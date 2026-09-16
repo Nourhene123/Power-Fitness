@@ -17,11 +17,7 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-/**
- * The structured "coach analysis" produced from an {@link Assessment}: metabolic numbers,
- * goal feasibility, ranked limiters, hard contraindications, suggested starting point.
- * Filterable scalars are columns; the full structure is {@link #analysis} (jsonb).
- */
+
 @Entity
 @Table(name = "assessment_analyses")
 @Getter

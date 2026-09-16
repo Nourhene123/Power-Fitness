@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** One line of a {@link ShopOrder}. Name/price are snapshotted at order time, independent of later product edits. */
 @Entity
 @Table(name = "shop_order_items")
 @Getter

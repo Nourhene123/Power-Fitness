@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** A "request a coach" submission from the public contact form. */
+
 @Entity
 @Table(name = "coach_requests")
 @Getter

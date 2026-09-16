@@ -16,7 +16,6 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-/** Append-only audit entry for a {@link Program}'s review lifecycle. */
 @Entity
 @Table(name = "program_review_events")
 @Getter

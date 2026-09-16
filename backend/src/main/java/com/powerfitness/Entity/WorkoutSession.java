@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** A completed training session logged by the client. */
+
 @Entity
 @Table(name = "workout_sessions")
 @Getter

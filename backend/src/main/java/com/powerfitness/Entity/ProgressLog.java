@@ -15,7 +15,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** A weigh-in plus optional body measurements. Upserted per {@code (user, loggedOn)}. */
 @Entity
 @Table(name = "progress_logs",
         uniqueConstraints = @UniqueConstraint(name = "uq_progress_user_day", columnNames = {"user_id", "logged_on"}))

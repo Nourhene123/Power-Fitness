@@ -18,11 +18,6 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-/**
- * One immutable version of a {@link Program}'s plan. Golden rule: the {@code content} of an
- * approved version is never edited and a version is never deleted — post-approval edits
- * create a new version.
- */
 @Entity
 @Table(name = "program_versions",
         uniqueConstraints = @UniqueConstraint(name = "uq_pv_program_version",

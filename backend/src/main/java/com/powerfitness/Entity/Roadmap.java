@@ -18,10 +18,6 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-/**
- * Denormalised "current roadmap" row kept in sync from the active {@link ProgramVersion}.
- * The dashboards read this table directly; one row per program.
- */
 @Entity
 @Table(name = "roadmaps")
 @Getter

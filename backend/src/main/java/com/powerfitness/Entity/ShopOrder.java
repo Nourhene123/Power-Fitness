@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** A cash-on-delivery shop order. Line items live in {@link ShopOrderItem}, queried by order. */
+
 @Entity
 @Table(name = "shop_orders")
 @Getter

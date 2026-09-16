@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** A library exercise. {@code patterns} is a CSV of injury/body-part keywords used to filter unsafe picks. */
 @Entity
 @Table(name = "exercises")
 @Getter

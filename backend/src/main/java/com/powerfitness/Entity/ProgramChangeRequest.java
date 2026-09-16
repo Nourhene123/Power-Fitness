@@ -15,7 +15,6 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-/** A coach's request for the client to clarify specific assessment fields before approval. */
 @Entity
 @Table(name = "program_change_requests")
 @Getter

@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** A registered account: member ({@code USER}), {@code COACH}, or {@code ADMIN}. */
 @Entity
 @Table(name = "users")
 @Getter

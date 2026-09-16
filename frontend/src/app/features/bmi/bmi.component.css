@@ -1,7 +1,7 @@
 
 .bmi-shell {
-  --gold: #f9ac54;
-  --gold-dark: #d4872c;
+  --gold: #c78a38;
+  --gold-dark: #8a5320;
   --card: #13151a;
   --line: rgba(255, 255, 255, 0.08);
   --ink: #f4f6fa;
@@ -64,7 +64,7 @@
 }
 .bmi-field input:focus {
   border-color: var(--gold);
-  box-shadow: 0 0 0 3px rgba(249, 172, 84, 0.15);
+  box-shadow: 0 0 0 3px rgba(199, 138, 56, 0.15);
 }
 
 .bmi-submit {
@@ -79,11 +79,11 @@
   font-size: 0.95rem;
   color: #111;
   background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-  box-shadow: 0 6px 20px rgba(249, 172, 84, 0.2);
+  box-shadow: 0 6px 20px rgba(199, 138, 56, 0.2);
   transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
 }
-.bmi-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(249, 172, 84, 0.35); }
+.bmi-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(199, 138, 56, 0.35); }
 
 
 .bmi-result { display: none; margin-top: 1.75rem; }
@@ -139,9 +139,9 @@
 .bmi-note {
   display: flex; gap: 0.7rem;
   padding: 0.9rem 1rem;
-  border: 1px dashed rgba(249, 172, 84, 0.35);
+  border: 1px dashed rgba(199, 138, 56, 0.35);
   border-radius: 12px;
-  background: rgba(249, 172, 84, 0.06);
+  background: rgba(199, 138, 56, 0.06);
   font-family: "Inter", sans-serif;
   font-size: 0.82rem;
   line-height: 1.6;
@@ -166,9 +166,9 @@
 .bmi-cta {
   text-align: center;
   padding: 1.6rem 1.4rem;
-  border: 1px solid rgba(249, 172, 84, 0.3);
+  border: 1px solid rgba(199, 138, 56, 0.3);
   border-radius: 14px;
-  background: radial-gradient(40rem 12rem at 50% 0%, rgba(249, 172, 84, 0.1), transparent 70%), var(--card);
+  background: radial-gradient(40rem 12rem at 50% 0%, rgba(199, 138, 56, 0.1), transparent 70%), var(--card);
 }
 .bmi-cta h3 { font-family: "Outfit", sans-serif; color: var(--ink); font-size: 1.15rem; margin-bottom: 0.4rem; }
 .bmi-cta p { font-family: "Inter", sans-serif; color: var(--soft); font-size: 0.86rem; line-height: 1.6; margin-bottom: 1.1rem; }
@@ -182,7 +182,7 @@
   text-decoration: none;
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.bmi-cta a:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(249, 172, 84, 0.3); }
+.bmi-cta a:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(199, 138, 56, 0.3); }
 
 /* Page hero (bmi.php used the old styles.css header — replaced with a themed one). */
 .bmi-hero {
@@ -197,7 +197,7 @@
     font-weight: 700;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--gold, #f9ac54);
+    color: var(--gold, #c78a38);
     margin-bottom: 0.6rem;
   }
 
@@ -209,7 +209,7 @@
     letter-spacing: -0.02em;
 
     span {
-      color: var(--gold, #f9ac54);
+      color: var(--gold, #c78a38);
     }
   }
 

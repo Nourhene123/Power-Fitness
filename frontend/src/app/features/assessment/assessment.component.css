@@ -1,6 +1,6 @@
 .asmt {
-  --gold: #f9ac54;
-  --gold-dark: #d4872c;
+  --gold: #c78a38;
+  --gold-dark: #8a5320;
   --bg: #0c0d10;
   --card: #13151a;
   --field: #0e1014;
@@ -78,7 +78,7 @@ legend {
 }
 .f textarea { resize: vertical; min-height: 76px; }
 .f input:focus, .f select:focus, .f textarea:focus {
-  border-color: var(--gold); box-shadow: 0 0 0 3px rgba(249, 172, 84, 0.14);
+  border-color: var(--gold); box-shadow: 0 0 0 3px rgba(199, 138, 56, 0.14);
 }
 
 .choices { display: flex; flex-wrap: wrap; gap: 0.5rem; }
@@ -93,7 +93,7 @@ legend {
 .choices label.is-sel,
 .choices input:checked + span,
 .choices label:has(input:checked) { color: #111; background: var(--gold); border-color: var(--gold); font-weight: 600; }
-.choices label:hover { border-color: rgba(249, 172, 84, 0.5); }
+.choices label:hover { border-color: rgba(199, 138, 56, 0.5); }
 
 .choices--cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.7rem; }
 .choices--cards label { position: relative; border-radius: 12px; text-align: center; padding: 0.9rem 0.7rem; cursor: pointer; background: var(--field); border: 1px solid var(--line); }
@@ -105,7 +105,7 @@ legend {
 .choices--cards label:has(input:checked) b { color: #111; }
 .choices--cards label.is-sel small,
 .choices--cards label:has(input:checked) small { color: rgba(0,0,0,0.65); }
-.choices--cards label:hover { border-color: rgba(249, 172, 84, 0.5); }
+.choices--cards label:hover { border-color: rgba(199, 138, 56, 0.5); }
 
 /* Sliders */
 .slider { }
@@ -128,7 +128,7 @@ legend {
 
 
 .med-box {
-  border: 1px dashed rgba(249, 172, 84, 0.4); background: rgba(249, 172, 84, 0.06);
+  border: 1px dashed rgba(199, 138, 56, 0.4); background: rgba(199, 138, 56, 0.06);
   border-radius: 12px; padding: 1rem 1.1rem; font-size: 0.83rem; line-height: 1.6;
 }
 .med-box label { display: flex; gap: 0.6rem; align-items: flex-start; margin-top: 0.7rem; cursor: pointer; color: var(--ink); }
@@ -147,7 +147,7 @@ legend {
 .btn-back:hover { color: #fff; }
 .btn-next, .btn-finish {
   background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #111;
-  box-shadow: 0 6px 18px rgba(249, 172, 84, 0.22);
+  box-shadow: 0 6px 18px rgba(199, 138, 56, 0.22);
 }
 .btn-next:hover, .btn-finish:hover { transform: translateY(-2px); }
 

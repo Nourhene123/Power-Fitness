@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** An in-app notification (plan approved, changes requested, ...). */
 @Entity
 @Table(name = "notifications")
 @Getter

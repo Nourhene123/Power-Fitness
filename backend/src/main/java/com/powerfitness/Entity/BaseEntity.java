@@ -13,10 +13,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-/**
- * Base for all persistent entities: identity + audit timestamps.
- * Timestamps are populated by Spring Data JPA auditing (see {@code JpaConfig}).
- */
+
 @Getter
 @Setter
 @MappedSuperclass

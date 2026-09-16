@@ -15,11 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/**
- * The header of a client's personalized program — the state-machine root.
- * Actual plan content lives in immutable {@link ProgramVersion}s; {@code activeVersionId}
- * points at the one currently shown to the client.
- */
+
 @Entity
 @Table(name = "programs")
 @Getter

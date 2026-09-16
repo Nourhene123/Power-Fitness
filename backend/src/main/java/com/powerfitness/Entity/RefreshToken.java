@@ -13,7 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** A rotating refresh token. Only the SHA-256 hash of the token value is stored. */
 @Entity
 @Table(name = "refresh_tokens")
 @Getter

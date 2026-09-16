@@ -12,7 +12,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** A shop catalog item (outfits, supplements, accessories, equipment). Price is in TND. */
 @Entity
 @Table(name = "products")
 @Getter

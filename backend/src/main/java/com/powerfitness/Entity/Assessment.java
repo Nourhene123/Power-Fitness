@@ -16,11 +16,6 @@ import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
-/**
- * A coaching assessment (7-step questionnaire). Versioned — {@code isLatest} marks the current one.
- * Scalar columns hold what the analyzer / roadmap generator / dashboard read directly;
- * {@link #responses} (jsonb) holds the long tail (measurements, equipment[], injuries[], prefs, ...).
- */
 @Entity
 @Table(name = "assessments")
 @Getter

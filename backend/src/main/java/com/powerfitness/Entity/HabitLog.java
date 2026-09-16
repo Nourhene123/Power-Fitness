@@ -14,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-/** One day's habit check-ins for a user. Upserted per {@code (user, logDate)}. */
 @Entity
 @Table(name = "habit_logs",
         uniqueConstraints = @UniqueConstraint(name = "uq_habit_user_day", columnNames = {"user_id", "log_date"}))
