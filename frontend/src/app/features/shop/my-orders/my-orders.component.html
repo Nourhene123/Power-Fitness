@@ -1,0 +1,41 @@
+<div class="orders-page">
+  <div class="header-row">
+    <h2><i class="ri-shopping-bag-3-line"></i> My Order History</h2>
+    <a routerLink="/shop" class="browse-btn"><i class="ri-store-2-line"></i> Browse Pro Shop</a>
+  </div>
+
+  @if (loading()) {
+    <p class="state-msg"><i class="ri-loader-4-line spin"></i> Loading…</p>
+  } @else if (!orders().length) {
+    <div class="empty-state">
+      <i class="ri-shopping-bag-line"></i>
+      <h3>No orders found</h3>
+      <p>You haven't ordered any supplements or gear yet. Explore our fitness store!</p>
+    </div>
+  } @else {
+    <div class="orders-table-wrap">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (o of orders(); track o.id) {
+            <tr>
+              <td class="mono">PF-{{ o.id }}</td>
+              <td>{{ o.createdAt | date: 'MMM d, y · HH:mm' }}</td>
+              <td>{{ o.items.length }} item{{ o.items.length === 1 ? '' : 's' }}</td>
+              <td class="amount">{{ o.total | number: '1.2-2' }} TND</td>
+              <td><span class="status-tag" [class]="statusClass(o.status)">{{ o.status | lowercase }}</span></td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

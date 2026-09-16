@@ -1,0 +1,150 @@
+<div class="dash2">
+  <div class="d-strip">
+    <div class="cell">
+      <div class="k">My goal</div>
+      <div class="d-goal-line">
+        {{ goal().line }}
+        @if (goal().onTrack === true) {
+          <span class="d-pill ok">on track</span>
+        } @else if (goal().onTrack === false) {
+          <span class="d-pill off">behind pace</span>
+        } @else if (goal().direction === 'maintain') {
+          <span class="d-pill neutral">recomp</span>
+        }
+      </div>
+      <div class="progbar"><span [style.width.%]="goal().progressPct"></span></div>
+      <div class="progbar-cap">
+        {{ goal().currentKg | number: '1.1-1' }} kg now ·
+        {{ goal().toGoKg === 0 ? 'at goal' : (goal().toGoKg < 0 ? -goal().toGoKg : goal().toGoKg) + ' kg to go' }}
+        ({{ goal().progressPct }}%)
+      </div>
+    </div>
+    <div class="cell">
+      <div class="k">My program</div>
+      <div class="d-phase-name">{{ phase().name }}</div>
+      <div class="d-phase-sub">
+        v{{ phase().version }}
+        @if (phase().phaseShort) {
+          · {{ phase().phaseShort }}
+        }
+        · Week {{ phase().weekNo }} of {{ phase().totalWeeks }}
+      </div>
+      <div class="d-weekdots">
+        @for (w of weeks(); track w) {
+          <i [class.done]="w < phase().weekNo" [class.now]="w === phase().weekNo"></i>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2 — Today -->
+  <div class="today-hero">
+    <div class="today-workout">
+      <h2><i class="ri-calendar-todo-line"></i> Today · {{ todayLabel }}</h2>
+      @if (today().isRest) {
+        <div class="rest"><i class="ri-zzz-line"></i> Rest &amp; recover</div>
+        <div class="meta">No session scheduled. Walk, stretch, hydrate, sleep well.</div>
+      } @else {
+        <div class="big">{{ today().session?.title }}</div>
+        <div class="meta">
+          {{ today().session?.exercises }} exercises
+          @if (today().session?.duration) {
+            · ~{{ today().session?.duration }}
+          }
+        </div>
+        @if (today().doneToday) {
+          <span class="btn-start done"><i class="ri-check-double-line"></i> Logged today</span>
+        } @else {
+          <a class="btn-start" routerLink="/progress/log/workout" [queryParams]="{ day: today().sessionIdx }">
+            <i class="ri-play-circle-fill"></i> Start workout
+          </a>
+        }
+      }
+    </div>
+    <div class="today-nutri">
+      <div class="k">Today's fuel target</div>
+      <div class="cal">{{ today().calories | number: '1.0-0' }} <small>kcal</small></div>
+      <div class="macros">
+        <span>P <b>{{ today().proteinG }}g</b></span>
+        <span>C <b>{{ today().carbsG }}g</b></span>
+        <span>F <b>{{ today().fatsG }}g</b></span>
+        <span>💧 <b>{{ today().waterL }}L</b></span>
+      </div>
+    </div>
+    <div class="today-habits">
+      @for (h of habitMeta; track h.key) {
+        <button type="button" class="hchip" [class.on]="habitOn(h.key)" (click)="onHabitClick(h.key)">
+          <i [class]="h.icon"></i> {{ h.label }}
+        </button>
+      }
+    </div>
+  </div>
+
+  <!-- ROW 3 — progress -->
+  <div class="d-mini">
+    <div class="chart-card">
+      <h4>Weight trend</h4>
+      <app-weight-trend-chart
+        [series]="progress().weightSeries"
+        [goalBandLow]="progress().goalBandLow"
+        [goalBandHigh]="progress().goalBandHigh"
+        [startKg]="goal().startKg"
+      />
+    </div>
+    <div class="chart-card">
+      <h4>Adherence · last 4 weeks</h4>
+      <div class="adh-bars">
+        @for (wk of progress().weeks; track wk.label) {
+          <div class="b">
+            <div class="val">{{ wk.adherencePct }}%</div>
+            <div class="fill" [style.height.%]="wk.adherencePct < 3 ? 3 : wk.adherencePct"></div>
+            <div class="lbl">{{ wk.label }}</div>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="streak-card">
+      <i class="ri-fire-fill flame"></i>
+      <div class="n">{{ progress().streak }}</div>
+      <div class="u">day streak</div>
+    </div>
+  </div>
+
+  <!-- ROW 4 — coach -->
+  <div class="d-coach">
+    <div class="coach-note-card">
+      <div class="k"><i class="ri-pushpin-fill"></i> From your coach</div>
+      <p>{{ coach().note ? coach().note : 'No pinned note right now.' }}</p>
+    </div>
+    <div class="d-side">
+      <div class="focus-callout">
+        <div class="k">
+          <i class="ri-focus-3-line"></i> What to improve
+          @if (coach().focusSource === 'coach') {
+            (coach)
+          }
+        </div>
+        <p>{{ coach().focus }}</p>
+      </div>
+      @if (milestone().label) {
+        <div class="milestone">
+          <i class="ri-flag-2-line"></i>
+          <div>
+            <div class="k">Next milestone</div>
+            <b>{{ milestone().label }}</b>
+            <span class="in"> · {{ milestone().date }} (in {{ milestone().inDays }} day{{ milestone().inDays === 1 ? '' : 's' }})</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <!-- Secondary pages -->
+  <div class="d-secondary">
+    <a routerLink="/program"><i class="ri-map-2-line"></i> Full program</a>
+    <a routerLink="/program/history"><i class="ri-history-line"></i> Plan history</a>
+    <a routerLink="/progress/log/weigh-in"><i class="ri-scales-3-line"></i> Log weigh-in</a>
+    <a routerLink="/progress/history"><i class="ri-timeline-view"></i> Activity</a>
+    <a routerLink="/account"><i class="ri-user-settings-line"></i> Account</a>
+  </div>
+</div>

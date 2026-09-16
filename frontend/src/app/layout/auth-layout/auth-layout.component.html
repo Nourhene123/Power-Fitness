@@ -1,0 +1,27 @@
+<div class="auth-shell">
+  <aside class="auth-brand">
+    <a routerLink="/" class="auth-brand__logo">
+      <img src="assets/img/logo-gold.png" alt="Power Fitness" />
+    </a>
+    <div class="auth-brand__mid">
+      <span class="auth-brand__eyebrow"><i class="ri-shield-star-line"></i> Coach-reviewed</span>
+      <h2>Your personalized <span>12-week roadmap</span>.</h2>
+      <p>
+        A science-based assessment, calorie &amp; macro targets, and a workout split — reviewed
+        by a real coach before it goes live on your dashboard.
+      </p>
+      <ul class="auth-brand__points">
+        <li><i class="ri-flashlight-fill"></i> Personalized 12-week roadmap</li>
+        <li><i class="ri-user-star-line"></i> Reviewed by Coach Ilyesse</li>
+        <li><i class="ri-line-chart-line"></i> Weekly progress &amp; adherence</li>
+      </ul>
+    </div>
+    <div class="auth-brand__foot">&copy; {{ year }} PowerFit — Personalized coaching</div>
+  </aside>
+
+  <main class="auth-panel">
+    <a routerLink="/" class="auth-panel__back"><i class="ri-arrow-left-line"></i> Back to homepage</a>
+    <a routerLink="/" class="auth-mobile-logo"><img src="assets/img/logo-gold.png" alt="PowerFit" /></a>
+    <router-outlet />
+  </main>
+</div>

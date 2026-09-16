@@ -1,0 +1,55 @@
+<div class="learn">
+  <header class="learn-hero">
+    <div>
+      <h4>{{ content().label }} Program</h4>
+      <h1>{{ content().title }}</h1>
+      <p>{{ content().intro }}</p>
+      <a routerLink="/register" class="learn-btn">
+        <i class="ri-flashlight-fill"></i> Get your customized 12-week roadmap
+      </a>
+    </div>
+    <img src="assets/img/undraw_diet_ghvw.svg" [alt]="content().label + ' program'" />
+  </header>
+
+  <nav class="learn-tabs">
+    @for (l of levels; track l) {
+      <a [routerLink]="['/learn', l]" [class.active]="l === content().level">
+        {{ l | titlecase }}
+      </a>
+    }
+  </nav>
+
+  <section class="learn-section">
+    <h2><i class="ri-calendar-event-line"></i> {{ content().label }} Workout Week</h2>
+    <div class="learn-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            @for (h of content().workoutHeaders; track h) { <th>{{ h }}</th> }
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of content().workout; track row[0]) {
+            <tr>@for (cell of row; track $index) { <td>{{ cell }}</td> }</tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="learn-section">
+    <h2><i class="ri-restaurant-2-line"></i> Recommended Meals &amp; Nutrition</h2>
+    <div class="learn-table-wrap">
+      <table>
+        <thead>
+          <tr><th>Meal</th><th>Timing</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          @for (row of content().meals; track row[0]) {
+            <tr>@for (cell of row; track $index) { <td>{{ cell }}</td> }</tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

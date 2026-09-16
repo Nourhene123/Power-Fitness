@@ -1,0 +1,60 @@
+<div class="coach-shell">
+  <aside class="coach-sidebar" [class.open]="sidebarOpen()">
+    <div class="sidebar-header">
+      <a routerLink="/" class="logo">
+        <img src="assets/img/logo-gold.png" alt="Power Fitness Logo" />
+      </a>
+      <span class="sidebar-badge"><i class="ri-shield-star-fill"></i> {{ roleLabel().toUpperCase() }}</span>
+    </div>
+
+    <nav class="sidebar-menu">
+      <div class="menu-label">Main Navigation</div>
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: !!link.exact }"
+          class="sidebar-link"
+          (click)="closeSidebar()"
+        >
+          <i [class]="link.icon"></i><span>{{ link.label }}</span>
+        </a>
+      }
+      <div class="menu-label">Quick Links</div>
+      <a routerLink="/" class="sidebar-link"><i class="ri-home-4-line"></i><span>Back to homepage</span></a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar">{{ initial() }}</div>
+        <div class="info">
+          <div class="name">{{ name() }}</div>
+          <div class="role"><i class="ri-shield-check-fill"></i> {{ roleLabel() }}</div>
+        </div>
+        <button type="button" (click)="logout()" title="Logout" class="logout-btn">
+          <i class="ri-logout-box-r-line"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="coach-main">
+    <header class="coach-header">
+      <div class="header-left">
+        <button type="button" class="sidebar-toggle-btn" (click)="toggleSidebar()" aria-label="Toggle navigation">
+          <i class="ri-menu-2-line"></i>
+        </button>
+      </div>
+      <div class="header-right">
+        <app-notif-bell />
+        <button type="button" (click)="logout()" class="header-btn header-btn-logout">
+          <i class="ri-logout-box-r-line"></i> Logout
+        </button>
+      </div>
+    </header>
+
+    <div class="coach-container">
+      <router-outlet />
+    </div>
+  </div>
+</div>

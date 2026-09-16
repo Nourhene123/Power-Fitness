@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    # host port 5433 (see docker-compose.yml) — avoids a native Postgres already on 5432
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/powerfitness}
+    username: ${SPRING_DATASOURCE_USERNAME:powerfitness}
+    password: ${SPRING_DATASOURCE_PASSWORD:powerfitness}
+  jpa:
+    properties:
+      hibernate.format_sql: true
+  flyway:
+    clean-disabled: false
+
+logging:
+  level:
+    com.powerfitness: DEBUG
+    org.hibernate.SQL: DEBUG

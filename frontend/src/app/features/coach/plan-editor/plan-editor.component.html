@@ -1,0 +1,214 @@
+@if (loading()) {
+  <div class="loading-state"><i class="ri-loader-4-line spin"></i></div>
+} @else {
+  @if (editor(); as e) {
+  <div class="ep-head">
+    <div>
+      <h1><i class="ri-edit-box-line" style="color: var(--accent-coach)"></i> {{ e.client.name }} — plan editor</h1>
+      <div class="sub">
+        {{ e.client.email }} ·
+        <span class="vbadge">v{{ e.versionNo }} · {{ e.status.replace('_', ' ') }}</span>
+      </div>
+    </div>
+    <div style="display: flex; gap: 0.5rem">
+      <a [routerLink]="['/coach/clients', e.client.userId]" class="mini"><i class="ri-file-list-3-line"></i> Full profile</a>
+      <a routerLink="/coach" class="mini"><i class="ri-arrow-left-line"></i> Queue</a>
+    </div>
+  </div>
+
+  @if (flash(); as f) {
+    <div class="flash" [class.err]="!f.ok">{{ f.text }}</div>
+  }
+
+  @if (e.locked) {
+    <div class="locked-note">
+      <span><i class="ri-lock-line"></i> This version is <b>{{ e.status.replace('_', ' ') }}</b> and cannot be edited. Create a new version to make changes.</span>
+      <button type="button" class="btn-a" style="background: var(--accent-coach); color: #111" [disabled]="creatingVersion()" (click)="createNewVersion()">
+        <i class="ri-git-branch-line"></i> {{ creatingVersion() ? 'Creating…' : 'New version' }}
+      </button>
+    </div>
+  }
+
+  <form [formGroup]="form">
+    <fieldset [disabled]="e.locked" style="border: 0; padding: 0; margin: 0">
+      <div class="ep-grid">
+        <!-- ============ LEFT: reference ============ -->
+        <div class="ref">
+          <div class="panel">
+            <h3><i class="ri-survey-line"></i> Assessment</h3>
+            @if (e.client.assessment; as a) {
+              <div class="kv"><span>Age</span><b>{{ a.age ?? '—' }}</b></div>
+              <div class="kv"><span>Sex</span><b>{{ (a.sexAtBirth || a.gender) ?? '—' }}</b></div>
+              <div class="kv"><span>Height / Weight</span><b>{{ a.heightCm ?? '?' }} cm / {{ a.weightKg ?? '?' }} kg</b></div>
+              <div class="kv"><span>Goal weight</span><b>{{ a.targetWeightKg ?? '?' }} kg</b></div>
+              <div class="kv"><span>Goal</span><b>{{ (a.primaryGoal ?? '—').replace('_', ' ') }}</b></div>
+              <div class="kv"><span>Experience</span><b>{{ a.experienceLevel ?? '—' }}</b></div>
+              <div class="kv"><span>Days / session</span><b>{{ a.workoutFrequency ?? '?' }} × {{ a.sessionDurationMin ?? '?' }} min</b></div>
+              <div class="kv"><span>Occupation</span><b>{{ (a.occupationType ?? '—').replace('_', ' ') }}</b></div>
+              <div class="kv"><span>Sleep</span><b>{{ a.sleepHours ?? '?' }}h · q{{ a.sleepQuality ?? '?' }}/5</b></div>
+              <div class="kv"><span>Stress / energy</span><b>{{ a.stressLevel ?? '?' }} / {{ a.energyLevel ?? '?' }}</b></div>
+              <div class="kv"><span>Equipment</span><b>{{ a.equipment.join(', ') || '—' }}</b></div>
+              <div class="kv"><span>Diet</span><b>{{ (a.dietPreference ?? '—').replace('_', ' ') }}</b></div>
+              <div class="kv"><span>Allergies</span><b>{{ a.allergies || '—' }}</b></div>
+              <div class="kv"><span>Coaching tone</span><b>{{ a.coachingTonePref ?? '—' }}</b></div>
+              @if (a.injuries.length > 0) {
+                <div style="margin-top: 0.6rem; font-size: 11px; text-transform: uppercase; color: #f87171">Injuries</div>
+                @for (inj of a.injuries; track inj.bodyPart) {
+                  <div class="li">
+                    <span class="dot" style="background: #f87171"></span>
+                    <span><b>{{ inj.bodyPart.replace('_', ' ') }}</b>{{ inj.stillPainful ? ' (painful)' : '' }} — avoid {{ inj.avoid || 'aggravating patterns' }}</span>
+                  </div>
+                }
+              }
+              @if (a.medicalConditions) {
+                <div class="li" style="color: #f87171; margin-top: 0.5rem">
+                  <span class="dot" style="background: #f87171"></span>Medical: {{ a.medicalConditions }}
+                </div>
+              }
+            } @else {
+              <p style="color: var(--text-muted); font-size: 12.5px">No assessment on file.</p>
+            }
+          </div>
+
+          @if (e.client.analysis; as an) {
+            <div class="panel">
+              <h3><i class="ri-robot-2-line"></i> Analysis</h3>
+              <div class="kv"><span>Feasibility</span><b>{{ an.feasibility.verdict.toUpperCase() }}</b></div>
+              <div class="li" style="color: var(--text-muted)">{{ an.feasibility.message }}</div>
+              <div class="section-label">Limiters</div>
+              @for (l of an.limiters; track l.label) {
+                <div class="li"><span class="dot" style="background: #fbbf24"></span><span><b>{{ l.label }}</b> → {{ l.action }}</span></div>
+              }
+              <div class="section-label">Suggested start</div>
+              <div class="li"><span class="dot" style="background: var(--accent-cyan)"></span>{{ an.suggestedStart.split }} · ~{{ an.suggestedStart.weeklySetsPerMuscle }} sets/muscle</div>
+            </div>
+          }
+
+          <div class="panel">
+            <h3><i class="ri-git-commit-line"></i> Live changelog</h3>
+            <div class="changelog">
+              @for (cl of e.liveChangelog; track cl) {
+                <div>• {{ cl }}</div>
+              }
+              @if (e.liveChangelog.length === 0) {
+                <div style="color: var(--text-muted)">No changes yet — matches the generator output.</div>
+              }
+            </div>
+          </div>
+        </div>
+
+        <!-- ============ RIGHT: editable plan ============ -->
+        <div>
+          <div class="panel">
+            <h3><i class="ri-numbers-line"></i> Targets</h3>
+            <div class="fld"><label>Plan title</label><input type="text" formControlName="roadmapTitle" /></div>
+            <div class="metrics4">
+              <div class="fld"><label>Calories (kcal)</label><input type="number" formControlName="targetCalories" /></div>
+              <div class="fld"><label>Protein (g)</label><input type="number" formControlName="proteinG" /></div>
+              <div class="fld"><label>Carbs (g)</label><input type="number" formControlName="carbsG" /></div>
+              <div class="fld"><label>Fats (g)</label><input type="number" formControlName="fatsG" /></div>
+              <div class="fld"><label>Water (L)</label><input type="number" step="0.1" formControlName="waterLiters" /></div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3><i class="ri-calendar-event-line"></i> Weekly split</h3>
+            @for (dayGroup of splitDays.controls; track dayGroup; let i = $index) {
+              <div class="day-block" [formGroup]="dayGroup">
+                <div class="fld">
+                  <label>{{ dayGroup.get('day')!.value }} · {{ dayGroup.get('duration')!.value }}</label>
+                  <input type="text" formControlName="title" placeholder="Session title" />
+                </div>
+                <div class="exhead"><span>Exercise</span><span>Sets</span><span>Reps</span><span>Rest</span><span>Notes</span><span></span></div>
+                <div formArrayName="exercises">
+                  @for (exGroup of dayExercises(i).controls; track exGroup; let j = $index) {
+                    <div class="row4" [formGroup]="exGroup">
+                      <input type="text" formControlName="name" [attr.list]="'ex-lib-' + i" />
+                      <input type="text" formControlName="sets" />
+                      <input type="text" formControlName="reps" />
+                      <input type="text" formControlName="rest" />
+                      <input type="text" formControlName="notes" />
+                      <button type="button" class="x" (click)="removeExercise(i, j)">&times;</button>
+                    </div>
+                  }
+                </div>
+                <button type="button" class="mini" (click)="addExercise(i)"><i class="ri-add-line"></i> Add exercise</button>
+                <datalist [id]="'ex-lib-' + i">
+                  @for (ex of e.safeExercises; track ex.name) {
+                    <option [value]="ex.name">{{ ex.category }} · {{ ex.primaryMuscle }} · {{ ex.equipment }}</option>
+                  }
+                </datalist>
+              </div>
+            }
+          </div>
+
+          <div class="panel">
+            <h3><i class="ri-restaurant-2-line"></i> Meal targets</h3>
+            @for (mealGroup of meals.controls; track mealGroup) {
+              <div class="meal-block" [formGroup]="mealGroup">
+                <div class="meal-name">{{ mealGroup.get('name')!.value }}</div>
+                <div class="meal-macros">
+                  <div class="fld"><label>kcal</label><input type="number" formControlName="calories" /></div>
+                  <div class="fld"><label>P</label><input type="number" formControlName="proteinG" /></div>
+                  <div class="fld"><label>C</label><input type="number" formControlName="carbsG" /></div>
+                  <div class="fld"><label>F</label><input type="number" formControlName="fatsG" /></div>
+                </div>
+                <div class="fld" style="margin: 0.4rem 0 0"><label>Suggestion</label><textarea formControlName="suggestion"></textarea></div>
+              </div>
+            }
+          </div>
+
+          <div class="panel">
+            <h3><i class="ri-shield-star-line"></i> Guidelines &amp; notes</h3>
+            <div class="fld"><label>Hydration</label><textarea formControlName="hydration"></textarea></div>
+            <div class="fld"><label>Sleep &amp; recovery</label><textarea formControlName="sleep"></textarea></div>
+            <div class="fld"><label>Consistency rule</label><textarea formControlName="consistencyRule"></textarea></div>
+            <div class="fld"><label>Supplement notes (one per line)</label><textarea formControlName="supplementsText" style="min-height: 80px"></textarea></div>
+          </div>
+
+          <div class="panel">
+            <h3><i class="ri-map-pin-time-line"></i> Phases</h3>
+            @for (phaseGroup of phaseGroups.controls; track phaseGroup) {
+              <div class="phase-block" [formGroup]="phaseGroup">
+                <div class="fld" style="margin: 0 0 0.4rem">
+                  <label>Phase {{ phaseGroup.get('phase')!.value }} · {{ phaseGroup.get('weeks')!.value }} — title</label>
+                  <input type="text" formControlName="title" />
+                </div>
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 6px">
+                  <div class="fld" style="margin: 0"><label>Focus</label><input type="text" formControlName="focus" /></div>
+                  <div class="fld" style="margin: 0"><label>Intensity</label><input type="text" formControlName="intensity" /></div>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      @if (!e.locked) {
+        <div class="actionbar">
+          <textarea formControlName="coachNote" placeholder="Coach note (required to approve / request changes — shown to the client)"></textarea>
+          <button type="button" class="btn-a btn-draft" [disabled]="saving()" (click)="saveDraft()">
+            <i class="ri-save-line"></i> {{ saving() ? 'Saving…' : 'Save draft' }}
+          </button>
+          <button type="button" class="btn-a btn-changes" [disabled]="requestingChanges()" (click)="submitRequestChanges()">
+            <i class="ri-question-answer-line"></i> {{ requestingChanges() ? 'Sending…' : 'Request client changes' }}
+          </button>
+          <button type="button" class="btn-a btn-approve" [disabled]="approving()" (click)="approve()">
+            <i class="ri-checkbox-circle-line"></i> {{ approving() ? 'Approving…' : 'Approve & activate' }}
+          </button>
+          <details class="req" style="width: 100%">
+            <summary>Fields to ask the client about (for "Request changes")</summary>
+            <div class="req-fields">
+              @for (opt of requestFieldOptions; track opt.field) {
+                <label [class.checked]="checkedFields().has(opt.field)">
+                  <input type="checkbox" [checked]="checkedFields().has(opt.field)" (change)="toggleField(opt.field)" /> {{ opt.label }}
+                </label>
+              }
+            </div>
+          </details>
+        </div>
+      }
+    </fieldset>
+  </form>
+  }
+}

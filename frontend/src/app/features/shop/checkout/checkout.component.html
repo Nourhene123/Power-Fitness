@@ -1,0 +1,56 @@
+<div class="checkout-wrap">
+  <a routerLink="/shop" class="back"><i class="ri-arrow-left-line"></i> Back to shop</a>
+
+  <div class="checkout-grid">
+    <div class="form-card">
+      <h1><i class="ri-truck-line"></i> Pay on Delivery</h1>
+      <p class="lead">Enter your delivery information. You'll pay in cash when the products arrive at your door.</p>
+
+      @if (errorMessage()) {
+        <div class="banner err">{{ errorMessage() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <label>
+          Full name *
+          <input type="text" formControlName="recipientName" />
+        </label>
+        <label>
+          Phone number *
+          <input type="tel" formControlName="phone" />
+        </label>
+        <label>
+          City *
+          <input type="text" formControlName="city" />
+        </label>
+        <label>
+          Full address *
+          <textarea rows="3" formControlName="addressLine"></textarea>
+        </label>
+        <label>
+          Note (optional)
+          <input type="text" formControlName="note" placeholder="Gate code, landmark, delivery instructions…" />
+        </label>
+        <button type="submit" [disabled]="submitting()">
+          <i class="ri-check-line"></i> {{ submitting() ? 'Placing order…' : 'Confirm Order' }}
+        </button>
+      </form>
+    </div>
+
+    <div class="summary-card">
+      <h4>Order Summary</h4>
+      @for (line of cart.lines(); track line.key) {
+        <div class="row">
+          <span>{{ line.name }}{{ line.size ? ' (' + line.size + ')' : '' }} &times; {{ line.quantity }}</span>
+          <span>{{ line.price * line.quantity | number: '1.2-2' }} TND</span>
+        </div>
+      }
+      <div class="row"><span>Subtotal</span><span>{{ cart.subtotal() | number: '1.2-2' }} TND</span></div>
+      <div class="row">
+        <span>Delivery</span>
+        <span>{{ deliveryFee() === 0 ? 'FREE' : (deliveryFee() | number: '1.2-2') + ' TND' }}</span>
+      </div>
+      <div class="row total"><span>Total (pay on delivery)</span><span>{{ total() | number: '1.2-2' }} TND</span></div>
+    </div>
+  </div>
+</div>

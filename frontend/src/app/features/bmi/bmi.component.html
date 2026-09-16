@@ -1,0 +1,88 @@
+<header class="bmi-hero">
+  <h4>QUICK CHECK</h4>
+  <h1>Your BMI<span>, in seconds</span></h1>
+  <p>
+    A fast screening number to place you on the healthy-weight scale. For your real calorie,
+    macro and training targets, take the free coaching assessment.
+  </p>
+</header>
+
+<div class="bmi-shell">
+  <div class="bmi-panel">
+    <div class="bmi-panel__head">
+      <h2><i class="ri-heart-pulse-line"></i> Calculate your BMI</h2>
+      <p>Enter your height and weight — nothing is stored.</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="calculate()" novalidate>
+      <div class="bmi-grid">
+        <div class="bmi-field">
+          <label for="height">Height (cm)</label>
+          <input id="height" type="number" inputmode="decimal" formControlName="height" placeholder="e.g. 178" />
+        </div>
+        <div class="bmi-field">
+          <label for="weight">Weight (kg)</label>
+          <input id="weight" type="number" inputmode="decimal" formControlName="weight" placeholder="e.g. 74" />
+        </div>
+      </div>
+      <button type="submit" class="bmi-submit"><i class="ri-calculator-line"></i> Calculate BMI</button>
+    </form>
+
+    @if (result(); as r) {
+      <div class="bmi-result is-visible">
+        <div class="bmi-score">
+          <div class="bmi-score__num">{{ r.value.toFixed(1) }}</div>
+          <div class="bmi-score__cat">Category: <b>{{ r.category }}</b></div>
+          <div class="bmi-gauge">
+            <div class="bmi-gauge__track">
+              <div class="bmi-gauge__marker" [style.left.%]="r.markerPct"></div>
+            </div>
+            <div class="bmi-gauge__labels">
+              <span>15</span><span>18.5</span><span>25</span><span>30</span><span>40</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bmi-note">
+          <i class="ri-information-line"></i>
+          <span><b>BMI is a rough screening tool, not a body-composition measure.</b>
+            It doesn't tell muscle from fat, so athletes and lifters often read "high" while being
+            lean. Use it as a starting point — not a verdict.</span>
+        </div>
+
+        @switch (r.band) {
+          @case ('under') {
+            <div class="bmi-reco is-visible">
+              <h3>Starting direction: lean mass &amp; strength</h3>
+              <p>A controlled calorie surplus with compound strength training to add healthy weight
+                and muscle. The full assessment sets your exact surplus and split.</p>
+            </div>
+          }
+          @case ('healthy') {
+            <div class="bmi-reco is-visible">
+              <h3>Starting direction: recomposition &amp; performance</h3>
+              <p>You're in the healthy range. Train for the goal that matters to you — build muscle,
+                get leaner, or improve conditioning. The assessment builds the plan around it.</p>
+            </div>
+          }
+          @case ('over') {
+            <div class="bmi-reco is-visible">
+              <h3>Starting direction: fat loss (muscle-sparing)</h3>
+              <p>A moderate, sustainable calorie deficit with strength work to keep muscle while you
+                lean out. The assessment calculates your deficit and weekly targets.</p>
+            </div>
+          }
+        }
+
+        <div class="bmi-cta">
+          <h3><i class="ri-flashlight-fill"></i> Get your real numbers</h3>
+          <p>Calories, macros, hydration, a 12-week workout split and coach review — built from your
+            full profile, not just height and weight.</p>
+          <a [routerLink]="['/register']" [queryParams]="{ h: r.h, w: r.w }">
+            Start the free assessment <i class="ri-arrow-right-line"></i>
+          </a>
+        </div>
+      </div>
+    }
+  </div>
+</div>

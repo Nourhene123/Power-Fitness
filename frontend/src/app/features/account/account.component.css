@@ -1,0 +1,116 @@
+.dash2 {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 0 0 40px;
+  max-width: 620px;
+}
+
+.back {
+  color: var(--text-soft);
+  font-size: 13px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.banner.ok {
+  background: rgba(34, 197, 94, 0.14);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #86efac;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+}
+.chart-card h4 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin: 0 0 14px;
+}
+
+.p-form {
+  display: grid;
+  gap: 12px;
+}
+.p-form label {
+  font-size: 12px;
+  color: var(--text-soft);
+  display: block;
+}
+.p-form label.muted {
+  color: var(--text-muted);
+}
+.p-form input {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: #fff;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 13.5px;
+}
+.p-form input:disabled {
+  background: #0e1014;
+  color: var(--text-muted);
+}
+
+.btn-start {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  color: #111;
+  font-weight: 800;
+  font-size: 14px;
+  padding: 11px 22px;
+  border-radius: 11px;
+  border: none;
+  cursor: pointer;
+}
+.btn-start:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.d-secondary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.d-secondary a,
+.d-secondary button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--text-soft);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 14px;
+  text-decoration: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+.d-secondary a:hover,
+.d-secondary button:hover {
+  border-color: rgba(249, 172, 84, 0.35);
+  color: #f1f5f9;
+}
+.d-secondary button.logout {
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}

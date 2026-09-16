@@ -1,0 +1,22 @@
+<div class="progress-page">
+  <a routerLink="/dashboard" class="back"><i class="ri-arrow-left-line"></i> Back to dashboard</a>
+
+  <div class="chart-card">
+    <h4>Your timeline</h4>
+    @if (loading()) {
+      <p class="p-empty"><i class="ri-loader-4-line spin"></i> Loading…</p>
+    } @else if (!items().length) {
+      <p class="p-empty">Nothing logged yet.</p>
+    } @else {
+      @for (it of items(); track $index) {
+        <div class="tl-item">
+          <i [class]="iconFor(it.type) + ' ' + it.type"></i>
+          <div>
+            <div class="tl-text">{{ it.text }}</div>
+            <div class="tl-date">{{ it.date | date: 'd MMM y' }}</div>
+          </div>
+        </div>
+      }
+    }
+  </div>
+</div>

@@ -1,0 +1,79 @@
+<div class="member-shell">
+  <aside class="member-sidebar" [class.open]="sidebarOpen()">
+    <div class="sidebar-header">
+      <a routerLink="/" class="logo">
+        <img src="assets/img/logo-gold.png" alt="Power Fitness Logo" />
+      </a>
+      <span class="sidebar-badge-client"><i class="ri-user-star-fill"></i> MEMBER</span>
+    </div>
+
+    <nav class="sidebar-menu">
+      <div class="menu-label">My Journey</div>
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: !!link.exact }"
+          class="sidebar-link"
+          (click)="closeSidebar()"
+        >
+          <i [class]="link.icon"></i><span>{{ link.label }}</span>
+        </a>
+      }
+      <div class="menu-label" style="margin-top: 12px">Store &amp; Account</div>
+      @for (link of storeLinks; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: !!link.exact }"
+          class="sidebar-link"
+          (click)="closeSidebar()"
+        >
+          <i [class]="link.icon"></i><span>{{ link.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="avatar-client">{{ initial() }}</div>
+        <div class="info">
+          <div class="name">{{ name() }}</div>
+          <div class="role">Active Member</div>
+        </div>
+        <button type="button" (click)="logout()" title="Logout" class="logout-btn">
+          <i class="ri-logout-box-r-line"></i>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="member-main">
+    <header class="member-header">
+      <div class="header-left">
+        <button type="button" class="sidebar-toggle-btn" (click)="toggleSidebar()" aria-label="Toggle navigation">
+          <i class="ri-menu-2-line"></i>
+        </button>
+      </div>
+      <div class="header-right">
+        <button type="button" class="header-btn header-btn-cart" (click)="cart.openDrawer()">
+          <i class="ri-shopping-bag-3-fill"></i>
+          @if (cart.count() > 0) {
+            <span class="cart-badge">{{ cart.count() }}</span>
+          }
+        </button>
+        <a routerLink="/shop" class="header-btn header-btn-primary">
+          <i class="ri-shopping-bag-3-fill"></i> Shop Now
+        </a>
+        <app-notif-bell />
+        <button type="button" (click)="logout()" class="header-btn header-btn-logout">
+          <i class="ri-logout-box-r-line"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="dashboard-container">
+      <router-outlet />
+    </div>
+  </div>
+</div>

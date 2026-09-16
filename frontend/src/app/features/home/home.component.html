@@ -1,0 +1,236 @@
+<div class="hero-wrapper">
+  <div class="hero-ambient-orb"></div>
+  <header class="header__container">
+    <div class="header__content">
+      <div class="hero-pill-badge">
+        <span class="pulse-dot"></span>
+        #1 SCIENCE-BASED ONLINE COACHING
+      </div>
+
+      <h1>LISTEN <span class="outline-text">TO YOUR</span> <span class="gold-gradient">BODY</span></h1>
+
+      <p>
+        Take our 10-minute biometric assessment to receive your custom 12-week workout roadmap,
+        personalized caloric targets, and daily meal strategy approved by Coach Ilyesse.
+      </p>
+
+      <div class="hero-cta-group">
+        <a routerLink="/register" class="btn-hero-primary">
+          <i class="ri-flashlight-fill"></i> Build Your Roadmap
+        </a>
+        <a routerLink="/bmi" class="btn-hero-secondary">
+          <i class="ri-calculator-line"></i> Calculate BMI
+        </a>
+      </div>
+
+      <div class="hero-trust-bar">
+        <span class="hero-trust-item"><i class="ri-checkbox-circle-fill"></i> Science-based protocols</span>
+        <span class="hero-trust-item"><i class="ri-user-star-fill"></i> 1-on-1 Coach Approval</span>
+        <span class="hero-trust-item"><i class="ri-shield-flash-fill"></i> 100% Free Assessment</span>
+      </div>
+
+      <div class="hero-stats-row">
+        <div class="hero-stat-box"><div class="num">12<span>w</span></div><div class="label">Custom Roadmap</div></div>
+        <div class="hero-stat-box"><div class="num">4.9<span>★</span></div><div class="label">Client Rating</div></div>
+        <div class="hero-stat-box"><div class="num">100<span>%</span></div><div class="label">Tailored For You</div></div>
+      </div>
+    </div>
+
+    <div class="header__image">
+      <div class="hero-athlete-container">
+        <div class="hero-athlete-backdrop"></div>
+        <div class="hero-pedestal-light"></div>
+        <img src="assets/img/Sans titre-4.png" alt="Coach Ilyesse Ferchichi — personalized online fitness coaching"
+             class="hero-athlete-img" width="370" />
+
+        <div class="floating-glass-badge badge-top-right">
+          <div class="floating-badge-icon"><i class="ri-star-smile-fill"></i></div>
+          <div class="floating-badge-text">
+            <span class="title">4.9 / 5.0 Rating</span>
+            <span class="subtitle">Certified Coach Ilyesse</span>
+          </div>
+        </div>
+
+        <div class="floating-glass-badge badge-bottom-left">
+          <div class="floating-badge-icon"><i class="ri-fire-fill"></i></div>
+          <div class="floating-badge-text">
+            <span class="title">12-Week Roadmap</span>
+            <span class="subtitle">Hypertrophy &amp; Macros</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how__container" id="how">
+  <div class="section-tagline">STREAMLINED METHODOLOGY</div>
+  <h2 class="section__header">HOW IT WORKS</h2>
+  <p class="section__subheader">
+    Our algorithm calculates the scientific foundation. Coach Ilyesse refines and approves
+    every detail for your body.
+  </p>
+
+  <div class="how__grid">
+    @for (step of steps; track step.n) {
+      <div class="how__step">
+        <div class="step-top-row">
+          <span class="step-num">{{ step.n }}</span>
+          <div class="step-icon"><i [class]="step.icon"></i></div>
+        </div>
+        <h4>{{ step.title }}</h4>
+        <p>{{ step.text }}</p>
+      </div>
+    }
+  </div>
+
+  <div class="how__action-bar">
+    <a routerLink="/register" class="how__note">
+      <i class="ri-arrow-right-line"></i> Start with the free assessment — no card required
+    </a>
+  </div>
+</section>
+
+<!-- EXPLORE PROGRAMS -->
+<section class="explore__container" id="programs">
+  <div class="section-tagline">SPECIALIZED PROTOCOLS</div>
+  <h2 class="section__header">EXPLORE OUR PROGRAMS</h2>
+  <p class="section__subheader">
+    Engineered programs tailored to your specific biomechanics, recovery capacity, and physique ambitions.
+  </p>
+
+  <div class="explore__grid">
+    @for (p of programs; track p.title) {
+      <a class="explore__card" routerLink="/register">
+        <div class="card-icon"><i [class]="p.icon"></i></div>
+        <h4>{{ p.title }}</h4>
+        <p>{{ p.text }}</p>
+        <span class="go">Start this goal <i class="ri-arrow-right-line"></i></span>
+      </a>
+    }
+  </div>
+</section>
+
+<!-- 1-ON-1 COACH SPOTLIGHT -->
+<section class="class__container">
+  <div class="class__image-wrapper">
+    <img src="assets/img/photo_2024-08-30_15-36-47.jpg" alt="Strength and conditioning coaching session" loading="lazy" />
+    <div class="class__image-overlay">
+      <div class="coach-tag">
+        <div class="coach-avatar"><img src="assets/img/me.jpg" alt="Coach Ilyesse" /></div>
+        <div class="coach-tag-text">
+          <div class="name">Coach Ilyesse Ferchichi</div>
+          <div class="role">Head Coach &amp; Fitness Specialist</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="class__content">
+    <div class="section-tagline" style="text-align: left; margin: 0;">DIRECT MENTORSHIP</div>
+    <h2>WORK 1-ON-1 WITH THE COACH</h2>
+    <p>
+      Prefer an ultra-tailored, hands-on mentorship? Book a private consultation with Coach Ilyesse.
+      We analyze your training history, bio-feedback, daily schedule, and construct a bespoke blueprint
+      for unstoppable results.
+    </p>
+    <ul class="coach-features-list">
+      <li><i class="ri-checkbox-circle-fill"></i> In-depth lifestyle &amp; nutrition audit</li>
+      <li><i class="ri-checkbox-circle-fill"></i> Form critique &amp; technique optimization</li>
+      <li><i class="ri-checkbox-circle-fill"></i> Direct weekly check-ins and plan adjustments</li>
+    </ul>
+    <a routerLink="/contact" class="btn-hero-primary" style="margin-top: 0.5rem;">
+      <i class="ri-calendar-check-line"></i> Book a Consultation
+    </a>
+  </div>
+</section>
+
+<!-- WHY JOIN US -->
+<section class="join__container">
+  <div class="section-tagline">COMMUNITY &amp; EXPERTISE</div>
+  <h2 class="section__header">WHY TRAIN WITH POWERFIT ?</h2>
+  <p class="section__subheader">
+    We bridge the gap between scientific athletic programming and personal accountability.
+  </p>
+
+  <div class="join__layout">
+    <div class="join__image-card">
+      <img src="assets/img/join.jpg" alt="Members training with a personal coach at Power Fitness" loading="lazy" />
+    </div>
+
+    <div class="join__cards-col">
+      <div class="join__feature-card">
+        <div class="join__feature-icon"><i class="ri-user-star-fill"></i></div>
+        <div class="join__feature-info">
+          <h4>Elite Personal Coaching</h4>
+          <p>Every rep, set, and macro target is vetted by an experienced professional coach.</p>
+        </div>
+      </div>
+      <div class="join__feature-card">
+        <div class="join__feature-icon"><i class="ri-dashboard-3-fill"></i></div>
+        <div class="join__feature-info">
+          <h4>Real-Time Progress Portal</h4>
+          <p>Log workouts on any device, calculate BMI &amp; TDEE, and watch your metrics climb week by week.</p>
+        </div>
+      </div>
+      <div class="join__feature-card">
+        <div class="join__feature-icon"><i class="ri-shield-star-fill"></i></div>
+        <div class="join__feature-info">
+          <h4>Guaranteed Transformation</h4>
+          <p>Structured 4-phase roadmaps ensure you continuously break plateaus without burnout.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="price__container" id="pricing">
+  <div class="section-tagline">TRANSPARENT MEMBERSHIP</div>
+  <h2 class="section__header">OUR COACHING PLANS</h2>
+  <p class="section__subheader">
+    Choose a coaching tier once your assessment is completed — every tier includes your customized
+    12-week roadmap.
+  </p>
+
+  <div class="price-hint-bar">
+    <i class="ri-information-line"></i>
+    <span>Not sure yet? <a routerLink="/register">Complete the free assessment first</a> — no payment required.</span>
+  </div>
+
+  <div class="price__grid">
+    @for (plan of plans; track plan.name) {
+      <div class="price__card" [class.popular-tier]="plan.popular">
+        @if (plan.popular) { <div class="popular-badge">MOST POPULAR</div> }
+        <div class="price__card-header">
+          <h4>{{ plan.name }}</h4>
+          <div class="price-amount">{{ plan.price }} <span>dt / mo</span></div>
+        </div>
+        <ul class="price-features-list">
+          @for (f of plan.features; track f) {
+            <li><i class="ri-checkbox-circle-fill"></i> {{ f }}</li>
+          }
+        </ul>
+        <a routerLink="/register" [class]="plan.popular ? 'price-btn-primary' : 'price-btn-outline'">
+          Get Started
+        </a>
+      </div>
+    }
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq__container" id="faq">
+  <div class="section-tagline">GOT QUESTIONS?</div>
+  <h2 class="section__header">FREQUENTLY ASKED QUESTIONS</h2>
+
+  <div class="faq-list">
+    @for (item of faqs; track item.q; let first = $first) {
+      <details class="faq-item" [open]="first">
+        <summary>{{ item.q }}</summary>
+        <p>{{ item.a }}</p>
+      </details>
+    }
+  </div>
+</section>

@@ -1,0 +1,75 @@
+<div class="page-header">
+  <div>
+    <h1>Shop <span>Orders</span></h1>
+    <p class="subtitle">Cash-on-delivery orders — update status as parcels are packed, shipped, and delivered.</p>
+  </div>
+  <select class="status-select" [value]="statusFilter()" (change)="onFilterChange($any($event.target).value)">
+    <option value="">All statuses</option>
+    <option value="PENDING">Pending</option>
+    <option value="CONFIRMED">Confirmed</option>
+    <option value="SHIPPED">Shipped</option>
+    <option value="DELIVERED">Delivered</option>
+    <option value="CANCELLED">Cancelled</option>
+  </select>
+</div>
+
+@if (loading()) {
+  <div class="loading-state"><i class="ri-loader-4-line spin"></i></div>
+} @else if (!orders().length) {
+  <div class="empty-state">
+    <i class="ri-shopping-bag-line"></i>
+    <h3>No orders</h3>
+    <p>Orders placed through the shop will show up here.</p>
+  </div>
+} @else {
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Buyer</th>
+          <th>Delivery</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (o of orders(); track o.id) {
+          <tr>
+            <td>
+              <strong>PF-{{ o.id }}</strong><br />
+              <small>{{ o.createdAt | date: 'MMM d, y · HH:mm' }}</small>
+            </td>
+            <td>{{ o.buyerName }}<br /><small>{{ o.buyerEmail }}</small></td>
+            <td>
+              {{ o.recipientName }}<br />
+              <small>{{ o.phone }} · {{ o.city }}</small><br />
+              <small>{{ o.addressLine }}</small>
+            </td>
+            <td>
+              @for (item of o.items; track item.productName) {
+                <div>{{ item.productName }} &times; {{ item.quantity }}{{ item.size ? ' (' + item.size + ')' : '' }}</div>
+              }
+            </td>
+            <td>{{ o.total | number: '1.2-2' }} TND</td>
+            <td>
+              <select
+                class="status-select"
+                [disabled]="busyId() === o.id"
+                [value]="o.status"
+                (change)="updateStatus(o, $any($event.target).value)"
+              >
+                <option value="PENDING">Pending</option>
+                <option value="CONFIRMED">Confirmed</option>
+                <option value="SHIPPED">Shipped</option>
+                <option value="DELIVERED">Delivered</option>
+                <option value="CANCELLED">Cancelled</option>
+              </select>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

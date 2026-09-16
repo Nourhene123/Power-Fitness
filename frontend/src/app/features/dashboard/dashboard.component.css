@@ -1,0 +1,15 @@
+.dash-loading {
+  display: flex;
+  justify-content: center;
+  padding: 80px 0;
+  color: var(--gold);
+  font-size: 32px;
+}
+.spin {
+  animation: dash-spin 1s linear infinite;
+}
+@keyframes dash-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

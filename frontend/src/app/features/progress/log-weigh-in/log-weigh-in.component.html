@@ -1,0 +1,90 @@
+<div class="progress-page">
+  <a routerLink="/dashboard" class="back"><i class="ri-arrow-left-line"></i> Back to dashboard</a>
+
+  @if (saved()) {
+    <div class="banner ok"><i class="ri-checkbox-circle-fill"></i> Saved.</div>
+  }
+  @if (errorMessage()) {
+    <div class="banner err">{{ errorMessage() }}</div>
+  }
+
+  <div class="chart-card">
+    <h4>New weigh-in</h4>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="p-form">
+      <div class="p-row2">
+        <label>
+          Date
+          <input type="date" formControlName="loggedOn" />
+        </label>
+        <label>
+          Weight (kg)
+          <input type="number" step="0.1" formControlName="weightKg" placeholder="72.5" />
+        </label>
+      </div>
+      <div class="p-section-label">Measurements (cm, optional)</div>
+      <div class="p-row-measurements">
+        <label>
+          Waist
+          <input type="number" step="0.1" formControlName="waistCm" />
+        </label>
+        <label>
+          Hip
+          <input type="number" step="0.1" formControlName="hipCm" />
+        </label>
+        <label>
+          Chest
+          <input type="number" step="0.1" formControlName="chestCm" />
+        </label>
+        <label>
+          Arm
+          <input type="number" step="0.1" formControlName="armCm" />
+        </label>
+        <label>
+          Thigh
+          <input type="number" step="0.1" formControlName="thighCm" />
+        </label>
+        <label>
+          Neck
+          <input type="number" step="0.1" formControlName="neckCm" />
+        </label>
+      </div>
+      <label>
+        Energy today (1-10)
+        <input type="number" min="1" max="10" formControlName="energy" />
+      </label>
+      <label>
+        Note (optional)
+        <input type="text" formControlName="note" placeholder="e.g. weighed post-workout" />
+      </label>
+      <button type="submit" class="btn-start" [disabled]="submitting()">
+        <i class="ri-check-line"></i> {{ submitting() ? 'Saving…' : 'Save weigh-in' }}
+      </button>
+    </form>
+  </div>
+
+  @if (history().length > 1) {
+    <div class="chart-card">
+      <h4>History</h4>
+      <table class="p-table">
+        <tr>
+          <th>Date</th>
+          <th>Weight</th>
+          <th>Waist</th>
+          <th>Chest</th>
+          <th>Arm</th>
+          <th>Energy</th>
+        </tr>
+        @for (r of history(); track r.id) {
+          <tr>
+            <td>{{ r.loggedOn | date: 'd MMM y' }}</td>
+            <td>{{ r.weightKg != null ? (r.weightKg | number: '1.1-1') : '—' }}</td>
+            <td>{{ r.waistCm ?? '—' }}</td>
+            <td>{{ r.chestCm ?? '—' }}</td>
+            <td>{{ r.armCm ?? '—' }}</td>
+            <td>{{ r.energy ?? '—' }}</td>
+          </tr>
+        }
+      </table>
+    </div>
+  }
+</div>

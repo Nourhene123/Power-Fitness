@@ -1,0 +1,85 @@
+
+.table-responsive {
+  overflow-x: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+th {
+  background: var(--bg-elevated);
+  color: var(--accent-coach);
+  padding: 15px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+td {
+  padding: 15px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: #d1d5db;
+  font-size: 14px;
+  vertical-align: top;
+}
+tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+.goals-cell {
+  max-width: 260px;
+  white-space: pre-line;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.badge-beginner {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+.badge-intermediate {
+  background: rgba(234, 179, 8, 0.2);
+  color: #facc15;
+}
+.badge-advanced {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
+
+.status-select {
+  background: #111317;
+  color: #fff;
+  border: 1px solid #4b5563;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background: none;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s;
+}
+.btn-delete:hover {
+  background: #ef4444;
+  color: #fff;
+}
+.btn-delete:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

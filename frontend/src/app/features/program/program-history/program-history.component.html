@@ -1,0 +1,79 @@
+<div class="ph">
+  <a routerLink="/dashboard" class="back-link"><i class="ri-arrow-left-line"></i> Back to dashboard</a>
+  <h1>Plan history</h1>
+
+  @if (loading()) {
+    <div class="ph-loading"><i class="ri-loader-4-line spin"></i></div>
+  } @else {
+    @for (v of versions(); track v.id) {
+      <div class="vcard" [class.cur]="v.current">
+        <div class="vhead">
+          <b>
+            v{{ v.versionNo }} ·
+            {{ (v.activatedAt || v.createdAt) | date: 'd MMM y' }}
+          </b>
+          <span class="st" [class]="statusClass(v.status)">
+            {{ statusLabel(v.status) }}{{ v.current ? ' · current' : '' }}
+          </span>
+        </div>
+
+        @if (v.versionNo > 1 && v.changelog.length > 0) {
+          <ul class="cl">
+            @for (c of v.changelog; track c) {
+              <li><i class="ri-arrow-right-s-line"></i> {{ c }}</li>
+            }
+          </ul>
+        } @else if (v.versionNo === 1) {
+          <div class="cl muted">Initial plan generated from your assessment.</div>
+        }
+
+        @if (v.coachNote) {
+          <div class="note">{{ v.coachNote }}</div>
+        }
+
+        @if (canView(v.status)) {
+          <div class="view-toggle">
+            <button type="button" class="vlink" (click)="toggleView(v.id)">
+              <i class="ri-eye-line"></i> {{ viewingId() === v.id ? 'Hide' : "View this version's plan" }}
+            </button>
+          </div>
+        }
+
+        @if (viewingId() === v.id) {
+          @if (viewLoading()) {
+            <div class="ph-loading small"><i class="ri-loader-4-line spin"></i></div>
+          } @else {
+            @if (viewing(); as detail) {
+              <div class="readplan">
+                <h3>v{{ detail.versionNo }} — {{ detail.content.metrics.roadmapTitle }}</h3>
+                <p class="readplan-sub">
+                  Target: {{ detail.content.metrics.targetCalories | number: '1.0-0' }} kcal ·
+                  P{{ detail.content.metrics.proteinG }} / C{{ detail.content.metrics.carbsG }} / F{{ detail.content.metrics.fatsG }} g
+                </p>
+                @for (day of detail.content.weeklySplit; track day.day) {
+                  <h4>{{ day.day }} — {{ day.title }}</h4>
+                  <div class="table-scroll">
+                    <table>
+                      @for (ex of day.exercises; track ex.name) {
+                        <tr>
+                          <td>{{ ex.name }}</td>
+                          <td>{{ ex.sets }}</td>
+                          <td>{{ ex.reps }}</td>
+                          <td>{{ ex.rest }}</td>
+                        </tr>
+                      }
+                    </table>
+                  </div>
+                }
+              </div>
+            }
+          }
+        }
+      </div>
+    }
+
+    @if (versions().length === 0) {
+      <p class="ph-empty">No plan versions yet.</p>
+    }
+  }
+</div>

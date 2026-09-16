@@ -1,0 +1,65 @@
+<div class="progress-page">
+  <a routerLink="/dashboard" class="back"><i class="ri-arrow-left-line"></i> Back to dashboard</a>
+
+  @if (saved()) {
+    <div class="banner ok"><i class="ri-checkbox-circle-fill"></i> Session logged. Nice work.</div>
+  }
+  @if (errorMessage()) {
+    <div class="banner err">{{ errorMessage() }}</div>
+  }
+
+  <div class="chart-card">
+    <h4>Log a completed session</h4>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="p-form">
+      <label>
+        Which session
+        <select formControlName="dayIndex">
+          @if (split().length) {
+            @for (d of split(); track d; let i = $index) {
+              <option [value]="i">{{ d.day }} — {{ d.title }}</option>
+            }
+          } @else {
+            <option [value]="0">Session</option>
+          }
+        </select>
+      </label>
+      <div class="p-row3">
+        <label>
+          Date
+          <input type="date" formControlName="sessionDate" />
+        </label>
+        <label>
+          Duration (min)
+          <input type="number" formControlName="durationMin" placeholder="55" />
+        </label>
+        <label>
+          Effort (RPE 1-10)
+          <input type="number" min="1" max="10" formControlName="rpe" placeholder="7" />
+        </label>
+      </div>
+      <label>
+        Notes (optional)
+        <textarea rows="2" formControlName="note" placeholder="PRs, how it felt, anything to tell the coach…"></textarea>
+      </label>
+      <button type="submit" class="btn-start" [disabled]="submitting() || loading()">
+        <i class="ri-check-line"></i> {{ submitting() ? 'Saving…' : 'Save session' }}
+      </button>
+    </form>
+  </div>
+
+  @if (recent().length) {
+    <div class="chart-card">
+      <h4>Recent sessions</h4>
+      <table class="p-table">
+        @for (s of recent(); track s.id) {
+          <tr>
+            <td>{{ s.sessionDate | date: 'd MMM' }}</td>
+            <td>{{ s.dayLabel }}</td>
+            <td>{{ s.durationMin ? s.durationMin + ' min' : '' }}</td>
+            <td>{{ s.rpe ? 'RPE ' + s.rpe : '' }}</td>
+          </tr>
+        }
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,212 @@
+<div class="page-header">
+  <div>
+    <h1><i class="ri-line-chart-line" style="color: var(--accent-cyan)"></i> Progress <span>Tracker</span></h1>
+    <p class="subtitle">Monitor daily habit consistency and overall progress for your clients.</p>
+  </div>
+</div>
+
+<div class="progress-header">
+  <div class="client-selector">
+    <i class="ri-user-search-line" style="font-size: 24px; color: var(--accent-coach)"></i>
+    <div>
+      <div class="lbl">Select client</div>
+      <select (change)="onSelect($event)">
+        @for (c of roster(); track c.userId) {
+          <option [value]="c.userId" [selected]="c.userId === clientId()">{{ c.userName }} ({{ c.userEmail }})</option>
+        }
+      </select>
+    </div>
+  </div>
+  @if (progress(); as p) {
+    <div style="text-align: right">
+      <h2 style="font-size: 20px; margin-bottom: 4px">{{ p.name }}</h2>
+      <span class="badge-tag badge-approved"><i class="ri-history-line"></i> Last 30 Days</span>
+    </div>
+  }
+</div>
+
+@if (loading()) {
+  <div class="loading-state"><i class="ri-loader-4-line spin"></i></div>
+} @else {
+  @if (progress(); as p) {
+  <div class="quick-facts">
+    <div class="fact"><i class="ri-scales-3-line"></i> Last weigh-in: <b>{{ daysAgo(p.daysSinceLastWeighIn) }}</b></div>
+    <div class="fact"><i class="ri-boxing-fill"></i> Last workout: <b>{{ daysAgo(p.daysSinceLastWorkout) }}</b></div>
+    <div class="fact"><i class="ri-fire-fill"></i> Current streak: <b>{{ p.currentStreak }} day{{ p.currentStreak === 1 ? '' : 's' }}</b></div>
+    @if (p.atRisk) {
+      <span class="badge-tag badge-risk"><i class="ri-alarm-warning-fill"></i> Needs attention</span>
+    }
+  </div>
+
+  @if (p.atRisk) {
+    <ul class="risk-reasons">
+      @for (reason of p.riskReasons; track reason) {
+        <li>{{ reason }}</li>
+      }
+    </ul>
+  }
+
+  @if (p.stats.totalDays === 0 && p.weightLogs.length === 0 && p.workoutLogs.length === 0) {
+    <div class="empty-state" style="margin-bottom: 30px">
+      <i class="ri-inbox-line"></i>
+      <h3>Nothing logged in the last 30 days</h3>
+      <p>{{ p.name }} hasn't checked in, weighed in, or logged a workout. Consider reaching out.</p>
+    </div>
+  }
+
+  <div class="stats-overview">
+    <div class="stat-box">
+      <div class="icon" style="background: rgba(239, 68, 68, 0.1); color: #ef4444"><i class="ri-fire-fill"></i></div>
+      <div>
+        <div class="val">{{ p.stats.totalDays === 0 ? '—' : p.stats.workoutPct + '%' }}</div>
+        <div class="lbl">Workout Consistency</div>
+        <small>{{ p.stats.workoutsCompleted }} sessions completed</small>
+      </div>
+    </div>
+    <div class="stat-box">
+      <div class="icon" style="background: rgba(34, 197, 94, 0.1); color: var(--accent-green)"><i class="ri-restaurant-fill"></i></div>
+      <div>
+        <div class="val">{{ p.stats.totalDays === 0 ? '—' : p.stats.nutritionPct + '%' }}</div>
+        <div class="lbl">Nutrition Adherence</div>
+      </div>
+    </div>
+    <div class="stat-box">
+      <div class="icon" style="background: rgba(56, 189, 248, 0.1); color: var(--accent-cyan)"><i class="ri-drop-fill"></i></div>
+      <div>
+        <div class="val">{{ p.stats.totalDays === 0 ? '—' : p.stats.waterPct + '%' }}</div>
+        <div class="lbl">Water Goal Hit</div>
+      </div>
+    </div>
+    <div class="stat-box">
+      <div class="icon" style="background: rgba(168, 85, 247, 0.1); color: var(--accent-purple)"><i class="ri-moon-fill"></i></div>
+      <div>
+        <div class="val">{{ p.stats.avgSleepHours === 0 ? '—' : p.stats.avgSleepHours + 'h' }}</div>
+        <div class="lbl">Avg. Sleep</div>
+      </div>
+    </div>
+    @if (p.stats.weightChangeKg !== 0) {
+      <div class="stat-box">
+        <div class="icon" style="background: var(--gold-glow); color: var(--accent-coach)"><i class="ri-scales-3-line"></i></div>
+        <div>
+          <div class="val" [style.color]="p.stats.weightChangeKg > 0 ? '#4ade80' : '#ef4444'">
+            {{ p.stats.weightChangeKg > 0 ? '+' : '' }}{{ p.stats.weightChangeKg }} kg
+          </div>
+          <div class="lbl">Weight Change</div>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (p.weightLogs.length > 0) {
+    <div class="habit-grid-container">
+      <div class="habit-grid-title"><i class="ri-scales-3-line" style="color: var(--accent-coach)"></i> Weight &amp; Measurements</div>
+      <div class="table-scroll">
+        <table class="mini-table">
+          <thead>
+            <tr><th>Date</th><th>Weight</th><th>Δ</th><th>Waist</th><th>Hip</th><th>Chest</th><th>Energy</th><th>Note</th></tr>
+          </thead>
+          <tbody>
+            @for (row of p.weightLogs; track row.date; let i = $index) {
+              <tr>
+                <td>{{ row.date | date: 'MMM d' }}</td>
+                <td style="font-weight: 600; color: #fff">{{ row.weightKg }} kg</td>
+                <td [style.color]="weightDelta(i) > 0 ? '#4ade80' : weightDelta(i) < 0 ? '#ef4444' : '#9ca3af'">
+                  {{ weightDelta(i) > 0 ? '+' : '' }}{{ weightDelta(i) }}
+                </td>
+                <td>{{ row.waistCm ?? '—' }}</td>
+                <td>{{ row.hipCm ?? '—' }}</td>
+                <td>{{ row.chestCm ?? '—' }}</td>
+                <td>{{ row.energy ?? '—' }}/10</td>
+                <td class="note-cell">{{ row.note ?? '—' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  @if (p.workoutLogs.length > 0) {
+    <div class="habit-grid-container">
+      <div class="habit-grid-title"><i class="ri-boxing-fill" style="color: var(--accent-coach)"></i> Training Sessions (last 15)</div>
+      <div class="table-scroll">
+        <table class="mini-table">
+          <thead>
+            <tr><th>Date</th><th>Session</th><th>Duration</th><th>RPE</th><th>Notes</th></tr>
+          </thead>
+          <tbody>
+            @for (w of p.workoutLogs; track w.date) {
+              <tr>
+                <td>{{ w.date | date: 'MMM d' }}</td>
+                <td style="color: #fff"><i class="ri-fire-fill" style="color: #ef4444; margin-right: 6px"></i>{{ w.dayLabel || 'Session' }}</td>
+                <td style="color: var(--accent-cyan)">{{ w.durationMin ? w.durationMin + ' min' : '—' }}</td>
+                <td [style.color]="(w.rpe ?? 0) >= 8 ? '#ef4444' : (w.rpe ?? 0) >= 6 ? '#facc15' : '#4ade80'">
+                  {{ w.rpe ? w.rpe + '/10' : '—' }}
+                </td>
+                <td class="note-cell">{{ w.note ?? '—' }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  }
+
+  <div class="habit-grid-container">
+    <div class="habit-grid-title"><i class="ri-calendar-check-fill" style="color: var(--accent-coach)"></i> 30-Day Habit Matrix</div>
+
+    <div class="habit-row">
+      <div class="habit-row-label"><i class="ri-fire-fill" style="color: #ef4444"></i> Workouts</div>
+      <div class="habit-days">
+        @for (d of p.habitMatrix; track d.date) {
+          <div class="habit-day" [class.workout]="d.workout">
+            <div class="tooltip">{{ d.date | date: 'MMM d' }}</div>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="habit-row">
+      <div class="habit-row-label"><i class="ri-restaurant-fill" style="color: var(--accent-green)"></i> Nutrition</div>
+      <div class="habit-days">
+        @for (d of p.habitMatrix; track d.date) {
+          <div class="habit-day" [class.nutrition]="d.nutrition">
+            <div class="tooltip">{{ d.date | date: 'MMM d' }}</div>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="habit-row">
+      <div class="habit-row-label"><i class="ri-drop-fill" style="color: var(--accent-cyan)"></i> Hydration</div>
+      <div class="habit-days">
+        @for (d of p.habitMatrix; track d.date) {
+          <div class="habit-day" [class.water]="d.water">
+            <div class="tooltip">{{ d.date | date: 'MMM d' }}</div>
+          </div>
+        }
+      </div>
+    </div>
+    <div class="habit-row">
+      <div class="habit-row-label"><i class="ri-moon-fill" style="color: var(--accent-purple)"></i> Sleep</div>
+      <div class="habit-days">
+        @for (d of p.habitMatrix; track d.date) {
+          <div class="habit-day" [class.sleep]="d.sleep">
+            <div class="tooltip">{{ d.date | date: 'MMM d' }}</div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="timeline-axis">
+      @for (d of p.habitMatrix; track d.date; let i = $index) {
+        <div class="timeline-label">{{ i % 3 === 0 ? (d.date | date: 'd') : '' }}</div>
+      }
+    </div>
+  </div>
+} @else {
+  <div class="empty-state">
+    <i class="ri-error-warning-line"></i>
+    <h3>Client Not Found</h3>
+    <p>The client you are looking for does not exist or is not a member.</p>
+  </div>
+  }
+}

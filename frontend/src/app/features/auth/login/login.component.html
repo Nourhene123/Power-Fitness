@@ -1,0 +1,47 @@
+<div class="auth-card">
+  <div class="auth-header">
+    <span class="badge">Members &amp; Coaching</span>
+    <h1>Welcome <span>back</span></h1>
+    <p>Sign in to access your coaching roadmap and workouts.</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error">
+      <i class="ri-error-warning-fill"></i>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <div class="input-group">
+        <i class="ri-mail-line input-icon"></i>
+        <input id="email" type="email" class="input-control" formControlName="email"
+               placeholder="your@email.com" autocomplete="email" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <div class="input-group">
+        <i class="ri-lock-line input-icon"></i>
+        <input id="password" [type]="showPassword() ? 'text' : 'password'" class="input-control"
+               formControlName="password" placeholder="Enter your password" autocomplete="current-password" />
+        <button type="button" class="pw-toggle" (click)="showPassword.set(!showPassword())"
+                [attr.aria-label]="showPassword() ? 'Hide password' : 'Show password'">
+          <i [class]="showPassword() ? 'ri-eye-off-line' : 'ri-eye-line'"></i>
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit" [disabled]="submitting()">
+      <span>{{ submitting() ? 'Signing in…' : 'Sign in to dashboard' }}</span>
+      <i class="ri-arrow-right-line"></i>
+    </button>
+  </form>
+
+  <div class="auth-footer">
+    Don't have an account yet? <a routerLink="/register">Register here</a>
+  </div>
+</div>

@@ -1,0 +1,123 @@
+
+
+.nb-wrap {
+  position: relative;
+}
+.nb-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #cbd5e1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  cursor: pointer;
+}
+.nb-btn:hover {
+  color: #f9ac54;
+  border-color: rgba(249, 172, 84, 0.3);
+}
+.nb-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  border-radius: 8px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nb-panel {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  width: 340px;
+  max-width: 90vw;
+  background: #14161b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  z-index: 200;
+  overflow: hidden;
+  display: none;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.nb-panel.open {
+  display: block;
+}
+.nb-panel h4 {
+  margin: 0;
+  padding: 12px 16px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #6b7686;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: #14161b;
+}
+.nb-markall {
+  color: #f9ac54;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0;
+  padding: 0;
+}
+.nb-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: none;
+  cursor: pointer;
+  font: inherit;
+}
+.nb-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+.nb-item.unread {
+  background: rgba(249, 172, 84, 0.06);
+}
+.nb-item .t {
+  color: #f4f6fa;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Poppins', 'Outfit', sans-serif;
+}
+.nb-item .b {
+  color: #94a3b8;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 2px;
+}
+.nb-item .d {
+  color: #4b5563;
+  font-size: 10.5px;
+  margin-top: 3px;
+}
+.nb-empty {
+  padding: 24px 16px;
+  text-align: center;
+  color: #6b7686;
+  font-size: 13px;
+}

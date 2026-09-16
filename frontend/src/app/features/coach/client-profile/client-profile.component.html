@@ -1,0 +1,204 @@
+@if (loading()) {
+  <div class="loading-state"><i class="ri-loader-4-line spin"></i></div>
+} @else {
+  @if (profile(); as p) {
+  <div class="review-header">
+    <div class="user-banner">
+      <div class="user-avatar">{{ p.name.charAt(0).toUpperCase() }}</div>
+      <div class="user-info">
+        <h2>{{ p.name }}</h2>
+        <p>{{ p.email }} · Joined {{ p.joinedAt | date: 'MMM d, y' }}</p>
+      </div>
+    </div>
+    @if (p.assessment) {
+      <div style="display: flex; flex-wrap: wrap; gap: 8px">
+        <span class="badge-tag badge-goal"><i class="ri-fire-fill"></i> {{ label(p.assessment.primaryGoal) | titlecase }}</span>
+        <span class="badge-tag badge-level"><i class="ri-bar-chart-fill"></i> {{ p.assessment.experienceLevel | titlecase }}</span>
+        @if (p.atRisk) {
+          <span class="badge-tag badge-risk"><i class="ri-alarm-warning-fill"></i> Needs attention</span>
+        }
+      </div>
+    }
+  </div>
+
+  @if (p.atRisk) {
+    <ul class="risk-reasons" style="margin-bottom: 24px">
+      @for (reason of p.riskReasons; track reason) {
+        <li>{{ reason }}</li>
+      }
+    </ul>
+  }
+
+  @if (p.analysis; as an) {
+    <div class="brief">
+      <h3><i class="ri-robot-2-line"></i> Automated analysis</h3>
+
+      <div class="brief-metrics">
+        <div><label>BMI</label><b>{{ an.metabolic.bmi }}</b> <small style="color: var(--accent-cyan)">{{ an.metabolic.bmiCategory }}</small></div>
+        <div><label>Body-fat est.</label><b style="font-size: 13px">{{ an.metabolic.bodyfatBand }}</b></div>
+        <div><label>BMR</label><b>{{ an.metabolic.bmr | number: '1.0-0' }}</b></div>
+        <div><label>TDEE</label><b>{{ an.metabolic.tdee | number: '1.0-0' }}</b></div>
+        <div><label>Target kcal</label><b style="color: var(--accent-coach)">{{ an.metabolic.targetCalories | number: '1.0-0' }}</b></div>
+        <div><label>Macros P/C/F</label><b style="font-size: 13px">{{ an.metabolic.proteinG }}/{{ an.metabolic.carbsG }}/{{ an.metabolic.fatsG }}g</b></div>
+      </div>
+
+      <div class="brief-col">
+        <span class="h">Goal feasibility</span>
+        <span class="feas-badge" [style.background]="feasColor(an.feasibility.verdict) + '22'" [style.color]="feasColor(an.feasibility.verdict)">
+          <i class="ri-checkbox-circle-fill"></i> {{ an.feasibility.verdict.toUpperCase() }}
+        </span>
+        <p style="font-size: 13px; color: var(--text-secondary); margin-top: 8px; line-height: 1.6">{{ an.feasibility.message }}</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+        <div class="brief-col">
+          <span class="h">Strengths</span>
+          @for (s of an.strengths; track s.label) {
+            <div class="brief-li"><span class="dot" style="background: #34d399"></span><span><b>{{ s.label }}</b> — {{ s.detail }}</span></div>
+          }
+          @if (an.strengths.length === 0) {
+            <div class="brief-li" style="color: var(--text-muted)">None flagged.</div>
+          }
+        </div>
+        <div class="brief-col">
+          <span class="h">Limiters / risks (ranked)</span>
+          @for (l of an.limiters; track l.label) {
+            <div class="brief-li"><span class="dot" [style.background]="sevColor(l.severity)"></span><span><b>{{ l.label }}</b> → {{ l.action }}</span></div>
+          }
+          @if (an.limiters.length === 0) {
+            <div class="brief-li" style="color: var(--text-muted)">None flagged.</div>
+          }
+        </div>
+      </div>
+
+      @if (an.contraindications.notes.length > 0) {
+        <div class="brief-col">
+          <span class="h">Contraindications the generator obeyed</span>
+          @for (note of an.contraindications.notes; track note) {
+            <div class="brief-rule">{{ note }}</div>
+          }
+        </div>
+      }
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px">
+        <div class="brief-col" style="margin-bottom: 0">
+          <span class="h">Suggested starting point</span>
+          <div class="brief-li"><span class="dot" style="background: var(--accent-cyan)"></span>Split: <b style="margin-left: 4px">{{ an.suggestedStart.split }}</b></div>
+          <div class="brief-li"><span class="dot" style="background: var(--accent-cyan)"></span>~{{ an.suggestedStart.weeklySetsPerMuscle }} weekly sets / muscle · max {{ an.suggestedStart.sessionCap }} exercises/session</div>
+          @for (h of an.suggestedStart.focusHabits; track h) {
+            <div class="brief-li"><span class="dot" style="background: var(--accent-cyan)"></span>{{ h }}</div>
+          }
+        </div>
+        <div class="brief-col" style="margin-bottom: 0">
+          <span class="h">Data-quality flags</span>
+          @for (f of an.dataQualityFlags; track f.message) {
+            <div class="brief-flag"><i class="ri-alert-line"></i>{{ f.message }}</div>
+          }
+          @if (an.dataQualityFlags.length === 0) {
+            <div class="brief-li" style="color: var(--text-muted)">Clean.</div>
+          }
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (p.assessment; as a) {
+    <div class="review-section">
+      <h3><i class="ri-survey-line"></i> Assessment Data</h3>
+      <div class="assessment-grid">
+        <div class="assessment-item"><label>Age</label><div class="value">{{ a.age }} years</div></div>
+        <div class="assessment-item"><label>Gender</label><div class="value">{{ a.gender | titlecase }}</div></div>
+        <div class="assessment-item"><label>Height</label><div class="value">{{ a.heightCm }} cm</div></div>
+        <div class="assessment-item"><label>Current Weight</label><div class="value">{{ a.weightKg }} kg</div></div>
+        <div class="assessment-item"><label>Target Weight</label><div class="value">{{ a.targetWeightKg }} kg</div></div>
+        <div class="assessment-item"><label>Workout Freq.</label><div class="value">{{ a.workoutFrequency }} days/week</div></div>
+        <div class="assessment-item"><label>Session Duration</label><div class="value">{{ a.sessionDurationMin }} min</div></div>
+        <div class="assessment-item"><label>Location</label><div class="value">{{ a.workoutLocation | titlecase }}</div></div>
+        <div class="assessment-item"><label>Diet Preference</label><div class="value">{{ label(a.dietPreference) | titlecase }}</div></div>
+        <div class="assessment-item"><label>Equipment</label><div class="value" style="font-size: 13px">{{ a.equipment.join(', ') || '—' }}</div></div>
+        <div class="assessment-item"><label>Sleep</label><div class="value">{{ a.sleepHours }}h · q{{ a.sleepQuality }}/5</div></div>
+        <div class="assessment-item"><label>Stress / Energy</label><div class="value">{{ a.stressLevel }} / {{ a.energyLevel }}</div></div>
+      </div>
+      @if (a.injuries.length > 0) {
+        <div style="margin-top: 14px; font-size: 11px; text-transform: uppercase; color: #f87171">Injuries</div>
+        @for (inj of a.injuries; track inj.bodyPart) {
+          <div class="brief-li">
+            <span class="dot" style="background: #f87171"></span>
+            <span><b>{{ label(inj.bodyPart) | titlecase }}</b>{{ inj.stillPainful ? ' (painful)' : '' }} — avoid {{ inj.avoid || 'aggravating patterns' }}</span>
+          </div>
+        }
+      }
+      @if (a.medicalConditions) {
+        <div class="brief-li" style="color: #f87171; margin-top: 8px">
+          <span class="dot" style="background: #f87171"></span>Medical: {{ a.medicalConditions }}
+        </div>
+      }
+    </div>
+  }
+
+  @if (p.content; as c) {
+    @if (c.phases.length > 0) {
+      <div class="review-section">
+        <h3><i class="ri-map-pin-time-line"></i> 12-Week Progression Phases</h3>
+        @for (phase of c.phases; track phase.phase) {
+          <div class="mini-block">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px">
+              <strong style="color: var(--accent-coach)">Phase {{ phase.phase }}: {{ phase.title }}</strong>
+              <span class="badge-tag badge-freq">{{ phase.weeks }}</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px">{{ phase.focus }}</p>
+            <p style="font-size: 12px; color: var(--accent-red, #f87171)">Intensity: {{ phase.intensity }}</p>
+            <ul class="target-list">
+              @for (t of phase.targets; track t) {
+                <li><i class="ri-checkbox-circle-fill" style="color: var(--accent-green)"></i> {{ t }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    }
+
+    @if (c.weeklySplit.length > 0) {
+      <div class="review-section">
+        <h3><i class="ri-calendar-event-line"></i> Weekly Workout Split</h3>
+        @for (day of c.weeklySplit; track day.day) {
+          <div class="mini-block">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px">
+              <strong style="font-size: 14px">{{ day.day }} — {{ day.title }}</strong>
+              <span class="badge-tag badge-level"><i class="ri-timer-line"></i> {{ day.duration }}</span>
+            </div>
+            <table class="mini-table">
+              @for (ex of day.exercises; track ex.name) {
+                <tr>
+                  <td>{{ ex.name }}</td>
+                  <td style="color: var(--accent-coach)">{{ ex.sets }}</td>
+                  <td style="color: var(--accent-red, #f87171)">{{ ex.reps }}</td>
+                  <td style="color: var(--accent-cyan)">{{ ex.rest }}</td>
+                </tr>
+              }
+            </table>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <div class="review-section" style="border-color: var(--accent-coach); border-width: 2px">
+    <h3><i class="ri-quill-pen-line"></i> Coach Decision</h3>
+    @if (p.versionId) {
+      <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px">
+        This plan is <b>v{{ p.versionNo }} · {{ label(p.versionStatus) | titlecase }}</b>. All editing — macros,
+        phases, per-day exercises, meals, guidelines — plus <b>Approve</b>, <b>Save draft</b> and
+        <b>Request client changes</b> happen in the plan editor.
+      </p>
+      <a [routerLink]="['/coach/plan', p.versionId]" class="btn-coach btn-coach-primary" style="font-size: 14px; padding: 12px 22px">
+        <i class="ri-edit-box-line"></i> Open plan editor
+      </a>
+    } @else {
+      <div class="empty-state" style="padding: 20px 0">
+        <p>This client has no program version yet.</p>
+      </div>
+    }
+  </div>
+  }
+}

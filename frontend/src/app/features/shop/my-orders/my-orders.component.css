@@ -1,0 +1,124 @@
+.orders-page {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 0 0 40px;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.header-row h2 {
+  font-size: 18px;
+  color: #fff;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header-row h2 i {
+  color: var(--gold);
+}
+.browse-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  color: #111;
+  font-weight: 700;
+  font-size: 13px;
+  padding: 9px 16px;
+  border-radius: 9px;
+  text-decoration: none;
+}
+
+.state-msg {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.empty-state {
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: 14px;
+  padding: 44px 20px;
+  text-align: center;
+}
+.empty-state i {
+  font-size: 44px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  display: block;
+}
+.empty-state h3 {
+  color: #fff;
+  margin: 0 0 6px;
+}
+.empty-state p {
+  color: var(--text-muted);
+  font-size: 13.5px;
+  margin: 0;
+}
+
+.orders-table-wrap {
+  overflow-x: auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 6px 4px;
+}
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+}
+.orders-table th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 12px 14px;
+}
+.orders-table td {
+  padding: 12px 14px;
+  font-size: 13.5px;
+  color: var(--text-soft);
+  border-top: 1px solid var(--border);
+}
+.orders-table td.mono {
+  color: #fff;
+  font-weight: 700;
+}
+.orders-table td.amount {
+  color: var(--gold);
+  font-weight: 700;
+}
+
+.status-tag {
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: capitalize;
+}
+.status-tag.pending {
+  background: rgba(249, 172, 84, 0.15);
+  color: var(--gold);
+}
+.status-tag.progress {
+  background: rgba(56, 189, 248, 0.15);
+  color: #7dd3fc;
+}
+.status-tag.ok {
+  background: rgba(34, 197, 94, 0.15);
+  color: #86efac;
+}
+.status-tag.cancelled {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+}

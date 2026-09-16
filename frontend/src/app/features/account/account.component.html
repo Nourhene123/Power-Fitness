@@ -1,0 +1,33 @@
+<div class="dash2">
+  <a routerLink="/dashboard" class="back"><i class="ri-arrow-left-line"></i> Back to dashboard</a>
+
+  @if (saved()) {
+    <div class="banner ok">Saved.</div>
+  }
+
+  <div class="chart-card">
+    <h4>Profile</h4>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="p-form">
+      <label>
+        Name
+        <input type="text" formControlName="name" />
+      </label>
+      <label class="muted">
+        Email
+        <input type="text" [value]="store.user()?.email" disabled />
+      </label>
+      <button type="submit" class="btn-start" [disabled]="saving()">
+        <i class="ri-check-line"></i> {{ saving() ? 'Saving…' : 'Save' }}
+      </button>
+    </form>
+  </div>
+
+  <div class="chart-card">
+    <h4>Coaching</h4>
+    <div class="d-secondary">
+      <a routerLink="/assessment"><i class="ri-survey-line"></i> Re-do my assessment ({{ assessmentCount() }} on file)</a>
+      <a routerLink="/program/history"><i class="ri-git-branch-line"></i> Plan version history</a>
+      <button type="button" (click)="logout()" class="logout"><i class="ri-logout-box-r-line"></i> Log out</button>
+    </div>
+  </div>
+</div>

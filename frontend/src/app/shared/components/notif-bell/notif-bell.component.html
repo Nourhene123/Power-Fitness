@@ -1,0 +1,29 @@
+<div class="nb-wrap">
+  <button type="button" class="nb-btn" (click)="toggle()" aria-label="Notifications">
+    <i class="ri-notification-3-line"></i>
+    @if (unread() > 0) {
+      <span class="nb-count">{{ unread() > 9 ? '9+' : unread() }}</span>
+    }
+  </button>
+  <div class="nb-panel" [class.open]="open()">
+    <h4>
+      Notifications
+      @if (unread() > 0) {
+        <button type="button" class="nb-markall" (click)="markAllRead()">Mark all read</button>
+      }
+    </h4>
+    @if (items().length === 0) {
+      <div class="nb-empty">Nothing yet.</div>
+    } @else {
+      @for (n of items(); track n.id) {
+        <button type="button" class="nb-item" [class.unread]="!n.read" (click)="select(n)">
+          <div class="t">{{ n.title }}</div>
+          @if (n.body) {
+            <div class="b">{{ n.body }}</div>
+          }
+          <div class="d">{{ n.createdAt | date: 'd MMM · HH:mm' }}</div>
+        </button>
+      }
+    }
+  </div>
+</div>

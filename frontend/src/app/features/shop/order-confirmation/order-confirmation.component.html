@@ -1,0 +1,31 @@
+@if (order(); as o) {
+  <div class="confirm-wrap">
+    <div class="confirm-card">
+      <div class="celebrate-icon"><i class="ri-check-line"></i></div>
+      <div class="order-badge"><i class="ri-shield-check-fill"></i> Order #PF-{{ o.id }}</div>
+      <h1>Order Confirmed!</h1>
+      <p class="desc">Thank you for gearing up with Power Fitness. Your order has been placed and you'll pay in cash when it's delivered.</p>
+
+      <div class="timeline">
+        <div class="step"><div class="icon"><i class="ri-check-line"></i></div><span>Placed</span></div>
+        <div class="step active"><div class="icon"><i class="ri-box-3-fill"></i></div><span>Packing</span></div>
+        <div class="step"><div class="icon"><i class="ri-truck-fill"></i></div><span>Shipped</span></div>
+        <div class="step"><div class="icon"><i class="ri-home-smile-fill"></i></div><span>Delivered</span></div>
+      </div>
+
+      <div class="order-box">
+        <h4>Order Summary</h4>
+        @for (item of o.items; track item.productName) {
+          <div class="row"><span>{{ item.productName }} &times; {{ item.quantity }}</span><span>{{ item.lineTotal | number: '1.2-2' }} TND</span></div>
+        }
+        <div class="row"><span>Delivery</span><span>{{ o.deliveryFee === 0 ? 'FREE' : (o.deliveryFee | number: '1.2-2') + ' TND' }}</span></div>
+        <div class="row total"><span>Total (pay on delivery)</span><span class="total-amt">{{ o.total | number: '1.2-2' }} TND</span></div>
+      </div>
+
+      <div class="btn-group">
+        <a routerLink="/shop" class="btn-primary"><i class="ri-store-2-line"></i> Continue Shopping</a>
+        <a routerLink="/dashboard" class="btn-secondary"><i class="ri-fire-fill"></i> My Dashboard</a>
+      </div>
+    </div>
+  </div>
+}

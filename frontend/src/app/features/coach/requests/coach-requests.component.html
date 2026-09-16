@@ -1,0 +1,83 @@
+<div class="page-header">
+  <div>
+    <h1>Client <span>1-on-1 Requests</span></h1>
+    <p class="subtitle">Leads submitted from the "Build Your Roadmap" contact form.</p>
+  </div>
+</div>
+
+@if (stats(); as s) {
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-info"><h3>Total Requests</h3><div class="stat-value">{{ s.total }}</div></div>
+      <div class="stat-icon icon-amber"><i class="ri-user-follow-line"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-info"><h3>Pending</h3><div class="stat-value" style="color: #facc15">{{ s.pending }}</div></div>
+      <div class="stat-icon icon-amber"><i class="ri-time-line"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-info"><h3>Contacted</h3><div class="stat-value" style="color: var(--accent-cyan)">{{ s.contacted }}</div></div>
+      <div class="stat-icon icon-cyan"><i class="ri-phone-line"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-info"><h3>Completed</h3><div class="stat-value" style="color: var(--accent-green)">{{ s.completed }}</div></div>
+      <div class="stat-icon icon-green"><i class="ri-checkbox-circle-line"></i></div>
+    </div>
+  </div>
+}
+
+@if (loading()) {
+  <div class="loading-state"><i class="ri-loader-4-line spin"></i></div>
+} @else if (requests().length === 0) {
+  <div class="empty-state">
+    <i class="ri-inbox-line"></i>
+    <h3>No requests yet</h3>
+    <p>Coach requests submitted from the contact form will appear here.</p>
+  </div>
+} @else {
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Client Info</th>
+          <th>Phone</th>
+          <th>Level</th>
+          <th>Coaching Goals</th>
+          <th>Submitted</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of requests(); track r.id) {
+          <tr>
+            <td>#{{ r.id }}</td>
+            <td><strong>{{ r.name }}</strong><br /><small>{{ r.email }}</small></td>
+            <td>{{ r.phone }}</td>
+            <td><span class="badge" [class]="'badge-' + r.experience">{{ r.experience }}</span></td>
+            <td class="goals-cell">{{ r.goals }}</td>
+            <td><small>{{ r.createdAt | date: 'MMM d, y · HH:mm' }}</small></td>
+            <td>
+              <select
+                class="status-select"
+                [disabled]="busyId() === r.id"
+                [value]="r.status"
+                (change)="updateStatus(r, $any($event.target).value)"
+              >
+                <option value="pending">Pending</option>
+                <option value="contacted">Contacted</option>
+                <option value="completed">Completed</option>
+              </select>
+            </td>
+            <td>
+              <button type="button" class="btn-delete" [disabled]="busyId() === r.id" (click)="remove(r)">
+                <i class="ri-delete-bin-line"></i>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

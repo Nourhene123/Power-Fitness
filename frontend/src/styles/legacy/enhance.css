@@ -1,0 +1,352 @@
+/* =====================================================================
+   enhance.css  —  Couche d'amélioration (chargée APRÈS styles.css)
+   Ne remplace pas le design : améliore CTA, couleurs, UX, accessibilité.
+   ===================================================================== */
+
+/* ------------------------------------------------------------------ *
+ * 1. PALETTE AFFINÉE  (mêmes teintes, meilleurs contrastes + sémantique)
+ * ------------------------------------------------------------------ */
+:root {
+  --secondary-color: #f9ac54;         /* or de marque — inchangé */
+  --secondary-color-dark: #d4872c;
+  --gold-bright: #ffc271;             /* survol / accents lumineux */
+  --gold-glow: rgba(249, 172, 84, 0.18);
+  --gold-ring: rgba(249, 172, 84, 0.55);
+
+  --text-light: #aab4c4;              /* +lisible sur fond sombre */
+  --text-strong: #f1f5f9;
+  --text-muted: #6b7686;
+
+  --ok: #34d399;
+  --danger: #f87171;
+  --info: #38bdf8;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 0.25s;
+}
+
+html { scroll-behavior: smooth; }
+
+/* Fond uni sur toute la page — pas de tache lumineuse au centre. */
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background-color: var(--primary-color, #0c0d10);
+}
+
+/* Titres un peu plus nets */
+.section__header { letter-spacing: -0.02em; text-wrap: balance; }
+.section__subheader { line-height: 1.7; }
+
+/* ------------------------------------------------------------------ *
+ * 2. ACCESSIBILITÉ — focus visible cohérent
+ * ------------------------------------------------------------------ */
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--gold-ring);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Lien d'évitement (ajouté par enhance.js) */
+.skip-link {
+  position: absolute; left: -999px; top: 0; z-index: 2000;
+  background: var(--secondary-color); color: #111; font-weight: 700;
+  padding: 10px 18px; border-radius: 0 0 8px 0;
+}
+.skip-link:focus { left: 0; }
+
+/* ------------------------------------------------------------------ *
+ * 3. BOUTONS & APPELS À L'ACTION
+ * ------------------------------------------------------------------ */
+.btn {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  min-height: 46px;
+  transition:
+    transform var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out),
+    background var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out);
+}
+
+/* reflet qui balaie au survol */
+.btn::after {
+  content: "";
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.45) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform 0.6s var(--ease-out);
+}
+.btn:hover::after { transform: translateX(120%); }
+.btn:active { transform: translateY(0) scale(0.98); }
+
+/* l'icône flèche glisse au survol */
+.btn i { transition: transform var(--dur) var(--ease-out); }
+.btn:hover i.ri-arrow-right-line,
+.btn:hover i.ri-arrow-right-s-line { transform: translateX(4px); }
+.btn:hover i.ri-flashlight-fill { transform: scale(1.12) rotate(-6deg); }
+
+/* Variante secondaire (contour) — pour le CTA #2 du hero */
+.btn.btn-outline,
+a.btn[style*="border"] {           /* cible le bouton "Calculate BMI" inline */
+  background: transparent !important;
+  color: var(--text-strong) !important;
+  border: 1.5px solid rgba(255,255,255,0.22) !important;
+  box-shadow: none !important;
+}
+.btn.btn-outline:hover,
+a.btn[style*="border"]:hover {
+  border-color: var(--secondary-color) !important;
+  color: var(--secondary-color) !important;
+  background: var(--gold-glow) !important;
+}
+
+/* CTA principal (hero) */
+.btn-primary,
+.header__content .btn:first-of-type {
+  box-shadow: 0 6px 22px var(--gold-glow);
+}
+
+/* Grande taille */
+.btn-lg { padding: 1.05rem 2.6rem; font-size: 1.02rem; min-height: 54px; }
+
+/* Boutons pleine largeur sur mobile = meilleures conversions */
+@media (max-width: 600px) {
+  .header__content .btn,
+  .price__btn,
+  .about__content .btn { width: 100%; justify-content: center; }
+  .header__content > div[style*="flex"] { flex-direction: column; }
+}
+
+/* ------------------------------------------------------------------ *
+ * 4. HERO — harmonisation globale
+ * ------------------------------------------------------------------ */
+.header__container { position: relative; }
+.header__container::before,
+.header__container::after {
+  display: none !important;
+}
+.header__image::before {
+  display: none !important;
+}
+
+/* ------------------------------------------------------------------ *
+ * 5. CARTES — survols plus doux et cohérents
+ * ------------------------------------------------------------------ */
+.explore__card,
+.price__card,
+.join__card,
+.program__card,
+.explore__grid > div {
+  transition: transform var(--dur) var(--ease-out),
+              border-color var(--dur) var(--ease-out),
+              box-shadow var(--dur) var(--ease-out),
+              background var(--dur) var(--ease-out);
+}
+.explore__card:hover { transform: translateY(-6px); }
+.price__card:hover   { transform: translateY(-8px); }
+
+.explore__card span { transition: transform var(--dur) var(--ease-out); }
+.explore__card:hover span { transform: rotate(-6deg) scale(1.06); }
+
+/* Mettre en avant l'offre du milieu */
+.price__grid > .price__card:nth-child(2) {
+  border-color: var(--gold-ring);
+  box-shadow: 0 0 0 1px var(--gold-ring), 0 20px 50px -20px var(--gold-glow);
+}
+.price__grid > .price__card:nth-child(2)::before {
+  content: "POPULAIRE";
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.12em;
+  color: #111; background: var(--secondary-color);
+  padding: 4px 10px; border-radius: 999px;
+}
+.price__card { position: relative; }
+
+/* ------------------------------------------------------------------ *
+ * 7. BARRE CTA COLLANTE (mobile) — injectée par enhance.js
+ * ------------------------------------------------------------------ */
+.mobile-cta-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 900;
+  display: none;
+  gap: 10px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
+  background: rgba(12, 13, 16, 0.92);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid var(--border, rgba(255,255,255,0.08));
+}
+.mobile-cta-bar .btn { flex: 1; justify-content: center; }
+@media (max-width: 760px) {
+  .mobile-cta-bar { display: flex; }
+  body { padding-bottom: 76px; }
+}
+
+/* ------------------------------------------------------------------ *
+ * 8. DIVERS UX
+ * ------------------------------------------------------------------ */
+::selection { background: var(--secondary-color); color: #111; }
+
+/* liens texte du contenu : soulignement propre */
+.about__content a:not([class*="btn"]),
+.class__content a:not([class*="btn"]) {
+  color: var(--secondary-color);
+  text-underline-offset: 3px;
+}
+
+img { height: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * 9. NOUVELLES SECTIONS D'ACCUEIL
+ * ------------------------------------------------------------------ */
+
+/* --- Bandeau de confiance sous le hero (texte simple, discret) --- */
+.trust-bar {
+  display: flex; flex-wrap: wrap; gap: 0.6rem 1.5rem;
+  margin-top: 1.5rem;
+}
+.trust-bar span {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  font-size: 0.8rem; color: var(--text-light);
+}
+.trust-bar i { color: var(--secondary-color); font-size: 1rem; }
+
+/* --- « Comment ça marche » --- */
+.how__grid {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+@media (max-width: 900px) { .how__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .how__grid { grid-template-columns: 1fr; } }
+
+.how__step {
+  position: relative;
+  padding: 1.75rem 1.25rem 1.25rem;
+  background: var(--primary-color-light, #13151a);
+  border: 1px solid var(--border, rgba(255,255,255,0.07));
+  border-radius: var(--radius-md, 16px);
+  transition: transform var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out);
+}
+.how__step:hover { transform: translateY(-4px); border-color: var(--gold-ring); }
+.how__step .num {
+  position: absolute; top: -14px; left: 1.25rem;
+  width: 30px; height: 30px; border-radius: 8px;
+  display: grid; place-items: center;
+  font-family: "Outfit", sans-serif; font-weight: 800; font-size: 0.9rem; color: #111;
+  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-color-dark));
+}
+.how__step i { font-size: 1.6rem; color: var(--secondary-color); margin-bottom: 0.6rem; display: block; }
+.how__step h4 { color: #fff; font-size: 1.05rem; margin-bottom: 0.35rem; }
+.how__step p { font-size: 0.88rem; line-height: 1.6; color: var(--text-light); }
+.how__note {
+  margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted);
+  display: inline-flex; align-items: center; gap: 0.5rem;
+}
+.how__note i { color: var(--secondary-color); }
+
+/* --- Cartes « EXPLORE » cliquables --- */
+a.explore__card {
+  display: flex; flex-direction: column; height: 100%;
+  color: inherit; text-decoration: none;
+}
+a.explore__card p { flex: 1; margin-bottom: 1rem; }
+a.explore__card:hover h4 { color: var(--secondary-color); }
+
+/* le lien "Start this goal" : styles.css met TOUS les <span> en carré doré 48px,
+   on remet .go à plat */
+a.explore__card .go {
+  display: inline-flex; align-items: center; gap: 6px;
+  align-self: flex-start;
+  width: auto; height: auto; margin: 0; padding: 0;
+  background: none; box-shadow: none;
+  font-family: "Inter", sans-serif;
+  font-size: 0.82rem; font-weight: 700; letter-spacing: 0;
+  color: var(--secondary-color);
+}
+a.explore__card .go i {
+  width: auto; height: auto; padding: 0; margin: 0;
+  background: none; font-size: 0.95rem; color: var(--secondary-color);
+  transition: transform var(--dur) var(--ease-out);
+}
+a.explore__card:hover .go i { transform: translateX(4px); }
+
+/* --- FAQ (accordéon natif <details>) --- */
+.faq { max-width: 760px; margin: 2.5rem auto 0; }
+.faq details {
+  border-bottom: 1px solid var(--border, rgba(255,255,255,0.08));
+}
+.faq summary {
+  list-style: none; cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  padding: 1.15rem 0.25rem;
+  font-family: "Outfit", sans-serif; font-weight: 600; font-size: 1rem; color: #fff;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  font-family: "Outfit", sans-serif; font-weight: 400; line-height: 1;
+  font-size: 1.6rem; color: var(--secondary-color); flex-shrink: 0;
+  transition: transform var(--dur) var(--ease-out);
+}
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p {
+  padding: 0 0.25rem 1.25rem;
+  color: var(--text-light); font-size: 0.92rem; line-height: 1.7;
+  max-width: none;
+}
+.faq summary:focus-visible { outline: 2px solid var(--gold-ring); outline-offset: 3px; border-radius: 6px; }
+
+/* --- Encart « bilan gratuit d'abord » au-dessus des prix --- */
+.price-hint {
+  max-width: 620px; margin: 1rem auto 0; text-align: center;
+  font-size: 0.9rem; color: var(--text-light);
+}
+.price-hint a { color: var(--secondary-color); font-weight: 600; }
+
+/* --- Boutons des tarifs : styles.css laissait le dégradé doré derrière
+   un texte doré (illisible). On force un vrai style lisible. --- */
+.price__btn {
+  background: transparent !important;
+  background-image: none !important;
+  color: var(--secondary-color) !important;
+  border: 1.5px solid var(--gold-ring) !important;
+  box-shadow: none !important;
+  justify-content: center;
+  margin-top: auto;                 /* aligne les boutons en bas des cartes */
+}
+.price__btn:hover {
+  background: var(--secondary-color) !important;
+  color: #111 !important;
+  border-color: var(--secondary-color) !important;
+}
+/* L'offre mise en avant (2ᵉ carte) a un bouton plein */
+.price__grid > .price__card:nth-child(2) .price__btn {
+  background: linear-gradient(135deg, var(--secondary-color), var(--secondary-color-dark)) !important;
+  color: #111 !important;
+  border-color: transparent !important;
+}
+.price__grid > .price__card:nth-child(2) .price__btn:hover { filter: brightness(1.08); }
+
+/* espace vide sous les listes courtes : on centre un peu mieux le contenu */
+.price__card__content { display: flex; flex-direction: column; }
+.price__card p { display: flex; align-items: center; gap: 0.5rem; }
+.price__card p i { margin-right: 0 !important; }

@@ -1,0 +1,61 @@
+<header class="pro-nav" [class.scrolled]="scrolled()">
+  <div class="pro-nav__inner">
+    <a routerLink="/" class="pro-nav__logo" (click)="closeMenu()">
+      <img src="assets/img/logo-gold.png" alt="Power Fitness" />
+      <span class="pro-nav__logo-text">Power<span>Fit</span></span>
+    </a>
+
+    <button
+      class="pro-nav__hamburger"
+      [class.open]="menuOpen()"
+      type="button"
+      aria-label="Toggle menu"
+      (click)="toggleMenu()"
+    >
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="pro-nav__links" [class.open]="menuOpen()">
+      @for (link of links; track link.path) {
+        <li class="pro-nav__link">
+          <a
+            [routerLink]="link.path"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+            (click)="closeMenu()"
+          >
+            <i [class]="link.icon"></i> {{ link.label }}
+          </a>
+        </li>
+      }
+      @if (store.isAuthenticated()) {
+        <li class="pro-nav__link">
+          <a [routerLink]="appLink().path" routerLinkActive="active" class="nav-coach" (click)="closeMenu()">
+            <i [class]="appLink().icon"></i> {{ appLink().label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <div class="pro-nav__actions">
+      <button type="button" class="nav-cart-btn" (click)="cart.openDrawer()" aria-label="Open cart">
+        <i class="ri-shopping-bag-3-line"></i>
+        @if (cart.count() > 0) {
+          <span class="nav-cart-badge">{{ cart.count() }}</span>
+        }
+      </button>
+      @if (store.isAuthenticated()) {
+        <a routerLink="/account" class="nav-user-btn">
+          <i class="ri-user-smile-line"></i> {{ firstName() }}
+        </a>
+        <button type="button" class="nav-logout-btn" title="Log out" (click)="logout()">
+          <i class="ri-logout-box-r-line"></i>
+        </button>
+      } @else {
+        <a routerLink="/login" class="nav-login-btn"><i class="ri-login-box-line"></i> Login</a>
+        <a routerLink="/register" class="nav-cta-btn"><i class="ri-flashlight-fill"></i> Get Started</a>
+      }
+    </div>
+  </div>
+</header>
+<div class="nav-spacer"></div>

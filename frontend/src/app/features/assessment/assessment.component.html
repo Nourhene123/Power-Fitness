@@ -1,0 +1,392 @@
+<div class="asmt">
+  <div class="asmt-top">
+    <a routerLink="/"><img src="assets/img/logo-gold.png" alt="Power Fitness" /></a>
+    <a routerLink="/dashboard"><i class="ri-arrow-left-line"></i> Back to dashboard</a>
+  </div>
+
+  @if (submitted(); as done) {
+    <div class="asmt-wrap">
+      <div class="asmt-card" style="text-align:center">
+        <i class="ri-checkbox-circle-fill" style="font-size:56px;color:#34d399"></i>
+        <h2 style="justify-content:center;margin-top:1rem">Assessment submitted</h2>
+        <p class="hint" style="max-width:520px;margin:0.5rem auto 1.5rem">
+          Your draft <strong>{{ done.roadmapTitle }}</strong> has been generated and sent to
+          Coach Ilyesse for review. You'll get a notification when it's approved.
+        </p>
+        <button type="button" class="btn-next" (click)="goToDashboard()">
+          Go to dashboard <i class="ri-arrow-right-line"></i>
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="asmt-wrap">
+      <div class="asmt-steps">
+        @for (label of stepLabels; track label; let i = $index) {
+          <div class="seg" [class.done]="i + 1 < step()" [class.now]="i + 1 === step()"></div>
+        }
+      </div>
+      <div class="asmt-stepmeta">
+        <span>Step {{ step() }} of {{ totalSteps }} — {{ stepLabels[step() - 1] }}</span>
+      </div>
+
+      @if (errorMessage()) {
+        <div class="asmt-error"><i class="ri-error-warning-fill"></i><div>{{ errorMessage() }}</div></div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()" class="asmt-card" novalidate>
+
+        
+        @if (step() === 1) {
+          <section class="asmt-step">
+            <h2><i class="ri-user-line"></i> Identity &amp; context</h2>
+            <p class="hint">The basics we need to calculate your metabolism accurately.</p>
+            <div class="grid2">
+              <div class="f"><label>Full name</label><input type="text" formControlName="fullName" /></div>
+              <div class="f"><label>Date of birth</label><input type="date" formControlName="dateOfBirth" required /></div>
+            </div>
+            <div class="grid2">
+              <div class="f">
+                <span class="lbl">Sex at birth <span class="opt">(for BMR)</span></span>
+                <div class="choices">
+                  <label><input type="radio" formControlName="sexAtBirth" value="male" /><span>Male</span></label>
+                  <label><input type="radio" formControlName="sexAtBirth" value="female" /><span>Female</span></label>
+                </div>
+              </div>
+              <div class="f"><label>Gender</label>
+                <select formControlName="gender">
+                  <option value="male">Man</option><option value="female">Woman</option><option value="other">Other / prefer not to say</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid2">
+              <div class="f"><label>Country <span class="opt">(optional)</span></label><input type="text" formControlName="country" /></div>
+              <div class="f">
+                <span class="lbl">Occupation</span>
+                <div class="choices">
+                  @for (o of [['desk','Desk job'],['on_feet','On feet'],['physical','Physical'],['shift','Shift work']]; track o[0]) {
+                    <label><input type="radio" formControlName="occupationType" [value]="o[0]" /><span>{{ o[1] }}</span></label>
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="f"><label>Why now? <span class="opt">— what made you start today</span></label>
+              <textarea formControlName="motivation" placeholder="A few sentences in your own words."></textarea>
+            </div>
+          </section>
+        }
+
+        
+        @if (step() === 2) {
+          <section class="asmt-step">
+            <h2><i class="ri-body-scan-line"></i> Body &amp; biometrics</h2>
+            <p class="hint">Height and weight are required. Everything else improves tracking accuracy.</p>
+            <div class="grid3">
+              <div class="f"><label>Height (cm)</label><input type="number" step="0.5" formControlName="heightCm" required /></div>
+              <div class="f"><label>Current weight (kg)</label><input type="number" step="0.1" formControlName="weightKg" required /></div>
+              <div class="f"><label>Goal weight (kg)</label><input type="number" step="0.1" formControlName="targetWeightKg" required /></div>
+            </div>
+            <fieldset>
+              <legend>Body measurements <span class="opt" style="font-weight:400">(optional, cm)</span></legend>
+              <div class="grid3">
+                @for (mCtrl of [['waistCm','Waist'],['hipCm','Hip'],['chestCm','Chest'],['armCm','Arm'],['thighCm','Thigh'],['neckCm','Neck']]; track mCtrl[0]) {
+                  <div class="f"><label>{{ mCtrl[1] }}</label><input type="number" step="0.5" [formControlName]="mCtrl[0]" /></div>
+                }
+              </div>
+            </fieldset>
+          </section>
+        }
+
+        @if (step() === 3) {
+          <section class="asmt-step">
+            <h2><i class="ri-boxing-line"></i> Training history &amp; capacity</h2>
+            <p class="hint">What you can realistically do — days, time and equipment.</p>
+            <div class="grid2">
+              <div class="f"><label>Experience level</label>
+                <select formControlName="experienceLevel">
+                  <option value="beginner">Beginner (&lt; 1 yr)</option>
+                  <option value="intermediate">Intermediate (1-3 yrs)</option>
+                  <option value="advanced">Advanced (3+ yrs)</option>
+                </select>
+              </div>
+              <div class="f"><label>Years lifting <span class="opt">(number)</span></label><input type="number" step="0.5" formControlName="yearsTraining" /></div>
+            </div>
+            <fieldset>
+              <legend>Estimated strength <span class="opt" style="font-weight:400">(heaviest comfortable — optional)</span></legend>
+              <div class="grid3">
+                <div class="f"><label>Squat (kg)</label><input type="number" step="2.5" formControlName="strengthSquat" /></div>
+                <div class="f"><label>Bench (kg)</label><input type="number" step="2.5" formControlName="strengthBench" /></div>
+                <div class="f"><label>Deadlift (kg)</label><input type="number" step="2.5" formControlName="strengthDeadlift" /></div>
+              </div>
+            </fieldset>
+            <div class="grid2">
+              <div class="f"><label>Training days per week</label>
+                <select formControlName="workoutFrequency">
+                  @for (n of [2,3,4,5,6]; track n) { <option [ngValue]="n">{{ n }} days</option> }
+                </select>
+              </div>
+              <div class="f"><label>Session length cap (min)</label>
+                <select formControlName="sessionDurationMin">
+                  @for (n of [30,45,60,75,90]; track n) { <option [ngValue]="n">{{ n }} min</option> }
+                </select>
+              </div>
+            </div>
+            <fieldset>
+              <legend>Which days can you train?</legend>
+              <div class="choices">
+                @for (d of daysList; track d) {
+                  <label [class.is-sel]="inArray('trainingDays', d)">
+                    <input type="checkbox" [checked]="inArray('trainingDays', d)" (change)="toggleArray('trainingDays', d)" /><span>{{ d }}</span>
+                  </label>
+                }
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Environment &amp; equipment</legend>
+              <div class="choices">
+                @for (e of equipmentList; track e[0]) {
+                  <label [class.is-sel]="inArray('equipment', e[0])">
+                    <input type="checkbox" [checked]="inArray('equipment', e[0])" (change)="toggleArray('equipment', e[0])" /><span>{{ e[1] }}</span>
+                  </label>
+                }
+              </div>
+            </fieldset>
+            <div class="grid2">
+              <div class="f"><label>Daily step count <span class="opt">approx.</span></label><input type="number" formControlName="dailySteps" placeholder="e.g. 7000" /></div>
+              <div class="f"><label>Activity outside training</label>
+                <select formControlName="activityLevel">
+                  <option value="sedentary">Sedentary</option><option value="light">Lightly active</option>
+                  <option value="moderate">Moderately active</option><option value="very_active">Very active</option>
+                </select>
+              </div>
+            </div>
+          </section>
+        }
+
+        @if (step() === 4) {
+          <section class="asmt-step">
+            <h2><i class="ri-flag-2-line"></i> Goals &amp; focus</h2>
+            <p class="hint">Where you're headed and what matters most.</p>
+            <fieldset>
+              <legend>Primary goal</legend>
+              <div class="choices--cards">
+                @for (g of [['muscle_gain','Build muscle','Hypertrophy'],['fat_loss','Lose fat','Get leaner'],['weight_gain','Gain weight','Add mass'],['athletic_performance','Perform','Speed & power'],['general_fitness','General fitness','Health & habit']]; track g[0]) {
+                  <label [class.is-sel]="form.get('primaryGoal')!.value === g[0]">
+                    <input type="radio" formControlName="primaryGoal" [value]="g[0]" /><b>{{ g[1] }}</b><small>{{ g[2] }}</small>
+                  </label>
+                }
+              </div>
+            </fieldset>
+            <div class="grid2">
+              <div class="f"><label>Secondary goal <span class="opt">(optional)</span></label>
+                <select formControlName="secondaryGoal">
+                  <option value="">-</option><option value="strength">Get stronger</option><option value="endurance">Better endurance</option>
+                  <option value="mobility">Mobility / pain-free</option><option value="aesthetics">Look better</option><option value="consistency">Just be consistent</option>
+                </select>
+              </div>
+              <div class="f"><label>Target date <span class="opt">(optional)</span></label><input type="date" formControlName="targetDate" /></div>
+            </div>
+            <fieldset>
+              <legend>Priority muscle groups</legend>
+              <div class="choices">
+                @for (mus of muscleList; track mus) {
+                  <label [class.is-sel]="inArray('priorityMuscles', mus)">
+                    <input type="checkbox" [checked]="inArray('priorityMuscles', mus)" (change)="toggleArray('priorityMuscles', mus)" /><span>{{ mus | titlecase }}</span>
+                  </label>
+                }
+              </div>
+            </fieldset>
+            <div class="f"><label>What does success look like — in your words?</label>
+              <textarea formControlName="successDefinition" placeholder="Be specific: a number, a photo, a feeling, an ability."></textarea>
+            </div>
+          </section>
+        }
+
+       
+        @if (step() === 5) {
+          <section class="asmt-step">
+            <h2><i class="ri-restaurant-2-line"></i> Nutrition &amp; lifestyle</h2>
+            <p class="hint">So the meal plan fits your kitchen, your budget and your tastes.</p>
+            <div class="grid3">
+              <div class="f"><label>Meals per day</label>
+                <select formControlName="mealsPerDay">@for (n of [2,3,4,5,6]; track n) { <option [ngValue]="n">{{ n }}</option> }</select>
+              </div>
+              <div class="f"><label>Eating out (per week)</label><input type="number" formControlName="eatingOutPerWeek" placeholder="e.g. 3" /></div>
+              <div class="f"><label>Diet style</label>
+                <select formControlName="dietPreference">
+                  <option value="high_protein">High protein</option><option value="balanced">Balanced</option>
+                  <option value="vegetarian">Vegetarian</option><option value="vegan">Vegan</option>
+                  <option value="keto">Low carb / keto</option><option value="mediterranean">Mediterranean</option>
+                </select>
+              </div>
+            </div>
+            <div class="grid2">
+              <div class="f"><span class="lbl">Cooking ability</span>
+                <div class="choices">
+                  @for (c of [['none',"Can't cook"],['basic','Basic'],['confident','Confident']]; track c[0]) {
+                    <label><input type="radio" formControlName="cookingAbility" [value]="c[0]" /><span>{{ c[1] }}</span></label>
+                  }
+                </div>
+              </div>
+              <div class="f"><span class="lbl">Food budget</span>
+                <div class="choices">
+                  @for (b of [['tight','Tight'],['moderate','Moderate'],['flexible','Flexible']]; track b[0]) {
+                    <label><input type="radio" formControlName="budgetLevel" [value]="b[0]" /><span>{{ b[1] }}</span></label>
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="grid2">
+              <div class="f"><label>Allergies &amp; intolerances</label><input type="text" formControlName="allergies" placeholder="e.g. lactose, nuts" /></div>
+              <div class="f"><label>Foods you refuse to eat</label><input type="text" formControlName="dislikedFoods" placeholder="e.g. fish, mushrooms" /></div>
+            </div>
+            <div class="grid3">
+              <div class="f"><label>Water intake (L / day)</label><input type="number" step="0.1" formControlName="waterIntakeLiters" /></div>
+              <div class="f"><label>Alcohol (units / week)</label><input type="number" formControlName="alcoholUnitsWeek" /></div>
+              <div class="f"><label>Caffeine (mg / day)</label><input type="number" formControlName="caffeineMg" placeholder="1 coffee ~ 90mg" /></div>
+            </div>
+            <div class="f"><label>Supplements currently taken</label><input type="text" formControlName="supplements" placeholder="e.g. creatine, vitamin D, whey" /></div>
+          </section>
+        }
+
+        
+        @if (step() === 6) {
+          <section class="asmt-step">
+            <h2><i class="ri-heart-pulse-line"></i> Recovery &amp; health</h2>
+            <p class="hint">Recovery sets the ceiling on training. Health info stays private to your coach.</p>
+            <div class="grid3">
+              <div class="f"><label>Average sleep (hours)</label><input type="number" step="0.5" formControlName="sleepHours" /></div>
+              <div class="f slider"><span class="lbl">Sleep quality <output>{{ form.get('sleepQuality')!.value }}</output>/5</span>
+                <input type="range" min="1" max="5" formControlName="sleepQuality" />
+              </div>
+              <div class="f"><span class="lbl">Wake up feeling</span>
+                <div class="choices">
+                  @for (w of [['groggy','Groggy'],['ok','OK'],['fresh','Fresh']]; track w[0]) {
+                    <label><input type="radio" formControlName="wakeFeeling" [value]="w[0]" /><span>{{ w[1] }}</span></label>
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="grid2">
+              <div class="f slider"><span class="lbl">Stress level <output>{{ form.get('stressLevel')!.value }}</output>/10</span>
+                <input type="range" min="1" max="10" formControlName="stressLevel" />
+              </div>
+              <div class="f slider"><span class="lbl">Energy level <output>{{ form.get('energyLevel')!.value }}</output>/10</span>
+                <input type="range" min="1" max="10" formControlName="energyLevel" />
+              </div>
+            </div>
+            <fieldset>
+              <legend>Injuries &amp; limitations</legend>
+              <div class="choices" style="margin-bottom:1rem">
+                <label><input type="radio" formControlName="hasInjuries" value="no" /><span>None</span></label>
+                <label><input type="radio" formControlName="hasInjuries" value="yes" /><span>I have some</span></label>
+              </div>
+              @if (form.get('hasInjuries')!.value === 'yes') {
+                <div formArrayName="injuries">
+                  @for (inj of injuries.controls; track inj; let i = $index) {
+                    <div class="injury-row" [formGroupName]="i">
+                      <div class="grid2">
+                        <div class="f" style="margin:0"><label>Body part</label>
+                          <select formControlName="bodyPart">
+                            <option value="">Select...</option>
+                            @for (p of injuryParts; track p) { <option [value]="p">{{ p.replace('_', ' ') | titlecase }}</option> }
+                          </select>
+                        </div>
+                        <div class="f" style="margin:0"><label>Movements to avoid</label><input type="text" formControlName="avoid" placeholder="e.g. overhead press, deep squat" /></div>
+                      </div>
+                      <div class="f" style="margin:.7rem 0 0"><label>Describe it</label><input type="text" formControlName="description" /></div>
+                      <label style="display:flex;gap:.5rem;align-items:center;margin-top:.7rem;font-size:.85rem;color:#fff;cursor:pointer">
+                        <input type="checkbox" formControlName="stillPainful" style="accent-color:#f9ac54" /> Still painful now
+                      </label>
+                      <div style="text-align:right"><button type="button" class="injury-remove" (click)="removeInjury(i)">Remove</button></div>
+                    </div>
+                  }
+                </div>
+                <button type="button" class="btn-mini" (click)="addInjury()"><i class="ri-add-line"></i> Add an injury</button>
+              }
+            </fieldset>
+            <div class="grid2">
+              <div class="f"><label>Relevant medical conditions</label><textarea formControlName="medicalConditions" placeholder="Leave blank if none."></textarea></div>
+              <div class="f"><label>Medications</label><textarea formControlName="medications" placeholder="Leave blank if none."></textarea></div>
+            </div>
+            <div class="f">
+              <label style="display:flex;gap:.5rem;align-items:center;font-size:.85rem;color:#fff;cursor:pointer;text-transform:none;letter-spacing:0">
+                <input type="checkbox" formControlName="isPregnant" style="accent-color:#f9ac54" /> Currently pregnant
+              </label>
+            </div>
+            <div class="med-box">
+              <strong>Not medical advice.</strong> This assessment and the generated plan are general fitness
+              guidance, not a medical evaluation. If you have a health condition, are pregnant, are recovering
+              from an injury or surgery, or are unsure, consult your doctor before starting.
+              <label>
+                <input type="checkbox" formControlName="medicalAck" required />
+                I understand, and I've cleared exercise with a doctor if that applies to me.
+              </label>
+            </div>
+          </section>
+        }
+
+        @if (step() === 7) {
+          <section class="asmt-step">
+            <h2><i class="ri-settings-3-line"></i> Preferences</h2>
+            <p class="hint">Last part — how you like to train and be coached.</p>
+            <div class="grid2">
+              <div class="f"><label>Exercises you love</label><input type="text" formControlName="lovedExercises" placeholder="e.g. deadlifts, incline press" /></div>
+              <div class="f"><label>Exercises you hate</label><input type="text" formControlName="hatedExercises" placeholder="e.g. burpees, running" /></div>
+            </div>
+            <fieldset>
+              <legend>Training style preference</legend>
+              <div class="choices--cards">
+                @for (s of [['strength','Strength','Heavy, low reps'],['bodybuilding','Bodybuilding','Pump & volume'],['athletic','Athletic','Power & conditioning'],['minimal','Minimalist','Few big lifts']]; track s[0]) {
+                  <label [class.is-sel]="form.get('trainingStylePref')!.value === s[0]">
+                    <input type="radio" formControlName="trainingStylePref" [value]="s[0]" /><b>{{ s[1] }}</b><small>{{ s[2] }}</small>
+                  </label>
+                }
+              </div>
+            </fieldset>
+            <div class="grid3">
+              <div class="f"><span class="lbl">Coaching tone</span>
+                <div class="choices">
+                  @for (t of [['gentle','Gentle'],['direct','Direct'],['tough','Tough']]; track t[0]) {
+                    <label><input type="radio" formControlName="coachingTonePref" [value]="t[0]" /><span>{{ t[1] }}</span></label>
+                  }
+                </div>
+              </div>
+              <div class="f"><span class="lbl">Check-in frequency</span>
+                <div class="choices">
+                  @for (f of [['weekly','Weekly'],['biweekly','Every 2 wks'],['monthly','Monthly']]; track f[0]) {
+                    <label><input type="radio" formControlName="checkinFrequency" [value]="f[0]" /><span>{{ f[1] }}</span></label>
+                  }
+                </div>
+              </div>
+              <div class="f"><span class="lbl">Preferred contact</span>
+                <div class="choices">
+                  @for (c of [['in_app','In-app'],['email','Email'],['whatsapp','WhatsApp']]; track c[0]) {
+                    <label><input type="radio" formControlName="contactChannel" [value]="c[0]" /><span>{{ c[1] }}</span></label>
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="med-box" style="border-style:solid;border-color:rgba(52,211,153,.35);background:rgba(52,211,153,.06)">
+              <strong>What happens next.</strong> We generate a draft roadmap from your assessment and its
+              automated analysis. Coach Ilyesse reviews it — adjusting or approving — before it becomes active
+              on your dashboard.
+            </div>
+          </section>
+        }
+
+        <div class="asmt-nav">
+          <button type="button" class="btn-back" (click)="back()" [style.visibility]="step() > 1 ? 'visible' : 'hidden'">
+            <i class="ri-arrow-left-line"></i> Back
+          </button>
+          @if (step() < totalSteps) {
+            <button type="button" class="btn-next" (click)="next()">Next <i class="ri-arrow-right-line"></i></button>
+          } @else {
+            <button type="submit" class="btn-finish" [disabled]="submitting()">
+              <i class="ri-send-plane-fill"></i> {{ submitting() ? 'Submitting…' : 'Submit for coach review' }}
+            </button>
+          }
+        </div>
+      </form>
+    </div>
+  }
+</div>

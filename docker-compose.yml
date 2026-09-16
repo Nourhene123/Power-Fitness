@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: powerfitness-db
+    environment:
+      POSTGRES_DB: powerfitness
+      POSTGRES_USER: powerfitness
+      POSTGRES_PASSWORD: powerfitness
+    ports:
+   
+      - "5433:5432"
+    volumes:
+      - pf-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U powerfitness -d powerfitness"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  pgweb:
+    image: sosedoff/pgweb:latest
+    container_name: powerfitness-pgweb
+    ports:
+      - "8081:8081"
+    environment:
+      PGWEB_DATABASE_URL: postgres://powerfitness:powerfitness@db:5432/powerfitness?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles: ["tools"]
+
+  backend:
+    build: ./backend
+    container_name: powerfitness-backend
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/powerfitness
+      SPRING_DATASOURCE_USERNAME: powerfitness
+      SPRING_DATASOURCE_PASSWORD: powerfitness
+      APP_JWT_SECRET: change-me-in-real-deployments-please-32chars-min
+      APP_UPLOADS_DIR: /app/uploads
+    ports:
+      - "8080:8080"
+    volumes:
+      - pf-uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    profiles: ["full"]
+
+  frontend:
+    build: ./frontend
+    container_name: powerfitness-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    profiles: ["full"]
+
+volumes:
+  pf-db-data:
+  pf-uploads:

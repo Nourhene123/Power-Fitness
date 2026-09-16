@@ -1,0 +1,22 @@
+@if (loading()) {
+  <div class="fp-loading"><i class="ri-loader-4-line spin"></i></div>
+} @else {
+  @if (program(); as p) {
+    @if (p.content) {
+      <div class="fp-header">
+        <div>
+          <a routerLink="/dashboard" class="back-link"><i class="ri-arrow-left-line"></i> Dashboard</a>
+          <h2>{{ p.content.metrics.roadmapTitle }}</h2>
+          <span class="fp-sub">v{{ p.versionNo }}</span>
+        </div>
+      </div>
+
+      <app-plan-view [content]="p.content" />
+    } @else {
+      <div class="fp-empty">
+        <p>No active plan yet.</p>
+        <a routerLink="/dashboard" class="back-link"><i class="ri-arrow-left-line"></i> Back to dashboard</a>
+      </div>
+    }
+  }
+}

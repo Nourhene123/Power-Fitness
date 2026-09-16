@@ -1,0 +1,58 @@
+.nf {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem;
+  background: var(--primary-color);
+}
+
+.nf__code {
+  font-family: var(--font-display);
+  font-size: 6rem;
+  font-weight: 900;
+  line-height: 1;
+  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nf h1 {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.nf p {
+  color: var(--text-light);
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+.nf__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-default);
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.nf__btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nf__btn {
+    transition: none;
+  }
+}

@@ -1,0 +1,107 @@
+<div class="about-wrap">
+  <section class="about-intro">
+    <div class="about-intro__text">
+      <span class="about-eyebrow"><i class="ri-user-star-line"></i> Meet your coach</span>
+      <h1>Ilyesse Ferchichi</h1>
+      <div class="about-intro__role">Fitness Coach &amp; Founder of Power Fitness</div>
+
+      <p class="about-intro__lead">
+        I'm a fitness coach with one obsession: building training that actually fits the person
+        in front of me. No copy-paste plans, no guesswork — a program built from your numbers,
+        your schedule and your goal.
+      </p>
+      <p class="about-intro__lead">
+        I stay close to current exercise science and sports nutrition, then turn it into
+        something simple you can follow every day. Whether you want to build muscle, lose fat,
+        or move and feel better, my job is to give you a clear path and keep you on it.
+      </p>
+
+      <div class="about-actions">
+        <a routerLink="/register" class="about-btn about-btn--primary">
+          <i class="ri-flashlight-fill"></i> Get your 12-week roadmap
+        </a>
+        <a routerLink="/contact" class="about-btn about-btn--ghost">
+          <i class="ri-calendar-check-line"></i> Book 1-on-1 coaching
+        </a>
+      </div>
+    </div>
+
+    <figure class="about-portrait">
+      <img src="assets/img/me.jpg" alt="Coach Ilyesse Ferchichi at the gym" />
+      <figcaption class="about-portrait__tag">
+        <i class="ri-verified-badge-line"></i>
+        <span><b>Ilyesse Ferchichi</b> — Coach &amp; Founder</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <div class="about-stats">
+    <div class="about-stat"><b>12 weeks</b><span>Structured, phased roadmap</span></div>
+    <div class="about-stat"><b>4 phases</b><span>Adaptation → overload → peak → deload</span></div>
+    <div class="about-stat"><b>1 coach</b><span>Every plan personally reviewed</span></div>
+  </div>
+
+  <section class="about-section">
+    <div class="about-section__head">
+      <span class="about-eyebrow"><i class="ri-compass-3-line"></i> My approach</span>
+      <h2>How I coach</h2>
+      <p>Four principles that shape every program I put my name on.</p>
+    </div>
+    <div class="about-grid">
+      @for (card of approach; track card.title) {
+        <article class="about-card">
+          <div class="about-card__icon"><i [class]="card.icon"></i></div>
+          <h3>{{ card.title }}</h3>
+          <p>{{ card.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="about-section__head">
+      <span class="about-eyebrow"><i class="ri-route-line"></i> The system</span>
+      <h2>How working with me actually works</h2>
+      <p>Power Fitness is the platform I built to run my coaching — everything in one place.</p>
+    </div>
+    <div class="about-steps">
+      @for (step of steps; track step.title) {
+        <div class="about-step">
+          <div>
+            <h3>{{ step.title }}</h3>
+            <p>{{ step.text }}</p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="about-section__head">
+      <span class="about-eyebrow"><i class="ri-shield-star-line"></i> What I stand for</span>
+      <h2>Values</h2>
+    </div>
+    <div class="about-grid about-grid--2x2">
+      @for (v of values; track v.title) {
+        <article class="about-card">
+          <div class="about-card__icon"><i [class]="v.icon"></i></div>
+          <h3>{{ v.title }}</h3>
+          <p>{{ v.text }}</p>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="about-cta">
+    <h2>Let's build your plan</h2>
+    <p>Start with the free assessment and get a draft roadmap in minutes. I'll take it from there.</p>
+    <div class="about-actions">
+      <a routerLink="/register" class="about-btn about-btn--primary">
+        <i class="ri-flashlight-fill"></i> Start the free assessment
+      </a>
+      <a routerLink="/programs" class="about-btn about-btn--ghost">
+        <i class="ri-boxing-line"></i> See the programs
+      </a>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,62 @@
+<section class="contact-wrap">
+  <div class="contact-card">
+    <h1>Request a Coach</h1>
+    <p class="lead">Get personalized guidance from Coach Ilyesse to reach your fitness goals.</p>
+
+    @if (submitted()) {
+      <div class="alert alert-success">
+        <i class="ri-checkbox-circle-fill"></i>
+        <div>
+          <h3>Request submitted</h3>
+          <p>Thanks — we'll contact you shortly at the email or phone you provided.</p>
+          <a routerLink="/register" class="btn"><i class="ri-flashlight-fill"></i> Build your 12-week roadmap</a>
+        </div>
+      </div>
+    } @else {
+      @if (errorMessage()) {
+        <div class="alert alert-error"><i class="ri-error-warning-fill"></i> {{ errorMessage() }}</div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="field">
+          <label for="name">Full Name</label>
+          <input id="name" type="text" formControlName="name" autocomplete="name" />
+          @if (invalid('name')) { <small class="err">Please enter your name.</small> }
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input id="email" type="email" formControlName="email" autocomplete="email" />
+          @if (invalid('email')) { <small class="err">Enter a valid email address.</small> }
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input id="phone" type="tel" formControlName="phone" placeholder="+216 ..." autocomplete="tel" />
+          @if (invalid('phone')) { <small class="err">Please enter a phone number.</small> }
+        </div>
+
+        <div class="field">
+          <label for="experience">Experience Level</label>
+          <select id="experience" formControlName="experience">
+            <option value="beginner">Beginner (&lt; 6 months)</option>
+            <option value="intermediate">Intermediate (6 months - 2 years)</option>
+            <option value="advanced">Advanced (2+ years)</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="goals">Coaching Goals &amp; Schedule Preferences</label>
+          <textarea id="goals" rows="4" formControlName="goals"
+                    placeholder="Tell us about what you want to achieve..."></textarea>
+          @if (invalid('goals')) { <small class="err">Tell us a little about your goals.</small> }
+        </div>
+
+        <button type="submit" class="btn btn-block" [disabled]="submitting()">
+          <i class="ri-send-plane-fill"></i>
+          {{ submitting() ? 'Sending…' : 'Submit Request' }}
+        </button>
+      </form>
+    }
+  </div>
+</section>

@@ -1,0 +1,32 @@
+@if (loading()) {
+  <div class="dash-loading"><i class="ri-loader-4-line spin"></i></div>
+} @else {
+  @if (dashboard(); as d) {
+    @switch (d.state) {
+      @case ('NONE') {
+        <app-welcome-state [name]="firstName()" />
+      }
+      @case ('CHANGES_REQUESTED') {
+        @if (d.changeRequest) {
+          <app-changes-requested-state [request]="d.changeRequest" />
+        }
+      }
+      @case ('IN_REVIEW') {
+        <app-in-review-state [preview]="d.preview" />
+      }
+      @case ('ACTIVE') {
+        @if (d.goal && d.phase && d.today && d.progress && d.coach && d.milestone) {
+          <app-active-state
+            [goal]="d.goal"
+            [phase]="d.phase"
+            [today]="d.today"
+            [progress]="d.progress"
+            [coach]="d.coach"
+            [milestone]="d.milestone"
+            (habitToggle)="onHabitToggle($event)"
+          />
+        }
+      }
+    }
+  }
+}

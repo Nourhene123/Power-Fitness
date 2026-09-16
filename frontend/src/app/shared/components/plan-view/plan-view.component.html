@@ -1,0 +1,136 @@
+<div class="kpi-grid">
+  <div class="kpi-card">
+    <div class="kpi-header"><span>Target daily fuel</span><div class="kpi-icon icon-green"><i class="ri-fire-line"></i></div></div>
+    <div class="kpi-value">{{ content().metrics.targetCalories | number: '1.0-0' }} <small>kcal</small></div>
+    <div class="kpi-sub">BMR {{ content().metrics.bmr }} · TDEE {{ content().metrics.tdee }}</div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-header"><span>Protein</span><div class="kpi-icon icon-cyan"><i class="ri-restaurant-line"></i></div></div>
+    <div class="kpi-value">{{ content().metrics.proteinG }}<small>g</small></div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-header"><span>Carbs / Fats</span><div class="kpi-icon icon-amber"><i class="ri-pie-chart-line"></i></div></div>
+    <div class="kpi-value">{{ content().metrics.carbsG }} / {{ content().metrics.fatsG }}<small>g</small></div>
+  </div>
+  <div class="kpi-card">
+    <div class="kpi-header"><span>Hydration</span><div class="kpi-icon icon-purple"><i class="ri-drop-line"></i></div></div>
+    <div class="kpi-value">{{ content().metrics.waterLiters }}<small>L</small></div>
+  </div>
+</div>
+
+<!-- Phases -->
+@if (content().phases.length) {
+  <div class="section">
+    <h2 class="section-title"><i class="ri-map-pin-time-line"></i> 12-Week progression</h2>
+    <div class="roadmap-phases-grid">
+      @for (p of content().phases; track p.phase) {
+        <div class="phase-card">
+          <div class="phase-header">
+            <span class="phase-badge">Phase {{ p.phase }}</span>
+            <span class="phase-weeks">{{ p.weeks }}</span>
+          </div>
+          <h4 class="phase-title">{{ p.title }}</h4>
+          <p class="phase-focus">{{ p.focus }}</p>
+          <div class="phase-intensity">Intensity: {{ p.intensity }}</div>
+          <ul class="phase-targets">
+            @for (t of p.targets; track t) {
+              <li><i class="ri-checkbox-circle-fill"></i> {{ t }}</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  </div>
+}
+
+<!-- Weekly split -->
+@if (content().weeklySplit.length) {
+  <div class="routine-box">
+    <h2 class="section-title"><i class="ri-calendar-event-line"></i> Weekly split</h2>
+    <div class="routine-tabs">
+      @for (d of content().weeklySplit; track d.day; let i = $index) {
+        <button type="button" class="routine-tab-btn" [class.active]="i === activeDay()" (click)="showDay(i)">
+          {{ d.day }}
+        </button>
+      }
+    </div>
+    @for (d of content().weeklySplit; track d.day; let i = $index) {
+      @if (i === activeDay()) {
+        <div class="routine-content-pane">
+          <div class="routine-day-head">
+            <h3>{{ d.title }}</h3>
+            <span class="tag-metric"><i class="ri-timer-line"></i> {{ d.duration }}</span>
+          </div>
+          <div class="table-scroll">
+            <table class="exercise-table">
+              <thead>
+                <tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Rest</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                @for (ex of d.exercises; track ex.name) {
+                  <tr>
+                    <td class="exercise-name"><i class="ri-checkbox-blank-circle-fill"></i> {{ ex.name }}</td>
+                    <td><span class="tag-metric">{{ ex.sets }}</span></td>
+                    <td><span class="tag-metric gold">{{ ex.reps }}</span></td>
+                    <td><span class="tag-metric cyan">{{ ex.rest }}</span></td>
+                    <td class="notes">{{ ex.notes }}</td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+    }
+  </div>
+}
+
+<!-- Meals -->
+@if (content().mealPlan.length) {
+  <div class="section">
+    <h2 class="section-title"><i class="ri-restaurant-2-line"></i> Daily meals</h2>
+    <div class="meal-grid">
+      @for (meal of content().mealPlan; track meal.number) {
+        <div class="meal-card">
+          <div class="meal-card-header">
+            <span class="meal-name">{{ meal.name }}</span>
+            <span class="meal-cals">{{ meal.calories }} kcal</span>
+          </div>
+          <div class="meal-macros-mini">
+            <div>P: <span>{{ meal.proteinG }}g</span></div>
+            <div>C: <span>{{ meal.carbsG }}g</span></div>
+            <div>F: <span>{{ meal.fatsG }}g</span></div>
+          </div>
+          <div class="meal-desc">{{ meal.suggestion }}</div>
+        </div>
+      }
+    </div>
+  </div>
+}
+
+<!-- Guidelines -->
+@if (content().guidelines) {
+  <div class="guidelines-box">
+    <h2 class="section-title"><i class="ri-shield-star-line"></i> Recovery &amp; supplements</h2>
+    <div class="guidelines-grid">
+      <div>
+        <h4 class="hydration"><i class="ri-drop-line"></i> Hydration</h4>
+        <p>{{ content().guidelines.hydration }}</p>
+      </div>
+      <div>
+        <h4 class="sleep"><i class="ri-moon-line"></i> Sleep</h4>
+        <p>{{ content().guidelines.sleep }}</p>
+      </div>
+      @if (content().guidelines.supplements.length) {
+        <div>
+          <h4 class="supp"><i class="ri-capsule-line"></i> Supplements</h4>
+          <ul>
+            @for (s of content().guidelines.supplements; track s) {
+              <li>• {{ s }}</li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  </div>
+}

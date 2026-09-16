@@ -1,0 +1,50 @@
+spring:
+  application:
+    name: powerfitness-backend
+  profiles:
+    active: dev
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.format_sql: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    default-property-inclusion: non_null
+    # Jackson 3 (Spring Boot 4) already serialises java.time types as ISO-8601 strings by default.
+  web:
+    locale: en
+    locale-resolver: fixed
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+server:
+  port: 8080
+  error:
+    include-message: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info
+  endpoint:
+    health:
+      show-details: when-authorized
+
+app:
+  jwt:
+    # 32+ char secret. Overridden per environment; this default is dev-only.
+    secret: ${APP_JWT_SECRET:dev-secret-please-change-me-0123456789abcdef}
+    access-token-ttl: PT15M
+    refresh-token-ttl: P30D
+    issuer: powerfitness
+  cors:
+    allowed-origins: ${APP_CORS_ORIGINS:http://localhost:4200}
+  uploads:
+    dir: ${APP_UPLOADS_DIR:./uploads}

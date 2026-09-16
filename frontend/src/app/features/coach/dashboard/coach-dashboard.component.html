@@ -1,0 +1,164 @@
+@if (loading()) {
+  <div class="loading-state"><i class="ri-loader-4-line spin"></i></div>
+} @else {
+  @if (dashboard(); as d) {
+  <div class="page-header">
+    <div>
+      <h1><i class="ri-shield-star-line" style="color: var(--accent-coach)"></i> Coach <span>Dashboard</span></h1>
+      <p class="subtitle">Welcome back, {{ firstName() }}. Manage your clients and review roadmaps.</p>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-info">
+        <h3>Pending Reviews</h3>
+        <div class="stat-value" style="color: var(--accent-coach)">{{ d.stats.pending }}</div>
+      </div>
+      <div class="stat-icon icon-amber"><i class="ri-time-line"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-info">
+        <h3>Approved Roadmaps</h3>
+        <div class="stat-value" style="color: var(--accent-green)">{{ d.stats.approved }}</div>
+      </div>
+      <div class="stat-icon icon-green"><i class="ri-checkbox-circle-line"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-info">
+        <h3>Total Clients</h3>
+        <div class="stat-value" style="color: var(--accent-cyan)">{{ d.stats.totalClients }}</div>
+      </div>
+      <div class="stat-icon icon-cyan"><i class="ri-group-line"></i></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-info">
+        <h3>Needs Attention</h3>
+        <div class="stat-value" style="color: #f87171">{{ d.stats.atRisk }}</div>
+      </div>
+      <div class="stat-icon icon-red"><i class="ri-alarm-warning-line"></i></div>
+    </div>
+  </div>
+
+  <h2 class="section-heading">
+    <i class="ri-alarm-warning-line"></i> Pending Roadmap Reviews
+    @if (d.stats.pending > 0) {
+      <span class="pulse-dot"></span>
+    }
+  </h2>
+
+  @if (d.pending.length === 0) {
+    <div class="empty-state">
+      <i class="ri-inbox-unarchive-line"></i>
+      <h3>No Pending Reviews</h3>
+      <p>All roadmaps have been reviewed. New submissions will appear here automatically.</p>
+    </div>
+  } @else {
+    <div class="clients-grid">
+      @for (rm of d.pending; track rm.versionId) {
+        <div class="client-card">
+          <div class="card-top">
+            <div class="avatar">{{ rm.userName.charAt(0).toUpperCase() }}</div>
+            <div class="client-info">
+              <h4>{{ rm.userName }}</h4>
+              <span class="email">{{ rm.userEmail }}</span>
+            </div>
+          </div>
+          <div class="card-badges">
+            <span class="badge-tag badge-goal"><i class="ri-fire-fill"></i> {{ goalLabel(rm.primaryGoal) | titlecase }}</span>
+            @if (rm.experienceLevel) {
+              <span class="badge-tag badge-level"><i class="ri-bar-chart-fill"></i> {{ rm.experienceLevel | titlecase }}</span>
+            }
+            <span class="badge-tag badge-freq"><i class="ri-calendar-check-fill"></i> {{ rm.workoutFrequency }} Days/Week</span>
+            <span class="badge-tag badge-pending"><i class="ri-time-fill"></i> Pending</span>
+          </div>
+          <div class="card-meta">
+            <i class="ri-calendar-line"></i> Submitted: {{ rm.submittedAt | date: 'MMM d, y · HH:mm' }}
+          </div>
+          <div class="card-actions">
+            <a [routerLink]="['/coach/plan', rm.versionId]" class="btn-coach btn-coach-primary">
+              <i class="ri-edit-box-line"></i> Review &amp; edit
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (d.recentlyApproved.length > 0) {
+    <h2 class="section-heading" style="margin-top: 40px"><i class="ri-checkbox-circle-line"></i> Recently Approved</h2>
+    <div class="clients-grid">
+      @for (arm of d.recentlyApproved; track arm.programId) {
+        <div class="client-card">
+          <div class="card-top">
+            <div class="avatar approved">{{ arm.userName.charAt(0).toUpperCase() }}</div>
+            <div class="client-info">
+              <h4>{{ arm.userName }}</h4>
+              <span class="email">{{ arm.userEmail }}</span>
+            </div>
+          </div>
+          <div class="card-badges">
+            <span class="badge-tag badge-approved"><i class="ri-checkbox-circle-fill"></i> Approved</span>
+            <span class="badge-tag badge-goal"><i class="ri-fire-fill"></i> {{ goalLabel(arm.primaryGoal) | titlecase }}</span>
+          </div>
+          <div class="card-meta">
+            <i class="ri-time-line"></i> Approved: {{ arm.approvedAt ? (arm.approvedAt | date: 'MMM d, y · HH:mm') : 'N/A' }}
+          </div>
+          <div class="card-actions">
+            <a [routerLink]="['/coach/clients', arm.userId]" class="btn-coach btn-coach-outline">
+              <i class="ri-eye-line"></i> View Details
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <h2 class="section-heading" style="margin-top: 50px; border-top: 1px solid var(--border-subtle); padding-top: 30px">
+    <i class="ri-group-line"></i> All Active Clients
+  </h2>
+
+  @if (d.roster.length === 0) {
+    <div class="empty-state">
+      <i class="ri-ghost-line"></i>
+      <h3>No Active Clients</h3>
+      <p>You don't have any clients with active roadmaps right now.</p>
+    </div>
+  } @else {
+    <div class="clients-grid roster-grid">
+      @for (client of d.roster; track client.userId) {
+        <div class="client-card compact" [class.at-risk]="client.atRisk">
+          <div class="card-top">
+            <div class="avatar small">{{ client.userName.charAt(0).toUpperCase() }}</div>
+            <div class="client-info">
+              <h4>{{ client.userName }}</h4>
+              <span class="email">{{ client.userEmail }}</span>
+            </div>
+          </div>
+          <div class="card-badges">
+            <span class="badge-tag badge-goal">{{ goalLabel(client.primaryGoal) | titlecase }}</span>
+            @if (client.atRisk) {
+              <span class="badge-tag badge-risk"><i class="ri-alarm-warning-fill"></i> Needs attention</span>
+            }
+          </div>
+          @if (client.atRisk) {
+            <ul class="risk-reasons">
+              @for (reason of client.riskReasons; track reason) {
+                <li>{{ reason }}</li>
+              }
+            </ul>
+          }
+          <div class="card-actions">
+            <a [routerLink]="['/coach/clients', client.userId]" class="btn-coach btn-coach-outline compact">
+              <i class="ri-user-settings-line"></i> Profile
+            </a>
+            <a [routerLink]="['/coach/clients', client.userId, 'progress']" class="btn-coach btn-coach-primary compact">
+              <i class="ri-line-chart-line"></i> Progress
+            </a>
+          </div>
+        </div>
+      }
+    </div>
+  }
+  }
+}

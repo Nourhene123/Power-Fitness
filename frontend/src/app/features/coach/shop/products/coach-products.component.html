@@ -1,0 +1,130 @@
+<div class="page-header">
+  <div>
+    <h1>Shop <span>Products</span></h1>
+    <p class="subtitle">Manage the catalog clients see in the Pro Shop.</p>
+  </div>
+  <button type="button" class="btn-coach btn-coach-primary" (click)="openCreate()">
+    <i class="ri-add-line"></i> Add Product
+  </button>
+</div>
+
+@if (formOpen()) {
+  <div class="modal-overlay" (click)="cancelForm()">
+    <div class="modal-dialog" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>{{ editingId() ? 'Edit product' : 'New product' }}</h3>
+        <button type="button" class="modal-close" (click)="cancelForm()" aria-label="Close">
+          <i class="ri-close-line"></i>
+        </button>
+      </div>
+
+      @if (errorMessage()) {
+        <p style="color: #fca5a5; font-size: 13px; margin: 0 0 12px">{{ errorMessage() }}</p>
+      }
+      <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-grid">
+          <label>
+            Name
+            <input type="text" formControlName="name" />
+          </label>
+          <label>
+            Category
+            <select formControlName="category">
+              @for (c of categories; track c) {
+                <option [value]="c">{{ c }}</option>
+              }
+            </select>
+          </label>
+          <label class="full">
+            Description
+            <textarea rows="2" formControlName="description"></textarea>
+          </label>
+          <label>
+            Price (TND)
+            <input type="number" step="0.001" min="0" formControlName="price" />
+          </label>
+          <label>
+            Stock quantity
+            <input type="number" min="0" formControlName="stockQty" />
+          </label>
+          <label class="full">
+            Image
+            <div class="image-picker">
+              @if (form.controls.imageUrl.value) {
+                <img class="image-preview" [src]="form.controls.imageUrl.value" alt="Product preview" />
+              } @else {
+                <div class="image-preview empty"><i class="ri-image-line"></i></div>
+              }
+              <label class="btn-coach btn-coach-outline file-btn">
+                <i class="ri-upload-2-line"></i> {{ uploading() ? 'Uploading…' : 'Choose from my PC' }}
+                <input type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden [disabled]="uploading()" (change)="onFileSelected($event)" />
+              </label>
+            </div>
+          </label>
+          @if (editingId()) {
+            <label class="active-toggle full">
+              <input type="checkbox" formControlName="active" /> Active (visible in the shop)
+            </label>
+          }
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-coach btn-coach-primary" [disabled]="saving() || uploading()">
+            {{ saving() ? 'Saving…' : 'Save' }}
+          </button>
+          <button type="button" class="btn-coach btn-coach-outline" (click)="cancelForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+}
+
+@if (loading()) {
+  <div class="loading-state"><i class="ri-loader-4-line spin"></i></div>
+} @else if (!products().length) {
+  <div class="empty-state">
+    <i class="ri-store-2-line"></i>
+    <h3>No products yet</h3>
+    <p>Add your first product to start selling.</p>
+  </div>
+} @else {
+  <div class="table-responsive">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th>Active</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (p of products(); track p.id) {
+          <tr>
+            <td><img class="thumb" [src]="p.imageUrl || 'assets/img/logo-gold.png'" [alt]="p.name" /></td>
+            <td><strong>{{ p.name }}</strong></td>
+            <td>{{ p.category }}</td>
+            <td>{{ p.price | number: '1.3-3' }} TND</td>
+            <td>{{ p.stockQty }}</td>
+            <td>
+              <label class="active-toggle">
+                <input type="checkbox" [checked]="p.active" [disabled]="busyId() === p.id" (change)="toggleActive(p)" />
+                {{ p.active ? 'Yes' : 'No' }}
+              </label>
+            </td>
+            <td style="display: flex; gap: 8px">
+              <button type="button" class="btn-coach btn-coach-outline" (click)="openEdit(p)">
+                <i class="ri-edit-line"></i>
+              </button>
+              <button type="button" class="btn-delete" [disabled]="busyId() === p.id" (click)="remove(p)">
+                <i class="ri-delete-bin-line"></i>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

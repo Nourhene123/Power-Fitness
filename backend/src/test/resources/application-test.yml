@@ -1,0 +1,22 @@
+# Datasource is supplied by Testcontainers @ServiceConnection.
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    clean-disabled: false
+
+app:
+  jwt:
+    secret: test-secret-0123456789-0123456789-0123456789
+    access-token-ttl: PT15M
+    refresh-token-ttl: P30D
+    issuer: powerfitness-test
+  cors:
+    allowed-origins:
+      - http://localhost:4200
+
+logging:
+  level:
+    org.testcontainers: WARN
+    com.github.dockerjava: WARN

@@ -1,0 +1,100 @@
+<div class="pg">
+  <section class="pg-hero">
+    <span class="pg-eyebrow"><i class="ri-route-line"></i> How your program works</span>
+    <h1>You don't pick a plan off a shelf.<br />Your assessment builds one.</h1>
+    <p>
+      Every roadmap is generated from your own numbers — biometrics, training days, equipment,
+      diet and injury history — then <strong>Coach Ilyesse reviews and approves it</strong> before
+      it goes live. Below is exactly what that means and what you get.
+    </p>
+    <div class="actions">
+      <a routerLink="/register" class="pg-btn pg-btn--primary"><i class="ri-flashlight-fill"></i> Start the free assessment</a>
+      <a routerLink="/contact" class="pg-btn pg-btn--ghost"><i class="ri-calendar-check-line"></i> Book 1-on-1 coaching</a>
+    </div>
+  </section>
+
+  <section class="pg-sec">
+    <div class="pg-sec__head">
+      <span class="pg-eyebrow"><i class="ri-checkbox-multiple-line"></i> In every roadmap</span>
+      <h2>What you get, whatever your goal</h2>
+    </div>
+    <ul class="pg-features">
+      @for (f of included; track f.b) {
+        <li><i [class]="f.icon"></i> <span><b>{{ f.b }}</b> — {{ f.t }}</span></li>
+      }
+    </ul>
+  </section>
+
+  <section class="pg-sec">
+    <div class="pg-sec__head">
+      <span class="pg-eyebrow"><i class="ri-flag-2-line"></i> Your assessment routes you</span>
+      <h2>One system, four directions</h2>
+      <p>You don't choose these — your goal and biometrics decide which one the generator uses.</p>
+    </div>
+    <div class="pg-grid pg-grid--4">
+      @for (g of goals; track g.h) {
+        <article class="pg-card">
+          <div class="pg-card__icon"><i [class]="g.icon"></i></div>
+          <h3>{{ g.h }}</h3>
+          <p>{{ g.p }}</p>
+          <div class="chg">{{ g.chg }}</div>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="pg-sec">
+    <div class="pg-sec__head">
+      <span class="pg-eyebrow"><i class="ri-bar-chart-2-line"></i> Scaled to you</span>
+      <h2>By experience level</h2>
+      <p>The generator sets volume and complexity from your training history; the coach fine-tunes it.</p>
+    </div>
+    <div class="pg-grid pg-grid--3">
+      @for (l of levels; track l.h) {
+        <article class="pg-card pg-level">
+          <span class="tag">{{ l.tag }}</span>
+          <h3>{{ l.h }}</h3>
+          <ul>
+            @for (p of l.points; track p) {
+              <li><i class="ri-check-line"></i> {{ p }}</li>
+            }
+          </ul>
+          <a [routerLink]="['/learn', l.level]">See a sample week <i class="ri-arrow-right-line"></i></a>
+        </article>
+      }
+    </div>
+  </section>
+
+  <section class="pg-sec">
+    <div class="pg-sec__head">
+      <span class="pg-eyebrow"><i class="ri-tools-line"></i> Real life, handled</span>
+      <h2>It adapts to your constraints</h2>
+    </div>
+    <div class="pg-constraints">
+      @for (c of constraints; track c.h) {
+        <div class="pg-constraint"><i [class]="c.icon"></i><h4>{{ c.h }}</h4><p>{{ c.p }}</p></div>
+      }
+    </div>
+  </section>
+
+  <section class="pg-sec pg-sec--center">
+    <div class="pg-sec__head">
+      <span class="pg-eyebrow"><i class="ri-question-line"></i> Programs FAQ</span>
+      <h2>Common questions</h2>
+    </div>
+    <div class="pg-faq">
+      @for (item of faqs; track item.q) {
+        <details><summary>{{ item.q }}</summary><p>{{ item.a }}</p></details>
+      }
+    </div>
+  </section>
+
+  <section class="pg-cta">
+    <h2>Build your program</h2>
+    <p>Ten minutes of questions, an instant draft, then a coach review. See your real numbers before you commit to anything.</p>
+    <div class="actions">
+      <a routerLink="/register" class="pg-btn pg-btn--primary"><i class="ri-flashlight-fill"></i> Start the free assessment</a>
+      <a routerLink="/bmi" class="pg-btn pg-btn--ghost"><i class="ri-calculator-line"></i> Try the BMI calculator first</a>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,56 @@
+<div class="ac-wrap">
+  <div class="box">
+    @if (loading()) {
+      <div class="ac-loading"><i class="ri-loader-4-line spin"></i></div>
+    } @else if (notFound()) {
+      <div class="ok">
+        <i class="ri-checkbox-circle-fill"></i>
+        <h1>Nothing to answer right now</h1>
+        <p class="lead">Your coach hasn't asked for anything — check your dashboard.</p>
+        <a class="back" routerLink="/dashboard">← Back to dashboard</a>
+      </div>
+    } @else if (done()) {
+      <div class="ok">
+        <i class="ri-checkbox-circle-fill"></i>
+        <h1>Sent to your coach</h1>
+        <p class="lead">Coach Ilyesse will fold your answers into the plan and re-approve it. You'll get a notification.</p>
+        <a class="back" routerLink="/dashboard">← Back to dashboard</a>
+      </div>
+    } @else {
+      @if (request(); as req) {
+        <h1>Your coach needs a quick update</h1>
+        <p class="lead">Just these points — your full assessment stays as is.</p>
+
+        @if (req.note) {
+          <div class="note"><i class="ri-chat-quote-line"></i> {{ req.note }}</div>
+        }
+
+        @if (errorMessage()) {
+          <div class="error">{{ errorMessage() }}</div>
+        }
+
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          @for (f of req.fields; track f.field) {
+            <div class="f">
+              <label>
+                {{ f.label }}
+                @if (currentValue(f.field)) {
+                  <span class="cur">— currently: {{ currentValue(f.field) }}</span>
+                }
+              </label>
+              <input type="text" [formControlName]="f.field" />
+            </div>
+          }
+          <div class="f">
+            <label>Anything else for your coach? <span class="cur">optional</span></label>
+            <textarea formControlName="message" placeholder="Context, questions, constraints…"></textarea>
+          </div>
+          <button type="submit" [disabled]="submitting()">
+            <i class="ri-send-plane-fill"></i> {{ submitting() ? 'Sending…' : 'Send & resubmit for review' }}
+          </button>
+        </form>
+        <a class="back" routerLink="/dashboard">← Cancel</a>
+      }
+    }
+  </div>
+</div>
