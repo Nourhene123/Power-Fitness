@@ -12,7 +12,7 @@
   height: 40px;
   font-size: 16px;
   background: linear-gradient(135deg, #1f2937, #374151);
-  color: #fff;
+  color: var(--white);
 }
 .client-card.compact .card-actions {
   gap: 8px;

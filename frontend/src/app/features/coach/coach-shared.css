@@ -10,7 +10,7 @@
 .page-header h1 {
   font-size: 26px;
   font-weight: 700;
-  color: #fff;
+  color: var(--white);
 }
 .page-header h1 span {
   color: var(--accent-coach);
@@ -28,7 +28,7 @@
   margin-bottom: 36px;
 }
 .stat-card {
-  background: rgba(26, 28, 32, 0.7);
+  background: var(--surface-tint-strong);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
@@ -83,7 +83,7 @@
 .section-heading {
   font-size: 18px;
   font-weight: 600;
-  color: #fff;
+  color: var(--white);
   margin-bottom: 20px;
   display: flex;
   align-items: center;
@@ -118,7 +118,7 @@
   margin-bottom: 40px;
 }
 .client-card {
-  background: rgba(26, 28, 32, 0.7);
+  background: var(--surface-tint-strong);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border-subtle);
   border-radius: 16px;
@@ -127,7 +127,7 @@
 }
 .client-card:hover {
   border-color: var(--accent-coach);
-  box-shadow: 0 0 30px rgba(249, 172, 84, 0.1);
+  box-shadow: 0 0 30px rgba(199, 138, 56, 0.1);
   transform: translateY(-2px);
 }
 .client-card .card-top {
@@ -156,7 +156,7 @@
 .client-card .client-info h4 {
   font-size: 15px;
   font-weight: 600;
-  color: #fff;
+  color: var(--white);
   margin-bottom: 2px;
 }
 .client-card .client-info .email {
@@ -182,7 +182,7 @@
 .badge-goal {
   background: var(--gold-glow);
   color: var(--accent-coach);
-  border-color: rgba(249, 172, 84, 0.25);
+  border-color: rgba(199, 138, 56, 0.25);
 }
 .badge-level {
   background: rgba(56, 189, 248, 0.12);
@@ -277,7 +277,7 @@
 }
 .btn-coach-success:hover {
   background: #16a34a;
-  color: #fff;
+  color: var(--white);
 }
 .btn-coach-danger {
   background: rgba(239, 68, 68, 0.15);
@@ -286,7 +286,7 @@
 }
 .btn-coach-danger:hover {
   background: #ef4444;
-  color: #fff;
+  color: var(--white);
 }
 .btn-coach:disabled {
   opacity: 0.6;

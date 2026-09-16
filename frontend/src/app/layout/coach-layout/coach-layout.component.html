@@ -1,5 +1,14 @@
-<div class="coach-shell">
+<div class="coach-shell" [class.sidebar-collapsed]="collapsed()" [attr.data-theme]="theme.theme()">
   <aside class="coach-sidebar" [class.open]="sidebarOpen()">
+    <button
+      type="button"
+      class="sidebar-collapse-btn"
+      (click)="toggleCollapse()"
+      [attr.aria-label]="collapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+    >
+      <i [class]="collapsed() ? 'ri-arrow-right-s-line' : 'ri-arrow-left-s-line'"></i>
+    </button>
+
     <div class="sidebar-header">
       <a routerLink="/" class="logo">
         <img src="assets/img/logo-gold.png" alt="Power Fitness Logo" />
@@ -15,13 +24,14 @@
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: !!link.exact }"
           class="sidebar-link"
+          [title]="link.label"
           (click)="closeSidebar()"
         >
           <i [class]="link.icon"></i><span>{{ link.label }}</span>
         </a>
       }
       <div class="menu-label">Quick Links</div>
-      <a routerLink="/" class="sidebar-link"><i class="ri-home-4-line"></i><span>Back to homepage</span></a>
+      <a routerLink="/" class="sidebar-link" title="Back to homepage"><i class="ri-home-4-line"></i><span>Back to homepage</span></a>
     </nav>
 
     <div class="sidebar-footer">
@@ -47,6 +57,15 @@
       </div>
       <div class="header-right">
         <app-notif-bell />
+        <button
+          type="button"
+          class="header-btn header-btn-theme"
+          (click)="theme.toggle()"
+          [attr.aria-label]="theme.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+          [title]="theme.theme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+        >
+          <i [class]="theme.theme() === 'dark' ? 'ri-sun-line' : 'ri-moon-line'"></i>
+        </button>
         <button type="button" (click)="logout()" class="header-btn header-btn-logout">
           <i class="ri-logout-box-r-line"></i> Logout
         </button>

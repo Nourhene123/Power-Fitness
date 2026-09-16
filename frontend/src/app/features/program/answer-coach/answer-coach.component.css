@@ -32,7 +32,7 @@
 
 h1 {
   font-family: 'Outfit', sans-serif;
-  color: #f4f6fa;
+  color: var(--white);
   font-size: 1.4rem;
   margin: 0 0 0.3rem;
 }
@@ -42,13 +42,13 @@ h1 {
   margin-bottom: 1.5rem;
 }
 .note {
-  background: rgba(249, 172, 84, 0.08);
-  border: 1px dashed rgba(249, 172, 84, 0.35);
+  background: rgba(199, 138, 56, 0.08);
+  border: 1px dashed rgba(199, 138, 56, 0.35);
   border-radius: 12px;
   padding: 1rem;
   font-size: 0.9rem;
   line-height: 1.6;
-  color: #e8edf4;
+  color: var(--white);
   margin-bottom: 1.5rem;
   white-space: pre-line;
 }
@@ -85,9 +85,9 @@ h1 {
 .f textarea {
   width: 100%;
   box-sizing: border-box;
-  background: #0e1014;
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  color: #fff;
+  background: var(--bg-card);
+  border: 1px solid var(--overlay-09);
+  color: var(--white);
   border-radius: 10px;
   padding: 0.8rem 0.9rem;
   font-size: 0.95rem;

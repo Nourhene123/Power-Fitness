@@ -34,7 +34,7 @@
   color: var(--gold);
 }
 .fp-header h2 {
-  color: #fff;
+  color: var(--white);
   font-family: 'Poppins', sans-serif;
   margin: 6px 0 0;
 }

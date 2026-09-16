@@ -22,18 +22,18 @@ th {
 td {
   padding: 15px;
   border-bottom: 1px solid var(--border-subtle);
-  color: #d1d5db;
+  color: var(--text-light);
   font-size: 14px;
   vertical-align: top;
 }
 tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--overlay-02);
 }
 
 .status-select {
-  background: #111317;
-  color: #fff;
-  border: 1px solid #4b5563;
+  background: var(--bg-card);
+  color: var(--white);
+  border: 1px solid var(--border-default);
   padding: 6px 10px;
   border-radius: 6px;
   font-size: 12px;
@@ -52,7 +52,7 @@ tr:hover td {
 }
 .btn-delete:hover {
   background: #ef4444;
-  color: #fff;
+  color: var(--white);
 }
 .btn-delete:disabled {
   opacity: 0.5;
@@ -62,7 +62,7 @@ tr:hover td {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(6, 7, 9, 0.6);
+  background: var(--surface-tint-soft);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: flex;
@@ -90,7 +90,7 @@ tr:hover td {
 }
 .modal-header h3 {
   font-size: 16px;
-  color: #fff;
+  color: var(--white);
   margin: 0;
 }
 .modal-close {
@@ -103,7 +103,7 @@ tr:hover td {
   line-height: 1;
 }
 .modal-close:hover {
-  color: #fff;
+  color: var(--white);
 }
 
 .form-grid {
@@ -132,7 +132,7 @@ tr:hover td {
   padding: 9px 10px;
   background: var(--bg-elevated);
   border: 1px solid var(--border-default);
-  color: #fff;
+  color: var(--white);
   border-radius: 8px;
   font-family: inherit;
   font-size: 13px;

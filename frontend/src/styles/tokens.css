@@ -30,7 +30,20 @@
   --border-subtle: rgba(255, 255, 255, 0.05);
   --border-default: rgba(255, 255, 255, 0.1);
 
- 
+  --overlay-02: rgba(255, 255, 255, 0.02);
+  --overlay-03: rgba(255, 255, 255, 0.03);
+  --overlay-04: rgba(255, 255, 255, 0.04);
+  --overlay-06: rgba(255, 255, 255, 0.06);
+  --overlay-08: rgba(255, 255, 255, 0.08);
+  --overlay-09: rgba(255, 255, 255, 0.09);
+
+  --sidebar-glass-bg: rgba(19, 21, 26, 0.95);
+  --header-glass-bg: rgba(14, 15, 19, 0.85);
+  --bg-card-deep: #0f1116;
+  --hero-gradient: linear-gradient(135deg, #14171f 0%, #1a1d27 50%, #111417 100%);
+  --surface-tint-strong: rgba(26, 29, 36, 0.7);
+  --surface-tint-soft: rgba(15, 16, 20, 0.5);
+
   --max-width: 1200px;
   --radius-sm: 8px;
   --radius-md: 16px;
@@ -58,4 +71,49 @@
   --pf-font-heading: "Outfit", sans-serif;
   --pf-font-body: "Inter", sans-serif;
   --pf-ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Light theme — scoped to the member/coach dashboard shells only, never the public site.
+   Also matches body[data-theme="light"], synced by the layout components, so the page's
+   own background (outside the shell, e.g. on overscroll) flips too. */
+.member-shell[data-theme="light"],
+.coach-shell[data-theme="light"],
+body[data-theme="light"] {
+  --primary-color: #f5f3ef;
+  --primary-color-light: #ffffff;
+  --primary-color-extra-light: #eeece5;
+  --bg-card: #ffffff;
+  --bg-elevated: #f0eee7;
+
+  --text-light: #56606f;
+  --text-soft: #56606f;
+  --text-muted: #6b7686;
+  --text-secondary: #334155;
+  --white: #12141a;
+
+  --border: rgba(0, 0, 0, 0.08);
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-default: rgba(0, 0, 0, 0.12);
+
+  --overlay-02: rgba(0, 0, 0, 0.02);
+  --overlay-03: rgba(0, 0, 0, 0.03);
+  --overlay-04: rgba(0, 0, 0, 0.04);
+  --overlay-06: rgba(0, 0, 0, 0.06);
+  --overlay-08: rgba(0, 0, 0, 0.08);
+  --overlay-09: rgba(0, 0, 0, 0.09);
+
+  --sidebar-glass-bg: rgba(255, 255, 255, 0.95);
+  --header-glass-bg: rgba(255, 255, 255, 0.85);
+  --bg-card-deep: #ece9e2;
+  --hero-gradient: linear-gradient(135deg, #ffffff 0%, #f3f1ec 50%, #ece9e2 100%);
+  --surface-tint-strong: rgba(255, 255, 255, 0.85);
+  --surface-tint-soft: rgba(255, 255, 255, 0.65);
+
+  --pf-bg-main: #f5f3ef;
+  --pf-bg-card: rgba(255, 255, 255, 0.92);
+  --pf-bg-card-hover: rgba(240, 238, 231, 0.95);
+  --pf-border-glass: rgba(0, 0, 0, 0.08);
+  --pf-text-main: #12141a;
+  --pf-text-sub: #56606f;
+  --pf-text-muted: #6b7686;
 }
