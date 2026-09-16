@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #fff;
+  color: var(--white);
   letter-spacing: -0.3px;
 }
 .section-title i {
@@ -24,7 +24,7 @@
   margin-bottom: 32px;
 }
 .kpi-card {
-  background: rgba(26, 29, 36, 0.7);
+  background: var(--surface-tint-strong);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   border-radius: 22px;
@@ -71,7 +71,7 @@
 .kpi-value {
   font-size: 30px;
   font-weight: 800;
-  color: #fff;
+  color: var(--white);
   letter-spacing: -1px;
   line-height: 1;
   margin-bottom: 5px;
@@ -92,7 +92,7 @@
   gap: 18px;
 }
 .phase-card {
-  background: rgba(26, 29, 36, 0.7);
+  background: var(--surface-tint-strong);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: 22px;
@@ -126,7 +126,7 @@
 .phase-weeks {
   font-size: 11px;
   color: var(--text-muted);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--border-subtle);
   padding: 3px 10px;
   border-radius: 99px;
   font-weight: 600;
@@ -135,7 +135,7 @@
   font-size: 15px;
   font-weight: 700;
   margin-bottom: 9px;
-  color: #fff;
+  color: var(--white);
 }
 .phase-focus {
   font-size: 12px;
@@ -153,7 +153,7 @@
   list-style: none;
   margin: 0;
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-top: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -174,7 +174,7 @@
 }
 
 .routine-box {
-  background: rgba(26, 29, 36, 0.7);
+  background: var(--surface-tint-strong);
   backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   border-radius: 22px;
@@ -190,7 +190,7 @@
   border-bottom: 1px solid var(--border);
 }
 .routine-tab-btn {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--overlay-03);
   border: 1px solid var(--border);
   color: var(--text-soft);
   padding: 9px 20px;
@@ -202,9 +202,9 @@
   font-family: 'Inter', sans-serif;
 }
 .routine-tab-btn:hover {
-  border-color: rgba(249, 172, 84, 0.4);
-  color: #fff;
-  background: rgba(249, 172, 84, 0.06);
+  border-color: rgba(199, 138, 56, 0.4);
+  color: var(--white);
+  background: rgba(199, 138, 56, 0.06);
 }
 .routine-tab-btn.active {
   background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
@@ -222,7 +222,7 @@
 }
 .routine-day-head h3 {
   font-size: 17px;
-  color: #fff;
+  color: var(--white);
   margin: 0;
 }
 .table-scroll {
@@ -245,7 +245,7 @@
 .exercise-table td {
   padding: 14px 16px;
   font-size: 14px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--overlay-04);
   color: var(--text-soft);
 }
 .exercise-table tr:last-child td {
@@ -253,7 +253,7 @@
 }
 .exercise-name {
   font-weight: 700;
-  color: #fff;
+  color: var(--white);
   display: flex;
   align-items: center;
   gap: 9px;
@@ -263,7 +263,7 @@
   font-size: 8px;
 }
 .tag-metric {
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--overlay-04);
   padding: 4px 10px;
   border-radius: 7px;
   font-size: 12px;
@@ -288,7 +288,7 @@
   gap: 18px;
 }
 .meal-card {
-  background: rgba(26, 29, 36, 0.7);
+  background: var(--surface-tint-strong);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border);
   border-radius: 22px;
@@ -305,7 +305,7 @@
 .meal-name {
   font-size: 15px;
   font-weight: 700;
-  color: #fff;
+  color: var(--white);
 }
 .meal-cals {
   font-size: 12px;
@@ -314,7 +314,7 @@
   background: var(--gold-glow);
   padding: 4px 12px;
   border-radius: 99px;
-  border: 1px solid rgba(249, 172, 84, 0.25);
+  border: 1px solid rgba(199, 138, 56, 0.25);
 }
 .meal-macros-mini {
   display: flex;
@@ -331,7 +331,7 @@
   font-size: 13px;
   color: var(--text-soft);
   line-height: 1.6;
-  background: rgba(12, 13, 16, 0.6);
+  background: var(--surface-tint-soft);
   padding: 12px 14px;
   border-radius: 10px;
   border-left: 3px solid var(--gold);

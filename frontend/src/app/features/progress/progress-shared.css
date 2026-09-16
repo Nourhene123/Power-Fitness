@@ -65,7 +65,7 @@
   padding: 10px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  color: #fff;
+  color: var(--white);
   border-radius: 9px;
   font-family: inherit;
   font-size: 13.5px;

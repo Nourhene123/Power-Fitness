@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, computed, effect, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthStore } from '../../core/auth/auth.store';
 import { CartService } from '../../core/cart/cart.service';
 import { NotifBellComponent } from '../../shared/components/notif-bell/notif-bell.component';
+import { ThemeService } from '../../core/theme/theme.service';
 
 interface SidebarLink {
   readonly path: string;
@@ -20,12 +21,24 @@ interface SidebarLink {
   styleUrl: './member-layout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MemberLayoutComponent {
+export class MemberLayoutComponent implements OnDestroy {
   private readonly auth = inject(AuthService);
   protected readonly store = inject(AuthStore);
   protected readonly cart = inject(CartService);
+  protected readonly theme = inject(ThemeService);
 
   protected readonly sidebarOpen = signal(false);
+  protected readonly collapsed = signal(false);
+
+  constructor() {
+    effect(() => {
+      document.body.setAttribute('data-theme', this.theme.theme());
+    });
+  }
+
+  ngOnDestroy(): void {
+    document.body.removeAttribute('data-theme');
+  }
 
   protected readonly links: readonly SidebarLink[] = [
     { path: '/dashboard', label: 'Today', icon: 'ri-home-smile-2-line', exact: true },
@@ -47,6 +60,10 @@ export class MemberLayoutComponent {
 
   protected toggleSidebar(): void {
     this.sidebarOpen.update((v) => !v);
+  }
+
+  protected toggleCollapse(): void {
+    this.collapsed.update((v) => !v);
   }
 
   protected closeSidebar(): void {

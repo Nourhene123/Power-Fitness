@@ -32,7 +32,7 @@
 .d-goal-line {
   font-size: 15px;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--white);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -58,7 +58,7 @@
 }
 .progbar {
   height: 8px;
-  background: #23262d;
+  background: var(--bg-elevated);
   border-radius: 999px;
   overflow: hidden;
   margin-top: 10px;
@@ -77,7 +77,7 @@
 .d-phase-name {
   font-size: 15px;
   font-weight: 700;
-  color: #f1f5f9;
+  color: var(--white);
 }
 .d-phase-sub {
   font-size: 12.5px;
@@ -93,7 +93,7 @@
   width: 100%;
   height: 5px;
   border-radius: 999px;
-  background: #23262d;
+  background: var(--bg-elevated);
 }
 .d-weekdots i.done {
   background: var(--gold);
@@ -106,8 +106,8 @@
   display: grid;
   grid-template-columns: 1.5fr 1fr;
   gap: 16px;
-  background: linear-gradient(145deg, var(--bg-card), #0f1116);
-  border: 1px solid rgba(249, 172, 84, 0.35);
+  background: linear-gradient(145deg, var(--bg-card), var(--bg-card-deep));
+  border: 1px solid rgba(199, 138, 56, 0.35);
   border-radius: 20px;
   padding: 22px;
 }
@@ -131,7 +131,7 @@
 .today-workout .big {
   font-size: 22px;
   font-weight: 800;
-  color: #f1f5f9;
+  color: var(--white);
   font-family: 'Poppins', sans-serif;
 }
 .today-workout .meta {
@@ -194,7 +194,7 @@ a.btn-start:hover {
 .today-nutri .cal {
   font-size: 26px;
   font-weight: 800;
-  color: #f1f5f9;
+  color: var(--white);
 }
 .today-nutri .cal small {
   font-size: 13px;
@@ -209,7 +209,7 @@ a.btn-start:hover {
   color: var(--text-soft);
 }
 .today-nutri .macros b {
-  color: #f1f5f9;
+  color: var(--white);
 }
 .today-habits {
   grid-column: 1 / -1;
@@ -232,7 +232,7 @@ a.btn-start:hover {
   cursor: pointer;
 }
 .hchip:hover {
-  border-color: rgba(249, 172, 84, 0.35);
+  border-color: rgba(199, 138, 56, 0.35);
 }
 .hchip i {
   font-size: 15px;
@@ -368,8 +368,8 @@ a.btn-start:hover {
   gap: 14px;
 }
 .focus-callout {
-  background: linear-gradient(145deg, rgba(249, 172, 84, 0.1), rgba(249, 172, 84, 0.03));
-  border: 1px solid rgba(249, 172, 84, 0.3);
+  background: linear-gradient(145deg, rgba(199, 138, 56, 0.1), rgba(199, 138, 56, 0.03));
+  border: 1px solid rgba(199, 138, 56, 0.3);
   border-radius: 16px;
   padding: 15px 17px;
 }
@@ -409,7 +409,7 @@ a.btn-start:hover {
   color: var(--text-muted);
 }
 .milestone b {
-  color: #f1f5f9;
+  color: var(--white);
   font-size: 13.5px;
 }
 .milestone .in {
@@ -436,6 +436,6 @@ a.btn-start:hover {
   text-decoration: none;
 }
 .d-secondary a:hover {
-  border-color: rgba(249, 172, 84, 0.35);
-  color: #f1f5f9;
+  border-color: rgba(199, 138, 56, 0.35);
+  color: var(--white);
 }

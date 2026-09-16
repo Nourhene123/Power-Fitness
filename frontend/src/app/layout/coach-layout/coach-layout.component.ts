@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, computed, effect, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthStore } from '../../core/auth/auth.store';
 import { Role } from '../../core/models/role.enum';
 import { NotifBellComponent } from '../../shared/components/notif-bell/notif-bell.component';
+import { ThemeService } from '../../core/theme/theme.service';
 
 interface SidebarLink {
   readonly path: string;
@@ -20,11 +21,23 @@ interface SidebarLink {
   styleUrl: './coach-layout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CoachLayoutComponent {
+export class CoachLayoutComponent implements OnDestroy {
   private readonly auth = inject(AuthService);
   protected readonly store = inject(AuthStore);
+  protected readonly theme = inject(ThemeService);
 
   protected readonly sidebarOpen = signal(false);
+  protected readonly collapsed = signal(false);
+
+  constructor() {
+    effect(() => {
+      document.body.setAttribute('data-theme', this.theme.theme());
+    });
+  }
+
+  ngOnDestroy(): void {
+    document.body.removeAttribute('data-theme');
+  }
 
   protected readonly links: readonly SidebarLink[] = [
     { path: '/coach', label: 'Roadmap Reviews', icon: 'ri-dashboard-3-line', exact: true },
@@ -39,6 +52,10 @@ export class CoachLayoutComponent {
 
   protected toggleSidebar(): void {
     this.sidebarOpen.update((v) => !v);
+  }
+
+  protected toggleCollapse(): void {
+    this.collapsed.update((v) => !v);
   }
 
   protected closeSidebar(): void {

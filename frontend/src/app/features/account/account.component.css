@@ -56,13 +56,13 @@
   padding: 10px;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  color: #fff;
+  color: var(--white);
   border-radius: 9px;
   font-family: inherit;
   font-size: 13.5px;
 }
 .p-form input:disabled {
-  background: #0e1014;
+  background: var(--bg-card);
   color: var(--text-muted);
 }
 
@@ -107,8 +107,8 @@
 }
 .d-secondary a:hover,
 .d-secondary button:hover {
-  border-color: rgba(249, 172, 84, 0.35);
-  color: #f1f5f9;
+  border-color: rgba(199, 138, 56, 0.35);
+  color: var(--white);
 }
 .d-secondary button.logout {
   color: #f87171;
