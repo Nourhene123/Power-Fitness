@@ -20,7 +20,7 @@ test.describe('login', () => {
     await page.goto('/login');
 
     await page.getByLabel('Email Address').fill(COACH_EMAIL);
-    await page.getByLabel('Password').fill(COACH_PASSWORD);
+    await page.getByLabel('Password', { exact: true }).fill(COACH_PASSWORD);
     await page.getByRole('button', { name: /sign in to dashboard/i }).click();
 
     await expect(page).toHaveURL(/\/coach(\/|$)/);
@@ -45,7 +45,7 @@ test.describe('login', () => {
     await page.goto('/login');
 
     await page.getByLabel('Email Address').fill(uniqueEmail('nobody'));
-    await page.getByLabel('Password').fill('WhateverPassword1');
+    await page.getByLabel('Password', { exact: true }).fill('WhateverPassword1');
     await page.getByRole('button', { name: /sign in to dashboard/i }).click();
 
     await expect(page.locator('.alert-error')).toBeVisible();

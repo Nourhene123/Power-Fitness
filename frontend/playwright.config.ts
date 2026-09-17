@@ -23,11 +23,11 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   projects: [
-    // Uses the Edge already installed on Windows instead of Playwright's own downloaded
-    // Chromium — `npx playwright install` needs to reach cdn.playwright.dev, which times out
-    // on networks that block or throttle it. Swap to `chromium` (and run the install command)
-    // once that download works, for closer parity with CI.
-    { name: 'msedge', use: { ...devices['Desktop Edge'], channel: 'msedge' } },
+    // Uses the Google Chrome already installed on this machine instead of Playwright's own
+    // downloaded Chromium — `npx playwright install` needs to reach cdn.playwright.dev, which
+    // times out on networks that block or throttle it. Swap to `chromium` (and run the install
+    // command) once that download works, for closer parity with CI.
+    { name: 'chrome', use: { ...devices['Desktop Chrome'], channel: 'chrome' } },
   ],
   webServer: {
     command: 'npm start',
