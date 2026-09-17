@@ -65,6 +65,7 @@ Full containerised stack: `docker compose --profile full up --build`
 ```bash
 cd backend  && ./mvnw verify           # unit + slice + Testcontainers integration
 cd frontend && npm test                # Karma/Jasmine
+cd frontend && npm run test:e2e        # Playwright, needs db + backend running — see frontend/e2e/README.md
 ```
 
 ## Default accounts (dev seed)
