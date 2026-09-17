@@ -113,8 +113,30 @@ Coach area (behind `coach-layout`, role-guarded)
 npm test
 ```
 
-Karma/Jasmine, `ng test`. There's no e2e suite wired up (`ng e2e` needs a runner added first) —
-manual verification currently follows [`../docs/SMOKE_TEST.md`](../docs/SMOKE_TEST.md).
+Karma/Jasmine, `ng test`, unit-level component/service tests.
+
+### E2E (Playwright)
+
+```bash
+npx playwright install chrome     # first time only — uses the Chrome already on your machine
+npm run test:e2e                  # headless
+npm run test:e2e:ui               # interactive, step-through UI with time-travel debugging
+```
+
+Drives a real browser against the real Angular dev server (`npm start`, started automatically by
+`playwright.config.ts`) and the real backend (**not** started automatically — see
+[`e2e/README.md`](./e2e/README.md) for the two things to run first). Current coverage is login and
+role-based landing routes (`e2e/auth.spec.ts`): coach → `/coach`, fresh member → `/assessment`,
+wrong credentials → inline error, unauthenticated visit to a member route → redirected to
+`/login` with `returnUrl` preserved.
+
+`playwright.config.ts` launches the browser via its **`channel`** (`chrome`, i.e. the Chrome
+already installed on the machine) rather than Playwright's own downloaded Chromium — useful on
+networks that block `cdn.playwright.dev`. Swap to a plain `chromium` project (and run
+`npx playwright install chromium`) once that download works, for closer parity with CI.
+
+Manual verification beyond what's automated currently follows
+[`../docs/SMOKE_TEST.md`](../docs/SMOKE_TEST.md).
 
 ## Things worth knowing before you touch this
 

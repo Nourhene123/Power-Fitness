@@ -143,8 +143,21 @@ See [`../docs/API.md`](../docs/API.md) for the full endpoint reference and
 ```
 
 Runs unit tests, the ArchUnit architecture test, and Testcontainers-backed integration tests
-(spins up a real disposable Postgres — Docker must be running). There's no separate
-"unit-only" command wired up; `verify` is what CI and the dev loop both use.
+(spins up a real disposable Postgres — Docker must be running). There's no separate Maven
+goal for "just the unit tests"; `verify` is what CI and the dev loop both use. For a fast
+inner loop while you're only touching business logic, target specific classes instead:
+
+```bash
+./mvnw test "-Dtest=AuthServiceImplTest,RefreshTokenServiceImplTest"   # unit only, no Docker
+./mvnw test "-Dtest=AuthControllerIntegrationTest"                     # one integration test
+```
+
+Naming convention: `*Test` for a plain unit test (no Spring context, collaborators mocked with
+Mockito), `*IntegrationTest` for anything extending `support/AbstractIntegrationTest`
+(`@SpringBootTest`, real Testcontainers Postgres). `AuthServiceImplTest` /
+`RefreshTokenServiceImplTest` / `AuthControllerIntegrationTest` are the reference example of
+covering a feature at both levels — unit tests isolate the logic, the integration test proves the
+real HTTP → Security → DB stack agrees with it.
 
 ## Things that will trip you up
 
