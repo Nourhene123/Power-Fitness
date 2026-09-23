@@ -1,0 +1,14 @@
+name: Keep demo awake
+
+# Render's free tier sleeps after 15 minutes idle and Spring Boot takes a while to wake up.
+# The liveness probe doesn't touch the database, so Neon can still scale to zero.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -fsS --max-time 120 https://powerfitness-api.onrender.com/actuator/health/liveness
