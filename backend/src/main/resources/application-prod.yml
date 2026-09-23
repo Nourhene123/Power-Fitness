@@ -3,8 +3,22 @@ spring:
     url: ${SPRING_DATASOURCE_URL}
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
+    hikari:
+      # Small pool, and no idle connections kept open: serverless Postgres (e.g. Neon)
+      # only scales to zero when nothing is connected.
+      maximum-pool-size: 5
+      minimum-idle: 0
+      idle-timeout: 60000
   flyway:
     clean-disabled: true
+
+management:
+  endpoint:
+    health:
+      probes:
+        # /actuator/health/liveness answers without touching the database,
+        # so a keep-alive ping doesn't keep the database awake.
+        enabled: true
 
 logging:
   level:
