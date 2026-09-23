@@ -9,7 +9,9 @@
 ![PostgreSQL 16](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql&logoColor=white)
 ![Tested with Testcontainers & Playwright](https://img.shields.io/badge/tests-JUnit%20·%20Testcontainers%20·%20Playwright-2EAD33)
 
-<!-- Live demo: add the link here once deployed -->
+### 🔗 [Live demo → power-fitness-two.vercel.app](https://power-fitness-two.vercel.app)
+
+Sign in as the demo coach (`coach@powerfitness.com` / `PowerCoach123!`), or register a new account to go through the member flow. The demo runs on free hosting (Vercel + Render + Neon).
 
 ![Power Fitness landing page](docs/screenshots/landing.webp)
 
@@ -100,7 +102,28 @@ The reasoning behind each choice is in the Architecture sections of [backend/REA
 | Frontend | Angular 17 (standalone components), TypeScript, SCSS design system, light and dark mode |
 | Database | PostgreSQL 16 |
 | Testing | JUnit 5, Mockito, Testcontainers, MockMvc, ArchUnit, Karma/Jasmine, Playwright |
-| DevOps | Docker Compose, GitHub Actions CI |
+| DevOps | Docker, Docker Compose, GitHub Actions CI |
+| Hosting | Vercel (frontend), Render (backend, Docker), Neon (serverless PostgreSQL) |
+
+## Deployment
+
+The live demo runs entirely on free tiers:
+
+```mermaid
+flowchart LR
+    U[Browser] --> V["Vercel<br/>Angular static build"]
+    V -- "/api/* rewrite<br/>(same origin, no CORS)" --> R["Render<br/>Spring Boot in Docker"]
+    R -- "JDBC + TLS" --> N[("Neon<br/>serverless PostgreSQL")]
+    G["GitHub Actions<br/>keep-alive ping"] -. "every 10 min" .-> R
+```
+
+- **Vercel** builds the Angular app from `frontend/` and serves it. [`vercel.json`](frontend/vercel.json) forwards `/api/*` and `/uploads/*` to the backend, so the browser only ever talks to one origin. It also sends deep links like `/dashboard` to the Angular router.
+- **Render** builds [`backend/Dockerfile`](backend/Dockerfile) and runs it with the `prod,demo` profiles. The JVM is tuned to fit the 512 MB free instance, and Flyway migrates the schema on startup.
+- **Neon** hosts PostgreSQL. The connection pool keeps no idle connections, so the database can scale to zero between requests.
+- **Keep-alive.** A [scheduled GitHub Action](.github/workflows/keep-alive.yml) pings a liveness endpoint that doesn't touch the database. This keeps the free Render instance from sleeping, so visitors don't wait for a cold start.
+- **Configuration.** All secrets (database credentials, JWT signing key, the admin account's password) are environment variables on Render. None are in the repository.
+
+Pushing to `main` redeploys both Vercel and Render automatically.
 
 ## Quick start
 
@@ -119,12 +142,11 @@ cd frontend && npm install && npm start
 
 To run the whole stack in containers instead, use `docker compose --profile full up --build`. For a database UI, use `docker compose --profile tools up -d pgweb` and open http://localhost:8081.
 
-**Demo accounts** (seeded only under the `dev` profile):
+**Demo account** (seeded under the `dev` and `demo` profiles):
 
 | Role | Email | Password |
 |---|---|---|
 | Coach | `coach@powerfitness.com` | `PowerCoach123!` |
-| Admin | `admin@powerfitness.com` | `PowerAdmin123!` |
 
 To try the member flow, register a new account. It takes you straight to the assessment.
 
@@ -175,7 +197,7 @@ The Playwright tests cover login and role-based routing: a coach lands on `/coac
 
 ## Roadmap
 
-- [ ] Public live demo
+- [x] Public live demo (Vercel + Render + Neon)
 - [ ] Run Playwright in CI
 - [ ] Extend Playwright coverage to the assessment → plan → coach approval flow
 - [ ] Email notifications alongside the in-app ones
