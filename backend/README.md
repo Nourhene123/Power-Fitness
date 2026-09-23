@@ -34,7 +34,7 @@ ever wired in, despite leftover "Stripe Secured" marketing copy on the old shop 
 
 API comes up on `http://localhost:8080`.
 
-Seeded accounts (dev profile only, never `prod`/`test` — see `Config/DataSeeder`):
+Seeded accounts (dev profile only, never `prod`/`test` — see `config/DataSeeder`):
 
 | Role  | Email                       | Password         |
 |-------|------------------------------|------------------|
@@ -59,30 +59,27 @@ not its domain area:
 
 ```
 com.powerfitness/
-  Config/                       security beans, JPA auditing, Jackson config, dev-only DataSeeder
-  DTO/                          request/response records — the only shape a controller may touch
-  Entity/                       JPA entities + enums
-  Exception/                    ApiException hierarchy + GlobalExceptionHandler (-> JSON ApiError)
-  Mapper/                       entity <-> DTO (MapStruct)
-  Repository/                   Spring Data JPA interfaces
-  RestController/                @RestController classes
-  Security/                     JwtService, JwtAuthenticationFilter, principal, user-details service
-  Services/
-    Interface/                  one interface per service
-    Implimentation/             impl classes — all entity<->DTO mapping happens here (sic on the name,
-                                 kept consistent with an existing sibling project's convention)
-    domain/                     framework-free value objects (PlanContent, AnalysisResult, ...)
-  Validation/                   custom bean-validation constraints
+  config/                       security beans, JPA auditing, Jackson config, dev-only DataSeeder
+  dto/                          request/response records — the only shape a controller may touch
+  entity/                       JPA entities + enums
+  exception/                    ApiException hierarchy + GlobalExceptionHandler (-> JSON ApiError)
+  mapper/                       entity <-> DTO (MapStruct)
+  repository/                   Spring Data JPA interfaces
+  controller/                   @RestController classes
+  security/                     JwtService, JwtAuthenticationFilter, principal, user-details service
+  service/                      one interface per service + the framework-free domain engines
+    impl/                       implementations — all entity<->DTO mapping happens here
+  common/domain/                framework-free value objects (PlanContent, AnalysisResult, ...)
   common/util/                  JSON helpers etc., no business logic
 ```
 
-Hard rule, enforced by `src/test/.../ArchitectureTest.java` (ArchUnit): **a `RestController` may
-not reference `Entity` or `Repository` at all** — not even as an import. Controllers only see
-`DTO` types; all entity access and mapping happens in the service layer. If `mvnw verify` fails
+Hard rule, enforced by `src/test/.../ArchitectureTest.java` (ArchUnit): **a controller may
+not reference `entity` or `repository` at all** — not even as an import. Controllers only see
+`dto` types; all entity access and mapping happens in the service layer. If `mvnw verify` fails
 on this rule, the fix is to move the mapping into the service/mapper, not to relax the rule.
 
 The assessment→analysis→roadmap pipeline (`AssessmentAnalyzer`, `RoadmapGenerator` in
-`Services/`) is deliberately framework-free — plain Java operating on `Services/domain` value
+`service/`) is deliberately framework-free — plain Java operating on `common/domain` value
 objects, no Spring annotations, no entity access. It's pure business logic ported from the old
 PHP analyzer/generator scripts and is unit-tested in isolation.
 
@@ -169,6 +166,3 @@ real HTTP → Security → DB stack agrees with it.
   `application.yml`), not sent as `null`. On the frontend this means a genuinely-empty field
   arrives as `undefined`, not `null` — matters if you're adding a new nullable field and writing
   a null-check for it on the Angular side.
-- The `Services/Implimentation` package name is intentionally spelled that way (not a typo to
-  fix) — it matches the naming convention of a sibling project this codebase was deliberately
-  aligned with.
