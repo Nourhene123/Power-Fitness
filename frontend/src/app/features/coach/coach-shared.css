@@ -127,7 +127,7 @@
 }
 .client-card:hover {
   border-color: var(--accent-coach);
-  box-shadow: 0 0 30px rgba(199, 138, 56, 0.1);
+  box-shadow: 0 0 30px rgba(249, 168, 39, 0.1);
   transform: translateY(-2px);
 }
 .client-card .card-top {
@@ -182,7 +182,7 @@
 .badge-goal {
   background: var(--gold-glow);
   color: var(--accent-coach);
-  border-color: rgba(199, 138, 56, 0.25);
+  border-color: rgba(249, 168, 39, 0.25);
 }
 .badge-level {
   background: rgba(56, 189, 248, 0.12);
@@ -254,11 +254,11 @@
   text-decoration: none;
 }
 .btn-coach-primary {
-  background: var(--accent-coach);
+  background: var(--gradient-gold);
   color: #111;
 }
 .btn-coach-primary:hover {
-  background: #e89d3f;
+  filter: brightness(1.06);
   transform: translateY(-1px);
 }
 .btn-coach-outline {

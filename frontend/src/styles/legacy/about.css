@@ -86,7 +86,7 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 .about-btn--primary {
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  background: var(--gradient-gold);
   color: #111;
   box-shadow: 0 6px 20px rgba(249, 172, 84, 0.18);
 }
@@ -205,7 +205,7 @@
   border-radius: 12px;
   font-size: 1.35rem;
   color: #111;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  background: var(--gradient-gold);
   margin-bottom: 1rem;
 }
 .about-card h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }

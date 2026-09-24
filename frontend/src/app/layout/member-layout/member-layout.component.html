@@ -1,5 +1,5 @@
 <div class="member-shell" [class.sidebar-collapsed]="collapsed()" [attr.data-theme]="theme.theme()">
-  <aside class="member-sidebar" [class.open]="sidebarOpen()">
+  <aside id="member-nav" class="member-sidebar" [class.open]="sidebarOpen()">
     <button
       type="button"
       class="sidebar-collapse-btn"
@@ -14,6 +14,9 @@
         <img src="assets/img/logo-gold.png" alt="Power Fitness Logo" />
       </a>
       <span class="sidebar-badge-client"><i class="ri-user-star-fill"></i> MEMBER</span>
+      <button type="button" class="sidebar-close-btn" (click)="closeSidebar()" aria-label="Close menu">
+        <i class="ri-close-line"></i>
+      </button>
     </div>
 
     <nav class="sidebar-menu">
@@ -59,10 +62,22 @@
     </div>
   </aside>
 
+  @if (sidebarOpen()) {
+    <!-- Phones: dims the page behind the open menu; tapping it closes the menu. -->
+    <div class="sidebar-backdrop" (click)="closeSidebar()" aria-hidden="true"></div>
+  }
+
   <div class="member-main">
     <header class="member-header">
       <div class="header-left">
-        <button type="button" class="sidebar-toggle-btn" (click)="toggleSidebar()" aria-label="Toggle navigation">
+        <button
+          type="button"
+          class="sidebar-toggle-btn"
+          (click)="toggleSidebar()"
+          aria-label="Toggle navigation"
+          aria-controls="member-nav"
+          [attr.aria-expanded]="sidebarOpen()"
+        >
           <i class="ri-menu-2-line"></i>
         </button>
       </div>

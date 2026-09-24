@@ -20,6 +20,7 @@ interface SidebarLink {
   templateUrl: './member-layout.component.html',
   styleUrl: './member-layout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '(document:keydown.escape)': 'closeSidebar()' },
 })
 export class MemberLayoutComponent implements OnDestroy {
   private readonly auth = inject(AuthService);

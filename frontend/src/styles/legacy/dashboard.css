@@ -181,7 +181,7 @@ body::after{
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    background: var(--gradient-gold);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -291,7 +291,7 @@ body::after{
 }
 
 .header-btn-primary {
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+    background: var(--gradient-gold);
     color: #111;
     border-color: var(--gold);
 }
@@ -497,7 +497,7 @@ body::after{
 }
 .routine-tab-btn:hover{border-color:rgba(249,172,84,0.4);color:#fff;background:rgba(249,172,84,0.06);}
 .routine-tab-btn.active{
-  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  background:var(--gradient-gold);
   color:#0c0d10;border-color:transparent;font-weight:700;
   box-shadow:0 4px 18px rgba(249,172,84,0.35);
 }
@@ -619,7 +619,7 @@ body::after{
 .today-workout .rest { font-size: 18px; font-weight: 700; color: var(--cyan); }
 .btn-start {
   align-self: flex-start; margin-top: 4px; display: inline-flex; align-items: center; gap: 8px;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #111;
+  background: var(--gradient-gold); color: #111;
   font-weight: 800; font-size: 14px; padding: 11px 22px; border-radius: 11px;
   text-decoration: none; border: none; cursor: pointer;
 }

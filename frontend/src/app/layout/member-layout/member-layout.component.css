@@ -61,9 +61,9 @@
 }
 
 .sidebar-badge-client {
-  background: rgba(199, 138, 56, 0.12);
+  background: rgba(249, 168, 39, 0.12);
   color: var(--gold);
-  border: 1px solid rgba(199, 138, 56, 0.3);
+  border: 1px solid rgba(249, 168, 39, 0.3);
   font-size: 11px;
   font-weight: 700;
   padding: 3px 8px;
@@ -116,9 +116,9 @@
   color: var(--gold);
 }
 .sidebar-link.active {
-  background: linear-gradient(90deg, rgba(199, 138, 56, 0.15) 0%, rgba(199, 138, 56, 0.03) 100%);
+  background: linear-gradient(90deg, rgba(249, 168, 39, 0.15) 0%, rgba(249, 168, 39, 0.03) 100%);
   color: var(--white);
-  border-color: rgba(199, 138, 56, 0.3);
+  border-color: rgba(249, 168, 39, 0.3);
   font-weight: 600;
 }
 .sidebar-link.active i {
@@ -142,7 +142,7 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+  background: var(--gradient-gold);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -276,7 +276,7 @@
   font-size: 16px;
 }
 .header-btn-primary {
-  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  background: var(--gradient-gold);
   color: #111;
   border: none;
   font-weight: 700;
@@ -314,7 +314,42 @@
   padding: 24px 28px 80px;
 }
 
+/* Phone-only drawer controls (see the 960px breakpoint below). */
+.sidebar-backdrop,
+.sidebar-close-btn {
+  display: none;
+}
+
 @media (max-width: 960px) {
+  /* The open drawer covers the header's menu button, so it needs its own close button and a
+     backdrop: tapping outside closes it, and the page behind is dimmed instead of cut off. */
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+  .sidebar-header {
+    justify-content: flex-start;
+    gap: 12px;
+  }
+  .sidebar-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    border: 1px solid var(--border-default);
+    border-radius: 10px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 1.3rem;
+    cursor: pointer;
+  }
   .member-sidebar {
     transform: translateX(-100%);
   }

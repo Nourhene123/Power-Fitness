@@ -5,6 +5,7 @@ import {
   withInMemoryScrolling,
   withNavigationErrorHandler,
 } from '@angular/router';
+import { ViewportScroller } from '@angular/common';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
@@ -40,6 +41,12 @@ export const appConfig: ApplicationConfig = {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,
       useValue: () => inject(SeoService).init(),
+    },
+    {
+      // Anchor links (e.g. /programs#goals) land below the fixed 72px navbar instead of under it.
+      provide: ENVIRONMENT_INITIALIZER,
+      multi: true,
+      useValue: () => inject(ViewportScroller).setOffset([0, 88]),
     },
   ],
 };

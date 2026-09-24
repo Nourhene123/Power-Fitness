@@ -30,8 +30,8 @@
   font-size: 12px;
   font-weight: 700;
   color: var(--gold);
-  background: rgba(199, 138, 56, 0.1);
-  border: 1px solid rgba(199, 138, 56, 0.3);
+  background: rgba(249, 168, 39, 0.1);
+  border: 1px solid rgba(249, 168, 39, 0.3);
   padding: 6px 14px;
   border-radius: 999px;
   margin-bottom: 18px;
@@ -133,7 +133,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  background: var(--gradient-gold);
   color: #111;
   font-weight: 700;
   font-size: 13px;
@@ -164,8 +164,8 @@
   --card-bg: #15171b;
   --card-bg-elevated: #1c1f24;
   --card-border: rgba(255, 255, 255, 0.07);
-  --card-border-hover: rgba(199, 138, 56, 0.4);
-  --accent-gold: #c78a38;
+  --card-border-hover: rgba(249, 168, 39, 0.4);
+  --accent-gold: #f9a827;
   --text-white: #ffffff;
   --text-muted-shop: #9ca3af;
   --text-dim: #6b7280;
@@ -174,7 +174,7 @@
   --radius-pill: 9999px;
   --shadow-sm-shop: 0 4px 12px rgba(0, 0, 0, 0.3);
   --shadow-lg-shop: 0 20px 45px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 35px rgba(199, 138, 56, 0.2);
+  --shadow-glow: 0 0 35px rgba(249, 168, 39, 0.2);
   --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -217,7 +217,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(199, 138, 56, 0.08) 0%, transparent 75%);
+  background: radial-gradient(circle at center, rgba(249, 168, 39, 0.08) 0%, transparent 75%);
   pointer-events: none;
 }
 .product-img {
@@ -258,10 +258,10 @@
   text-transform: capitalize;
 }
 .badge-featured {
-  background: linear-gradient(135deg, #c78a38 0%, #ea580c 100%);
+  background: linear-gradient(135deg, #f9a827 0%, #ea580c 100%);
   color: #111;
   font-weight: 800;
-  box-shadow: 0 2px 8px rgba(199, 138, 56, 0.4);
+  box-shadow: 0 2px 8px rgba(249, 168, 39, 0.4);
   text-transform: none;
 }
 
@@ -413,8 +413,8 @@
 }
 
 .btn-add-to-cart {
-  background: rgba(199, 138, 56, 0.12);
-  border: 1px solid rgba(199, 138, 56, 0.3);
+  background: rgba(249, 168, 39, 0.12);
+  border: 1px solid rgba(249, 168, 39, 0.3);
   color: var(--accent-gold);
   padding: 10px 18px;
   border-radius: var(--radius-pill);
@@ -436,7 +436,7 @@
   color: #0b0c0e;
   border-color: var(--accent-gold);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(199, 138, 56, 0.35);
+  box-shadow: 0 6px 18px rgba(249, 168, 39, 0.35);
 }
 .btn-add-to-cart:hover:not(:disabled) i {
   transform: scale(1.15);

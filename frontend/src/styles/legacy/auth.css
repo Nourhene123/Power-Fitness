@@ -164,7 +164,7 @@ body {
 /* Submit */
 .btn-submit {
   width: 100%; margin-top: 0.4rem;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  background: var(--gradient-gold);
   color: #111; border: none; border-radius: 11px;
   padding: 0.95rem; font-family: "Outfit", sans-serif;
   font-size: 0.95rem; font-weight: 700; cursor: pointer;

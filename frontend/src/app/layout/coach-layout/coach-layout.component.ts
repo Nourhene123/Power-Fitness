@@ -20,6 +20,7 @@ interface SidebarLink {
   templateUrl: './coach-layout.component.html',
   styleUrl: './coach-layout.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { '(document:keydown.escape)': 'closeSidebar()' },
 })
 export class CoachLayoutComponent implements OnDestroy {
   private readonly auth = inject(AuthService);
