@@ -9,6 +9,7 @@ export const SHOP_ROUTES: Routes = [
     path: '',
     component: CatalogComponent,
     title: 'Pro Shop | Power Fitness',
+    data: { description: 'Supplements and training apparel from the Power Fitness pro shop, with cash on delivery.' },
   },
   {
     path: 'checkout',

@@ -10,12 +10,14 @@
       [class.open]="menuOpen()"
       type="button"
       aria-label="Toggle menu"
+      aria-controls="main-nav"
+      [attr.aria-expanded]="menuOpen()"
       (click)="toggleMenu()"
     >
       <span></span><span></span><span></span>
     </button>
 
-    <ul class="pro-nav__links" [class.open]="menuOpen()">
+    <ul id="main-nav" class="pro-nav__links" [class.open]="menuOpen()">
       @for (link of links; track link.path) {
         <li class="pro-nav__link">
           <a
@@ -34,6 +36,13 @@
             <i [class]="appLink().icon"></i> {{ appLink().label }}
           </a>
         </li>
+      } @else {
+        <!-- Phones: the header has no room for "Get Started", so it lives in the menu instead. -->
+        <li class="pro-nav__mobile-cta">
+          <a routerLink="/register" class="nav-cta-btn" (click)="closeMenu()">
+            <i class="ri-flashlight-fill"></i> Get Started
+          </a>
+        </li>
       }
     </ul>
 
@@ -45,14 +54,14 @@
         }
       </button>
       @if (store.isAuthenticated()) {
-        <a routerLink="/account" class="nav-user-btn">
-          <i class="ri-user-smile-line"></i> {{ firstName() }}
+        <a routerLink="/account" class="nav-user-btn" [attr.aria-label]="'Account: ' + firstName()">
+          <i class="ri-user-smile-line"></i> <span class="nav-btn-label">{{ firstName() }}</span>
         </a>
-        <button type="button" class="nav-logout-btn" title="Log out" (click)="logout()">
+        <button type="button" class="nav-logout-btn" title="Log out" aria-label="Log out" (click)="logout()">
           <i class="ri-logout-box-r-line"></i>
         </button>
       } @else {
-        <a routerLink="/login" class="nav-login-btn"><i class="ri-login-box-line"></i> Login</a>
+        <a routerLink="/login" class="nav-login-btn" aria-label="Login"><i class="ri-login-box-line"></i> <span class="nav-btn-label">Login</span></a>
         <a routerLink="/register" class="nav-cta-btn"><i class="ri-flashlight-fill"></i> Get Started</a>
       }
     </div>

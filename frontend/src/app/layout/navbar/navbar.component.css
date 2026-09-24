@@ -307,8 +307,67 @@
     border-radius: 12px;
   }
 
+  .pro-nav {
+    padding: 0 1rem;
+  }
+
+  .pro-nav__inner {
+    gap: 0.75rem;
+  }
+
+  /* Logo left, then actions, then the menu button last, so it can never be pushed off-screen. */
+  .pro-nav__actions {
+    order: 2;
+    margin-left: auto;
+  }
+
   .pro-nav__hamburger {
     display: flex;
+    order: 3;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 12px 10px;
+  }
+}
+
+.pro-nav__mobile-cta {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .pro-nav__logo img {
+    height: 36px;
+  }
+
+  .pro-nav__logo-text {
+    font-size: 1.1rem;
+  }
+
+  /* Header buttons become icon-only; "Get Started" moves into the menu panel. */
+  .pro-nav__actions > .nav-cta-btn,
+  .nav-btn-label {
+    display: none;
+  }
+
+  .nav-login-btn,
+  .nav-user-btn {
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+  }
+
+  .pro-nav__mobile-cta {
+    display: block;
+    margin-top: 1rem;
+  }
+
+  .pro-nav__mobile-cta .nav-cta-btn {
+    display: flex;
+    justify-content: center;
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
   }
 }
 
