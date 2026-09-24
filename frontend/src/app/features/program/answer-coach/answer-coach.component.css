@@ -42,8 +42,8 @@ h1 {
   margin-bottom: 1.5rem;
 }
 .note {
-  background: rgba(199, 138, 56, 0.08);
-  border: 1px dashed rgba(199, 138, 56, 0.35);
+  background: rgba(249, 168, 39, 0.08);
+  border: 1px dashed rgba(249, 168, 39, 0.35);
   border-radius: 12px;
   padding: 1rem;
   font-size: 0.9rem;
@@ -107,7 +107,7 @@ button[type='submit'] {
   font-family: 'Outfit', sans-serif;
   font-weight: 700;
   cursor: pointer;
-  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  background: var(--gradient-gold);
   color: #111;
   font-size: 0.95rem;
   display: inline-flex;

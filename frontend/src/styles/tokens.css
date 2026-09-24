@@ -8,17 +8,23 @@
   --bg-card: #13151a;
   --bg-elevated: #1a1d24;
 
-  --secondary-color: #c78a38;
-  --secondary-color-dark: #8a5320;
-  --gold: #c78a38;
-  --gold-glow: rgba(199, 138, 56, 0.15);
+  --secondary-color: #f9a827;
+  --secondary-color-dark: #e0900f;
+  --gold: #f9a827;
+  --gold-light: #ffb84d;
+  --gold-dark: #e0900f;
+  /* Solid amber for backgrounds that carry dark text; unlike --gold, the light theme keeps it bright. */
+  --gold-fill: #f9a827;
+  --gold-glow: rgba(249, 168, 39, 0.15);
+  /* The brand CTA gradient (the "Build Your Roadmap" button); every primary button uses it. */
+  --gradient-gold: linear-gradient(135deg, #ffb84d 0%, #f9a827 100%);
 
   --accent-cyan: #38bdf8;
   --accent-green: #22c55e;
   --accent-green-soft: #34d399;
   --accent-red: #ef4444;
   --accent-purple: #a855f7;
-  --accent-coach: #c78a38;
+  --accent-coach: #f9a827;
 
   --text-light: #94a3b8;
   --text-soft: #94a3b8;
@@ -56,12 +62,12 @@
   --pf-bg-main: #08090d;
   --pf-bg-card: rgba(18, 20, 26, 0.78);
   --pf-bg-card-hover: rgba(26, 29, 38, 0.92);
-  --pf-gold: #c78a38;
-  --pf-gold-dark: #8a5320;
-  --pf-gold-glow: rgba(199, 138, 56, 0.25);
-  --pf-gold-subtle: rgba(199, 138, 56, 0.08);
+  --pf-gold: #f9a827;
+  --pf-gold-dark: #e0900f;
+  --pf-gold-glow: rgba(249, 168, 39, 0.25);
+  --pf-gold-subtle: rgba(249, 168, 39, 0.08);
   --pf-border-glass: rgba(255, 255, 255, 0.08);
-  --pf-border-gold: rgba(199, 138, 56, 0.35);
+  --pf-border-gold: rgba(249, 168, 39, 0.35);
   --pf-text-main: #ffffff;
   --pf-text-sub: #94a3b8;
   --pf-text-muted: #64748b;
@@ -89,6 +95,13 @@ body[data-theme="light"] {
   --text-soft: #56606f;
   --text-muted: #6b7686;
   --text-secondary: #334155;
+
+  /* Bright amber is unreadable as text on light backgrounds (1.8:1). Text accents use a darker
+     amber here (4.5:1 on the page background); CTA buttons keep --gradient-gold with dark text. */
+  --gold: #b45309;
+  --pf-gold: #b45309;
+  --accent-coach: #b45309;
+  --secondary-color: #b45309;
   --white: #12141a;
 
   --border: rgba(0, 0, 0, 0.08);

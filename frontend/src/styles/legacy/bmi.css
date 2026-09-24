@@ -79,7 +79,7 @@
   font-weight: 700;
   font-size: 0.95rem;
   color: #111;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  background: var(--gradient-gold);
   box-shadow: 0 6px 20px rgba(249, 172, 84, 0.2);
   transition: transform 0.2s, box-shadow 0.2s, filter 0.2s;
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
@@ -183,7 +183,7 @@
   border-radius: 10px;
   font-family: "Outfit", sans-serif; font-weight: 700; font-size: 0.9rem;
   color: #111;
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  background: var(--gradient-gold);
   text-decoration: none;
   transition: transform 0.2s, box-shadow 0.2s;
 }

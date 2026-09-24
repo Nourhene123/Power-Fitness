@@ -202,12 +202,12 @@
   font-family: 'Inter', sans-serif;
 }
 .routine-tab-btn:hover {
-  border-color: rgba(199, 138, 56, 0.4);
+  border-color: rgba(249, 168, 39, 0.4);
   color: var(--white);
-  background: rgba(199, 138, 56, 0.06);
+  background: rgba(249, 168, 39, 0.06);
 }
 .routine-tab-btn.active {
-  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  background: var(--gradient-gold);
   color: #0c0d10;
   border-color: transparent;
   font-weight: 700;
@@ -314,7 +314,7 @@
   background: var(--gold-glow);
   padding: 4px 12px;
   border-radius: 99px;
-  border: 1px solid rgba(199, 138, 56, 0.25);
+  border: 1px solid rgba(249, 168, 39, 0.25);
 }
 .meal-macros-mini {
   display: flex;

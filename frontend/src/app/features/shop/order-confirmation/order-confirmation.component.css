@@ -153,7 +153,7 @@
   font-size: 13.5px;
 }
 .btn-primary {
-  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  background: var(--gradient-gold);
   color: #111;
 }
 .btn-secondary {

@@ -18,8 +18,8 @@
   cursor: pointer;
 }
 .nb-btn:hover {
-  color: #c78a38;
-  border-color: rgba(199, 138, 56, 0.3);
+  color: #f9a827;
+  border-color: rgba(249, 168, 39, 0.3);
 }
 .nb-count {
   position: absolute;
@@ -72,7 +72,7 @@
   background: var(--bg-card);
 }
 .nb-markall {
-  color: #c78a38;
+  color: #f9a827;
   background: none;
   border: 0;
   cursor: pointer;
@@ -96,7 +96,7 @@
   background: var(--overlay-03);
 }
 .nb-item.unread {
-  background: rgba(199, 138, 56, 0.06);
+  background: rgba(249, 168, 39, 0.06);
 }
 .nb-item .t {
   color: var(--white);

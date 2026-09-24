@@ -351,9 +351,9 @@ textarea:disabled {
   gap: 4px;
 }
 .req-fields label.checked {
-  background: var(--accent-coach);
+  background: var(--gold-fill);
   color: #111;
-  border-color: var(--accent-coach);
+  border-color: var(--gold-fill);
 }
 .req-fields input {
   accent-color: var(--accent-coach);

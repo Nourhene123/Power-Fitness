@@ -87,7 +87,7 @@
   border-radius: 8px;
   cursor: pointer;
   color: #111;
-  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-color-dark) 100%);
+  background: var(--gradient-gold);
   box-shadow: 0 4px 16px var(--gold-glow);
   transition: filter 0.2s, transform 0.2s;
   text-decoration: none;

@@ -27,7 +27,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  background: var(--gradient-gold);
   color: #111;
   font-weight: 700;
   font-size: 13px;

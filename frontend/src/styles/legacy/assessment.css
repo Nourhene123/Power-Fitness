@@ -150,7 +150,7 @@ legend {
 .btn-back { background: var(--field); color: var(--soft); border: 1px solid var(--line); }
 .btn-back:hover { color: #fff; }
 .btn-next, .btn-finish {
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #111;
+  background: var(--gradient-gold); color: #111;
   box-shadow: 0 6px 18px rgba(249, 172, 84, 0.22);
 }
 .btn-next:hover, .btn-finish:hover { transform: translateY(-2px); }

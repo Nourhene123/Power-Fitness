@@ -86,7 +86,7 @@ button[type='submit'] {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: linear-gradient(135deg, var(--gold), var(--secondary-color-dark));
+  background: var(--gradient-gold);
   color: #111;
   font-weight: 800;
   font-size: 14px;
