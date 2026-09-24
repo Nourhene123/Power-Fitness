@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Signed-in areas: nothing useful for search engines.
+Disallow: /dashboard
+Disallow: /program
+Disallow: /progress
+Disallow: /orders
+Disallow: /account
+Disallow: /assessment
+Disallow: /coach
+Disallow: /shop/checkout
+
+Sitemap: https://power-fitness-two.vercel.app/sitemap.xml

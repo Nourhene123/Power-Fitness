@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ApplicationConfig, inject, provideZoneChangeDetection } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig, ENVIRONMENT_INITIALIZER, inject, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from '@angular/router';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -7,6 +7,7 @@ import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { AuthService } from './core/auth/auth.service';
+import { SeoService } from './core/seo/seo.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,6 +27,12 @@ export const appConfig: ApplicationConfig = {
         const auth = inject(AuthService);
         return () => auth.initialize();
       },
+    },
+    {
+      // Per-page meta description, canonical URL and link-preview tags.
+      provide: ENVIRONMENT_INITIALIZER,
+      multi: true,
+      useValue: () => inject(SeoService).init(),
     },
   ],
 };
