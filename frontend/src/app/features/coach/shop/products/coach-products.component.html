@@ -103,7 +103,7 @@
       <tbody>
         @for (p of products(); track p.id) {
           <tr>
-            <td><img class="thumb" [src]="p.imageUrl || 'assets/img/logo-gold.png'" [alt]="p.name" /></td>
+            <td><img class="thumb" [src]="p.imageUrl || 'assets/img/logo-gold.webp'" [alt]="p.name" /></td>
             <td><strong>{{ p.name }}</strong></td>
             <td>{{ p.category }}</td>
             <td>{{ p.price | number: '1.3-3' }} TND</td>

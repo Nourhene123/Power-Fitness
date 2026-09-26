@@ -32,7 +32,7 @@
 .auth-brand::before {
   content: "";
   position: absolute; inset: 0; z-index: -2;
-  background: url('/assets/img/gym-bg.jpg') center/cover no-repeat;
+  background: url('/assets/img/gym-bg.webp') center/cover no-repeat;
   transform: scale(1.02);
 }
 .auth-brand::after {
@@ -43,8 +43,12 @@
     radial-gradient(48rem 26rem at 8% -5%, rgba(249, 168, 39, 0.22), transparent 60%);
 }
 
-.auth-brand__logo { display: flex; align-items: center; gap: 12px; }
+.auth-brand__logo {
+  display: flex; align-items: center; gap: 12px;
+  transition: opacity 0.2s, transform 0.2s;
+}
 .auth-brand__logo img { height: 46px; width: auto; }
+.auth-brand__logo:hover { opacity: 0.85; transform: translateY(-1px); }
 
 .auth-brand__mid { max-width: 30rem; }
 .auth-brand__eyebrow {
@@ -76,16 +80,12 @@
   padding: 3rem 1.75rem;
   background: var(--bg);
 }
-.auth-panel__back {
-  position: absolute; top: 1.6rem; right: 1.75rem;
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 0.83rem; color: var(--soft); text-decoration: none;
-  transition: color 0.2s;
+.auth-mobile-logo {
+  display: none; margin-bottom: 1.5rem;
+  transition: opacity 0.2s, transform 0.2s;
 }
-.auth-panel__back:hover { color: var(--gold); }
-
-.auth-mobile-logo { display: none; margin-bottom: 1.5rem; }
 .auth-mobile-logo img { height: 42px; }
+.auth-mobile-logo:hover { opacity: 0.85; transform: translateY(-1px); }
 
 .auth-card {
   width: 100%;
