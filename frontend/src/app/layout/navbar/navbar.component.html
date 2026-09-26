@@ -39,7 +39,7 @@
       } @else {
         <!-- Phones: the header has no room for "Get Started", so it lives in the menu instead. -->
         <li class="pro-nav__mobile-cta">
-          <a routerLink="/register" class="nav-cta-btn" (click)="closeMenu()">
+          <a routerLink="/register" appGuestCta class="nav-cta-btn" (click)="closeMenu()">
             <i class="ri-flashlight-fill"></i> Get Started
           </a>
         </li>
@@ -62,7 +62,7 @@
         </button>
       } @else {
         <a routerLink="/login" class="nav-login-btn" aria-label="Login"><i class="ri-login-box-line"></i> <span class="nav-btn-label">Login</span></a>
-        <a routerLink="/register" class="nav-cta-btn"><i class="ri-flashlight-fill"></i> Get Started</a>
+        <a routerLink="/register" appGuestCta class="nav-cta-btn"><i class="ri-flashlight-fill"></i> Get Started</a>
       }
     </div>
   </div>

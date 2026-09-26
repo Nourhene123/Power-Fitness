@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/cor
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { CoachRequestService } from './data/coach-request.service';
+import { GuestCtaDirective } from '../../shared/directives/guest-cta.directive';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule, RouterLink, GuestCtaDirective],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

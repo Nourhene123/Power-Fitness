@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { GuestCtaDirective } from '../../shared/directives/guest-cta.directive';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, GuestCtaDirective],
   templateUrl: './about.component.html',
   styleUrl: './about.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

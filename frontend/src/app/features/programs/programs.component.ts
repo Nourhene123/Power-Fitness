@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TRAINING_GOALS } from '../../shared/data/goals.data';
+import { GuestCtaDirective } from '../../shared/directives/guest-cta.directive';
 
 @Component({
   selector: 'app-programs',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, GuestCtaDirective],
   templateUrl: './programs.component.html',
   styleUrl: './programs.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
