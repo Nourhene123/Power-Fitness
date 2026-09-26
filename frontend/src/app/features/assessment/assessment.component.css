@@ -95,7 +95,7 @@ legend {
 .choices label:has(input:checked) { color: #111; background: var(--gold); border-color: var(--gold); font-weight: 600; }
 .choices label:hover { border-color: rgba(249, 168, 39, 0.5); }
 
-.choices--cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.7rem; }
+.choices--cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); gap: 0.7rem; }
 .choices--cards label { position: relative; border-radius: 12px; text-align: center; padding: 0.9rem 0.7rem; cursor: pointer; background: var(--field); border: 1px solid var(--line); }
 .choices--cards label b { display: block; color: #fff; font-size: 0.9rem; margin-bottom: 2px; }
 .choices--cards label small { font-size: 0.72rem; color: var(--muted); }

@@ -30,14 +30,23 @@ export class CoachLayoutComponent implements OnDestroy {
   protected readonly sidebarOpen = signal(false);
   protected readonly collapsed = signal(false);
 
+  /** Phones/tablets show an icon rail; there the edge arrow opens the full menu over the page. */
+  private readonly mobileQuery = window.matchMedia('(max-width: 960px)');
+  protected readonly isMobile = signal(this.mobileQuery.matches);
+  private readonly onViewportChange = (e: MediaQueryListEvent) => this.isMobile.set(e.matches);
+  /** Whether the sidebar currently shows its labels (drives the edge arrow's icon and aria). */
+  protected readonly expanded = computed(() => (this.isMobile() ? this.sidebarOpen() : !this.collapsed()));
+
   constructor() {
     effect(() => {
       document.body.setAttribute('data-theme', this.theme.theme());
     });
+    this.mobileQuery.addEventListener('change', this.onViewportChange);
   }
 
   ngOnDestroy(): void {
     document.body.removeAttribute('data-theme');
+    this.mobileQuery.removeEventListener('change', this.onViewportChange);
   }
 
   protected readonly links: readonly SidebarLink[] = [
@@ -57,6 +66,15 @@ export class CoachLayoutComponent implements OnDestroy {
 
   protected toggleCollapse(): void {
     this.collapsed.update((v) => !v);
+  }
+
+  /** Edge arrow: collapses/expands in place on desktop, opens/closes the overlay menu on phones. */
+  protected toggleSidebarPanel(): void {
+    if (this.isMobile()) {
+      this.toggleSidebar();
+    } else {
+      this.toggleCollapse();
+    }
   }
 
   protected closeSidebar(): void {

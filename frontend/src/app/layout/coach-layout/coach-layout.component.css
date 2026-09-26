@@ -69,10 +69,22 @@
   border-radius: 6px;
   letter-spacing: 0.5px;
 }
+.sidebar-menu::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-menu::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 999px;
+}
+.sidebar-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
 .sidebar-menu {
   flex: 1;
   padding: 20px 14px;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-default) transparent;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -175,6 +187,7 @@
 
 .coach-main {
   flex: 1;
+  min-width: 0; /* flex items default to min-width:auto; without this the page can't shrink to phone width */
   margin-left: 270px;
   min-height: 100vh;
   display: flex;
@@ -182,34 +195,37 @@
   transition: margin-left 0.25s var(--ease);
 }
 
-.coach-shell.sidebar-collapsed .coach-sidebar {
-  width: 80px;
-}
-.coach-shell.sidebar-collapsed .coach-main {
-  margin-left: 80px;
-}
-.coach-shell.sidebar-collapsed .sidebar-header {
-  justify-content: center;
-  padding: 24px 10px;
-}
-.coach-shell.sidebar-collapsed .sidebar-badge,
-.coach-shell.sidebar-collapsed .menu-label,
-.coach-shell.sidebar-collapsed .sidebar-link span,
-.coach-shell.sidebar-collapsed .sidebar-user .info {
-  display: none;
-}
-.coach-shell.sidebar-collapsed .sidebar-link {
-  justify-content: center;
-  gap: 0;
-}
-.coach-shell.sidebar-collapsed .sidebar-footer {
-  padding: 16px 8px;
-}
-.coach-shell.sidebar-collapsed .sidebar-user {
-  flex-direction: column;
-  justify-content: center;
-  gap: 10px;
-  padding: 10px 4px;
+/* Desktop "collapsed" mode. Phones/tablets always get the icon rail below instead. */
+@media (min-width: 961px) {
+  .coach-shell.sidebar-collapsed .coach-sidebar {
+    width: 80px;
+  }
+  .coach-shell.sidebar-collapsed .coach-main {
+    margin-left: 80px;
+  }
+  .coach-shell.sidebar-collapsed .sidebar-header {
+    justify-content: center;
+    padding: 24px 10px;
+  }
+  .coach-shell.sidebar-collapsed .sidebar-badge,
+  .coach-shell.sidebar-collapsed .menu-label,
+  .coach-shell.sidebar-collapsed .sidebar-link span,
+  .coach-shell.sidebar-collapsed .sidebar-user .info {
+    display: none;
+  }
+  .coach-shell.sidebar-collapsed .sidebar-link {
+    justify-content: center;
+    gap: 0;
+  }
+  .coach-shell.sidebar-collapsed .sidebar-footer {
+    padding: 16px 8px;
+  }
+  .coach-shell.sidebar-collapsed .sidebar-user {
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px 4px;
+  }
 }
 .coach-header {
   height: 70px;
@@ -228,19 +244,6 @@
   display: flex;
   align-items: center;
   gap: 16px;
-}
-.sidebar-toggle-btn {
-  display: none;
-  background: transparent;
-  border: 1px solid var(--border-default);
-  color: var(--white);
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  cursor: pointer;
 }
 .header-right {
   display: flex;
@@ -283,14 +286,55 @@
 }
 
 /* Phone-only drawer controls (see the 960px breakpoint below). */
-.sidebar-backdrop,
-.sidebar-close-btn {
+.sidebar-backdrop {
   display: none;
 }
 
 @media (max-width: 960px) {
-  /* The open drawer covers the header's menu button, so it needs its own close button and a
-     backdrop: tapping outside closes it, and the page behind is dimmed instead of cut off. */
+  /* Phones/tablets: the sidebar stays visible as a 68px icon rail; the edge arrow expands it to
+     full width (with labels) over the page, like the desktop collapse toggle. */
+  .coach-sidebar {
+    width: 68px;
+    transform: none;
+  }
+  .coach-sidebar.open {
+    width: 270px;
+    box-shadow: 12px 0 40px rgba(0, 0, 0, 0.35);
+  }
+  .coach-main {
+    margin-left: 68px;
+  }
+  .coach-sidebar:not(.open) .sidebar-header {
+    justify-content: center;
+    padding: 20px 8px;
+  }
+  .coach-sidebar:not(.open) .sidebar-badge,
+  .coach-sidebar:not(.open) .menu-label,
+  .coach-sidebar:not(.open) .sidebar-link span,
+  .coach-sidebar:not(.open) .sidebar-user .info {
+    display: none;
+  }
+  .coach-sidebar:not(.open) .sidebar-menu {
+    padding: 14px 8px;
+    scrollbar-width: none; /* still scrollable; a visible bar would eat the 68px rail */
+  }
+  .coach-sidebar:not(.open) .sidebar-menu::-webkit-scrollbar {
+    display: none;
+  }
+  .coach-sidebar:not(.open) .sidebar-link {
+    justify-content: center;
+    gap: 0;
+    padding: 12px 0;
+  }
+  .coach-sidebar:not(.open) .sidebar-footer {
+    padding: 12px 6px;
+  }
+  .coach-sidebar:not(.open) .sidebar-user {
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 0;
+  }
+  /* The expanded menu overlays the page: the backdrop dims it, and tapping it closes the menu. */
   .sidebar-backdrop {
     display: block;
     position: fixed;
@@ -300,44 +344,11 @@
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
   }
-  .sidebar-header {
-    justify-content: flex-start;
-    gap: 12px;
-  }
-  .sidebar-close-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    margin-left: auto;
-    border: 1px solid var(--border-default);
-    border-radius: 10px;
-    background: transparent;
-    color: var(--text-secondary);
-    font-size: 1.3rem;
-    cursor: pointer;
-  }
-  .coach-sidebar {
-    transform: translateX(-100%);
-  }
-  .coach-sidebar.open {
-    transform: translateX(0);
-  }
-  .coach-main {
-    margin-left: 0;
-  }
-  .sidebar-toggle-btn {
-    display: flex;
-  }
+  /* Same edge arrow as desktop, slightly larger for touch. */
   .sidebar-collapse-btn {
-    display: none;
-  }
-  .coach-shell.sidebar-collapsed .coach-sidebar {
-    width: 270px;
-  }
-  .coach-shell.sidebar-collapsed .coach-main {
-    margin-left: 0;
+    width: 28px;
+    height: 28px;
+    right: -14px;
   }
   .coach-container {
     padding: 20px 16px;

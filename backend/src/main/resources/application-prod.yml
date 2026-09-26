@@ -12,6 +12,12 @@ spring:
   flyway:
     clean-disabled: true
 
+app:
+  jwt:
+    # No default on purpose: without APP_JWT_SECRET the app refuses to start, instead of
+    # silently signing tokens with the public dev secret from application.yml.
+    secret: ${APP_JWT_SECRET}
+
 management:
   endpoint:
     health:

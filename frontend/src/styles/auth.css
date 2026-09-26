@@ -203,3 +203,19 @@
   font-size: 0.75rem;
   color: var(--danger, #f87171);
 }
+
+/* Shown when sign-in takes >5s: the free-tier backend is waking up. */
+.slow-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin-top: 0.9rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid rgba(249, 168, 39, 0.25);
+  border-radius: 10px;
+  background: rgba(249, 168, 39, 0.08);
+  color: var(--soft);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+.slow-hint i { color: var(--gold); font-size: 1rem; margin-top: 1px; }
