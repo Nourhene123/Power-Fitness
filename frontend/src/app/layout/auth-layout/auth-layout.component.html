@@ -1,7 +1,7 @@
 <div class="auth-shell">
   <aside class="auth-brand">
-    <a routerLink="/" class="auth-brand__logo">
-      <img src="assets/img/logo-gold.png" alt="Power Fitness" />
+    <a routerLink="/" class="auth-brand__logo" aria-label="Power Fitness — back to homepage" title="Back to homepage">
+      <img src="assets/img/logo-gold.webp" alt="" />
     </a>
     <div class="auth-brand__mid">
       <span class="auth-brand__eyebrow"><i class="ri-shield-star-line"></i> Coach-reviewed</span>
@@ -20,8 +20,12 @@
   </aside>
 
   <main class="auth-panel">
-    <a routerLink="/" class="auth-panel__back"><i class="ri-arrow-left-line"></i> Back to homepage</a>
-    <a routerLink="/" class="auth-mobile-logo"><img src="assets/img/logo-gold.png" alt="PowerFit" /></a>
+    <!-- No separate "back to homepage" link: the logo (here and in .auth-brand on desktop)
+         already goes home — a standard convention. It gets a hover/tooltip affordance below
+         so that's actually discoverable, instead of adding a second, redundant link. -->
+    <a routerLink="/" class="auth-mobile-logo" aria-label="Power Fitness — back to homepage" title="Back to homepage">
+      <img src="assets/img/logo-gold.webp" alt="" />
+    </a>
     <router-outlet />
   </main>
 </div>

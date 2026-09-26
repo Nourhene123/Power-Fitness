@@ -30,7 +30,7 @@
       } @else {
         @for (line of cart.lines(); track line.key) {
           <div class="cart-item">
-            <img [src]="line.imageUrl || 'assets/img/logo-gold.png'" [alt]="line.name" />
+            <img [src]="line.imageUrl || 'assets/img/logo-gold.webp'" [alt]="line.name" />
             <div class="cart-item__info">
               <div class="cart-item__title">
                 {{ line.name }}
