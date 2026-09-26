@@ -5,6 +5,7 @@
   "rewrites": [
     { "source": "/api/:path*", "destination": "https://powerfitness-api.onrender.com/api/:path*" },
     { "source": "/uploads/:path*", "destination": "https://powerfitness-api.onrender.com/uploads/:path*" },
+    { "source": "/actuator/:path*", "destination": "https://powerfitness-api.onrender.com/actuator/:path*" },
     { "source": "/((?!.*\\.).*)", "destination": "/index.html" }
   ],
   "headers": [

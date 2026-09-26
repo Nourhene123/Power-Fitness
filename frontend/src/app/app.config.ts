@@ -15,6 +15,7 @@ import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { AuthService } from './core/auth/auth.service';
 import { SeoService } from './core/seo/seo.service';
 import { reloadOnStaleChunk } from './core/navigation/stale-chunk.handler';
+import { wakeBackend } from './core/backend/wake-backend';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -47,6 +48,13 @@ export const appConfig: ApplicationConfig = {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,
       useValue: () => inject(ViewportScroller).setOffset([0, 88]),
+    },
+    {
+      // Nudge the free-tier backend awake as soon as anyone opens the site, not only once they
+      // try to sign in — see wake-backend.ts.
+      provide: ENVIRONMENT_INITIALIZER,
+      multi: true,
+      useValue: () => wakeBackend(),
     },
   ],
 };
