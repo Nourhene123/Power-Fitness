@@ -20,7 +20,9 @@ import com.powerfitness.repository.UserRepository;
 import com.powerfitness.service.NotificationService;
 import com.powerfitness.service.ShopOrderService;
 import java.math.BigDecimal;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +56,7 @@ public class ShopOrderServiceImpl implements ShopOrderService {
         User user = users.findById(userId).orElseThrow(() -> ResourceNotFoundException.of("User", userId));
 
         List<ResolvedLine> lines = body.items().stream().map(this::resolveLine).toList();
+        reserveStock(lines);
 
         BigDecimal subtotal = lines.stream()
                 .map(l -> l.product().getPrice().multiply(BigDecimal.valueOf(l.quantity())))
@@ -85,8 +88,6 @@ public class ShopOrderServiceImpl implements ShopOrderService {
                     .quantity(line.quantity())
                     .size(line.size())
                     .build());
-            line.product().setStockQty(line.product().getStockQty() - line.quantity());
-            products.save(line.product());
         }
 
         notificationService.coachUser().ifPresent(coach -> notificationService.notify(coach, "shop_order",
@@ -98,6 +99,26 @@ public class ShopOrderServiceImpl implements ShopOrderService {
     }
 
     private record ResolvedLine(Product product, int quantity, String size) {}
+
+    /**
+     * Takes the ordered units out of stock. Lines for the same product (e.g. one T-shirt in two
+     * sizes) are summed first, so the stock check sees the real total. Each decrement is a single
+     * conditional UPDATE, so two orders running at once can't both sell the last units; if one
+     * fails, the exception rolls back the whole order, including decrements already made.
+     */
+    private void reserveStock(List<ResolvedLine> lines) {
+        Map<Long, Integer> totals = new LinkedHashMap<>();
+        Map<Long, String> names = new LinkedHashMap<>();
+        for (ResolvedLine line : lines) {
+            totals.merge(line.product().getId(), line.quantity(), Integer::sum);
+            names.putIfAbsent(line.product().getId(), line.product().getName());
+        }
+        totals.forEach((productId, quantity) -> {
+            if (products.decrementStockIfAvailable(productId, quantity) == 0) {
+                throw new BusinessRuleException("Not enough stock for " + names.get(productId) + ".");
+            }
+        });
+    }
 
     private ResolvedLine resolveLine(OrderItemLineRequest line) {
         Product product = products.findById(line.productId())

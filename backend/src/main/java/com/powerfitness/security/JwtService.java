@@ -13,6 +13,8 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Optional;
 import javax.crypto.SecretKey;
+import org.springframework.core.env.Environment;
+import org.springframework.core.env.Profiles;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,8 +24,21 @@ public class JwtService {
     private final String issuer;
     private final Duration accessTtl;
 
-    public JwtService(AppProperties props) {
-        this.key = Keys.hmacShaKeyFor(props.jwt().secret().getBytes(StandardCharsets.UTF_8));
+    /** The dev-only default from application.yml; it's public (in the repo), so never valid in prod. */
+    static final String DEV_SECRET_MARKER = "dev-secret-please-change-me";
+
+    public JwtService(AppProperties props, Environment environment) {
+        String secret = props.jwt().secret();
+        // An unset env var reaches us as the literal placeholder text ("${APP_JWT_SECRET}").
+        if (secret == null || secret.isBlank() || secret.contains("${")) {
+            throw new IllegalStateException("APP_JWT_SECRET is not set; the app can't sign tokens without it.");
+        }
+        if (environment.acceptsProfiles(Profiles.of("prod")) && secret.contains(DEV_SECRET_MARKER)) {
+            throw new IllegalStateException(
+                    "APP_JWT_SECRET is the public dev default; set a real secret for the prod profile.");
+        }
+        // hmacShaKeyFor also rejects secrets shorter than 256 bits (32 bytes) with a WeakKeyException.
+        this.key = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
         this.issuer = props.jwt().issuer();
         this.accessTtl = props.jwt().accessTokenTtl();
     }

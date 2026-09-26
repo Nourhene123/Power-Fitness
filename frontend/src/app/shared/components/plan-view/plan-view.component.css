@@ -19,7 +19,7 @@
 
 .kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: 18px;
   margin-bottom: 32px;
 }
@@ -88,7 +88,7 @@
 
 .roadmap-phases-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(270px, 100%), 1fr));
   gap: 18px;
 }
 .phase-card {
@@ -284,7 +284,7 @@
 
 .meal-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
   gap: 18px;
 }
 .meal-card {
@@ -347,7 +347,7 @@
 }
 .guidelines-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 18px;
   margin-top: 12px;
 }
@@ -380,4 +380,61 @@
   font-size: 12px;
   color: var(--text-muted);
   line-height: 1.7;
+}
+
+/* Phones: less padding so the text gets the width (the page already sits next to the icon rail). */
+@media (max-width: 600px) {
+  .kpi-card,
+  .phase-card,
+  .meal-card {
+    padding: 16px;
+  }
+  .routine-box,
+  .guidelines-box {
+    padding: 18px 16px;
+  }
+  .kpi-grid,
+  .roadmap-phases-grid,
+  .meal-grid,
+  .guidelines-grid {
+    gap: 12px;
+  }
+
+  /* The 5-column exercise table can't fit a phone: each exercise becomes a stacked row,
+     name on top and sets / reps / rest as badges underneath. */
+  .exercise-table thead {
+    display: none;
+  }
+  .exercise-table,
+  .exercise-table tbody,
+  .exercise-table tr {
+    display: block;
+    width: 100%;
+  }
+  .exercise-table tr {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--overlay-04);
+  }
+  .exercise-table tr:last-child {
+    border-bottom: none;
+  }
+  .exercise-table td {
+    display: inline-block;
+    padding: 0 6px 0 0;
+    border-bottom: none;
+  }
+  .exercise-table td.exercise-name {
+    display: block;
+    padding: 0 0 8px;
+  }
+  .exercise-table td.notes {
+    display: block;
+    padding: 6px 0 0;
+  }
+  .exercise-table td.notes:empty {
+    display: none;
+  }
+  .exercise-table .tag-metric {
+    white-space: nowrap;
+  }
 }
